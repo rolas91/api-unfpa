@@ -60,6 +60,8 @@ export default (app: Application): void => {
   app.post('/api/v1/auth/login', async (req, res) => {
     try {
       const response = await auth.login(req.body);
+      console.log(response);
+      
       const payload = { id: response.id };
       const token = await jsonwebtoken.sign(payload, process.env.SECRET!, {
         expiresIn: EXPIRES_IN
