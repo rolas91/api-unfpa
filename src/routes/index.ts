@@ -75,7 +75,7 @@ export default (app: Application): void => {
       });
     } catch (error) {
       console.log(error);
-      res.status(200).send({ message: error.message });
+      res.status(200).send({ message: error });
     }
   });
   // create a new jwt token for an especific user by Id
