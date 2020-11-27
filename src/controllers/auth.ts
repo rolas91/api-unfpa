@@ -5,6 +5,7 @@ import {getRepository} from 'typeorm';
 
 import Users from '../entity/User';
 
+
 // create a new user and save into db
 const register = async (data: {
   firstname: string;
@@ -12,10 +13,11 @@ const register = async (data: {
   email: string;
   password: string;
   phone:string;
-  type:string;
+  typeAuth:string;
+  typeUser:string;
   date: Date;
 }): Promise<any> => {
-  const { firstname, lastname, email, phone, type } = data;
+  const { firstname, lastname, email, phone, typeUser, typeAuth } = data;
   let { password } = data;
   let date = new Date;
 
@@ -29,7 +31,8 @@ const register = async (data: {
     email,
     phone,
     password,
-    type,
+    typeAuth,
+    typeUser,
     date
   });
 
@@ -44,19 +47,25 @@ const register = async (data: {
 };
 
 // login user and creates a jwt token
+
 const login = async (data: {
   email: string;
   password: string;
+  typeAuth:string
 }): Promise<any> => {
-  const { email, password } = data;
+  const { email, password, typeAuth } = data;
 
-  const user = await getRepository(Users).findOne({where:{email:email}});
+  const user:any  = await getRepository(Users).findOne(
+    {
+      email: email
+    }
+  );
   // const user = await Users.findOne({ email });
 
-  if (!user)
+  if (!user && user.typeAuth != typeAuth)
     throw {
       code: 404,
-      message: `The user with the email ${email} was not found`
+      message: `El usuario con este ${email} no registrado en el sistema o no se ha autenticado correctamente `
     };
   
   const isValidPassword = await bcrypt.compare(password, user.password);

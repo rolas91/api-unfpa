@@ -24,8 +24,15 @@ export default class User{
     @Column()
     avatar: string;
 
-    @Column()
-    type:string;
+    @Column({
+        default:'email'
+    })
+    typeAuth:string;
+
+    @Column({
+        default:'paciente'
+    })
+    typeUser:string;
 
     @Column('timestamp')
     date: Date;
