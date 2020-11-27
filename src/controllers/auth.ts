@@ -62,7 +62,7 @@ const login = async (data: {
   );
   // const user = await Users.findOne({ email });
 
-  if (!user && user.typeAuth != typeAuth)
+  if (!user && user.typeAuth === typeAuth)
     throw {
       code: 404,
       message: `El usuario con este ${email} no registrado en el sistema o no se ha autenticado correctamente `
