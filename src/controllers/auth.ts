@@ -60,12 +60,13 @@ const login = async (data: {
       email: email
     }
   );
+
   // const user = await Users.findOne({ email });
 
-  if (!user && user.typeAuth === typeAuth)
+  if (!user || user.typeAuth != typeAuth)
     throw {
       code: 404,
-      message: `El usuario con este ${email} no registrado en el sistema o no se ha autenticado correctamente `
+      message: `El usuario con este ${email} no esta registrado en el sistema o no se ha autenticado correctamente `
     };
   
   const isValidPassword = await bcrypt.compare(password, user.password);
