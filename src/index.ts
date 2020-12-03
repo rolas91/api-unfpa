@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
+import {ExpressPeerServer} from 'peer';
 // import mongoose from 'mongoose';
 import {createConnection} from 'typeorm';
 import bodyParser from 'body-parser';
@@ -28,9 +29,15 @@ app.set('view engine', 'ejs');
 // public files
 app.use(express.static('public'));
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
 });
+
+const peerServer = ExpressPeerServer(server, {
+    path: '/videocallapp'
+});
+
+app.use('/peerjs', peerServer);
 
 api(app);
 
