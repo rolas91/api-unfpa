@@ -53,13 +53,15 @@ const register = async (data: {
 const login = async (data: {
   email: string;
   password: string;
-  typeAuth:string
+  typeUser:string;
+  typeAuth:string;
 }): Promise<any> => {
-  const { email, password, typeAuth } = data;
+  const { email, password, typeUser,typeAuth } = data;
 
   const user:any  = await getRepository(Users).findOne(
     {
-      email: email
+      email: email,
+      typeUser:typeUser
     }
   );
 
