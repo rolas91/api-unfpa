@@ -16,6 +16,9 @@ export default class User{
     email: string;
 
     @Column()
+    cedula: string;
+
+    @Column()
     phone:string;
 
     @Column()

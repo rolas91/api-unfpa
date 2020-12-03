@@ -12,12 +12,13 @@ const register = async (data: {
   lastname:string,
   email: string;
   password: string;
+  cedula: string;
   phone:string;
   typeAuth:string;
   typeUser:string;
   date: Date;
 }): Promise<any> => {
-  const { firstname, lastname, email, phone, typeUser, typeAuth } = data;
+  const { firstname, lastname, email,cedula, phone, typeUser, typeAuth } = data;
   let { password } = data;
   let date = new Date;
 
@@ -29,6 +30,7 @@ const register = async (data: {
     firstname,
     lastname,
     email,
+    cedula,
     phone,
     password,
     typeAuth,
