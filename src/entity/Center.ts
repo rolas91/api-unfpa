@@ -34,7 +34,7 @@ export default class Center{
     field_timezone: string;
    
     @Column()
-    ield_hours_of_operation: string;
+    field_hours_of_operation: string;
     
     @Column()
     field_service_provided: string;
