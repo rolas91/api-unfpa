@@ -135,7 +135,7 @@ export default (app: Application): void => {
     try {
       
       const response = await center.getCenters();
-      res.status(200).send(...response);
+      res.status(200).send(response);
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
