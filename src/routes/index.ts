@@ -5,6 +5,7 @@ import { Application } from 'express';
 import * as auth from '../controllers/auth';
 import * as profile from '../controllers/profile';
 import * as user from '../controllers/users';
+import * as center from '../controllers/center';
 
 import tokens from '../controllers/tokens';
 
@@ -129,4 +130,14 @@ export default (app: Application): void => {
   }
   );
   
+  //centers
+  app.get('/api/v1/centers', async (req, res) => {
+    try {
+      
+      const response = await center.getCenters();
+      res.status(200).send(response);
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
 };
