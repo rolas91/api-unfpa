@@ -7,7 +7,7 @@ const getCenters = async (): Promise<any> => {
   const center = await getRepository(Center).find();
   if (!center) throw new Error('center not found');
   return {
-      data:center
+      center
   };
 };
 
