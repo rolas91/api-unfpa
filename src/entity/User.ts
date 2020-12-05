@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
 
 
 @Entity()
@@ -19,6 +19,9 @@ export default class User{
     cedula: string;
 
     @Column()
+    birth:Date;
+
+    @Column()
     phone:string;
 
     @Column()
@@ -28,15 +31,22 @@ export default class User{
     avatar: string;
 
     @Column({
+        type:"enum",
+        enum:["email","facebook","gmail"]
         default:'email'
     })
     typeAuth:string;
 
     @Column({
-        default:'paciente'
+        type:"enum",
+        enum:["paciente","medico","brigadista"],
+        default:"paciente"
     })
     typeUser:string;
 
-    @Column('timestamp')
-    date: Date;
+    @CreateDateColumn({name:'create_at'}) 
+    create_at: Date;
+
+    @UpdateDateColumn({name:'update_at'}) 
+    update_at: Date;
 }

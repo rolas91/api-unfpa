@@ -6,6 +6,7 @@ import * as auth from '../controllers/auth';
 import * as profile from '../controllers/profile';
 import * as user from '../controllers/users';
 import * as center from '../controllers/center';
+import * as patient from '../controllers/patient';
 
 import tokens from '../controllers/tokens';
 
@@ -141,3 +142,16 @@ export default (app: Application): void => {
     }
   });
 };
+
+//patients
+app.post('/api/v1/patients/register', async(req, res) => {
+  try {
+    const response = await patient.register(req.data)
+    res.status(200).json({
+      message:'successfully',
+      data:response
+    });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+})

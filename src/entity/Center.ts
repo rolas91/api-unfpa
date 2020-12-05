@@ -4,7 +4,7 @@ import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 export default class Center{
     
     @PrimaryGeneratedColumn()
-     nid: string;
+     nid: number;
 
     @Column()
     field_name: string;
