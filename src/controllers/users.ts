@@ -10,6 +10,19 @@ const getUsers = async (): Promise<any> => {
   return _.omit(user, 'password', '__v');
 };
 
+const getUser = async (data:{
+  identification:string;
+}): Promise<any> => {
+  const {identification} = data;
+  // const user = await Users.findById(id);
+  const user = await getRepository(Users).find({
+    where:{
+      cedula:identification
+    }
+  });
+  if (!user) throw new Error('user not found');
+  return _.omit(user, 'password', '__v');
+};
 
 
-export { getUsers };
+export { getUsers, getUser };

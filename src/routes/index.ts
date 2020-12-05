@@ -116,6 +116,16 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+
+  app.get('/api/v1/user/getuser', isLogin, async (req, res) => {
+    try {
+      const response = await user.getUser(req.body);
+      res.status(200).send(response);
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+
   app.post('/api/v1/user/update-avatar',isLogin, uploader.single('attachment'), async (req, res) => {
     try {
       const { file } = req;
