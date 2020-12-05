@@ -2,17 +2,17 @@ import {getRepository} from 'typeorm';
 import Appointment from '../entity/Appointment';
 
 const register = async(data:{
-    patientId:number;
+    patient:any;
     doctorId:number;
     note:string;
     typeAppointment:string;
     date: Date;
     hour:Date;
 }): Promise<any> => {
-    const {patientId, doctorId, note, typeAppointment, date, hour} = data;
+    const {patient, doctorId, note, typeAppointment, date, hour} = data;
 
     const newAppointment = getRepository(Appointment).create({
-        patientId,
+        patient,
         doctorId,
         note,
         typeAppointment,

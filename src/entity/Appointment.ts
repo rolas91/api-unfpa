@@ -1,12 +1,13 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm';
+import Patient from "./Patient";
 
 @Entity()
 export default class Appointment{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
-    patientId:number;
+    @ManyToOne(() => Patient, patient => patient.appointments)
+    patient:Patient;
 
     @Column()
     doctorId:number;
