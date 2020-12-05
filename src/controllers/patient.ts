@@ -1,5 +1,6 @@
 import {getRepository} from 'typeorm';
-import Patient from '../entity/Patient'
+import Patient from '../entity/Patient';
+import User from '../entity/User';
 
 const register = async(data:{
     user:any;
@@ -25,8 +26,11 @@ const register = async(data:{
     return await getRepository(Patient).save(newPatient);
 }
 
-const getPacients = async () => {
-   
+const getPatients = async () => {
+   await getRepository(User).createQueryBuilder("user")
+    .innerJoin("user.patients", "patients")
+    // .where("user.name = :name", { name: "Timber" })
+    .getMany();
 }
 
-export {register}
+export {register, getPatients}

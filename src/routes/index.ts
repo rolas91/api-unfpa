@@ -155,6 +155,18 @@ export default (app: Application): void => {
     }
   })
 
+  app.get('/api/v1/patients/getAll', async(req, res) => {
+    try {
+      const result = await patient.getPatients();
+      res.status(200).json({
+        message:'successfully',
+        data:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
 
 };
 
