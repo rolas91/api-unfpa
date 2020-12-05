@@ -13,15 +13,14 @@ const register = async (data: {
   email: string;
   password: string;
   cedula: string;
+  birth:Date;
   phone:string;
   typeAuth:string;
   typeUser:string;
-  date: Date;
 }): Promise<any> => {
-  const { firstname, lastname, email,cedula, phone, typeUser, typeAuth } = data;
+  const { firstname, lastname, email,cedula, birth,phone, typeUser, typeAuth } = data;
   let { password } = data;
-  let date = new Date;
-
+ 
   if (!validator.isEmail(email)) throw new Error('invalid email');
 
   password = await bcrypt.hash(password, 10);
@@ -31,11 +30,11 @@ const register = async (data: {
     lastname,
     email,
     cedula,
+    birth,
     phone,
     password,
     typeAuth,
-    typeUser,
-    date
+    typeUser
   });
 
   const result = await getRepository(Users).save(newUser);

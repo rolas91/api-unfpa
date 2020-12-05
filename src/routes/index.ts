@@ -141,17 +141,20 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+
+  //patients
+  app.post('/api/v1/patients/register', async(req, res) => {
+    try {
+      const response = await patient.register(req.body)
+      res.status(200).json({
+        message:'successfully',
+        data:response
+      });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+
 };
 
-//patients
-app.post('/api/v1/patients/register', async(req, res) => {
-  try {
-    const response = await patient.register(req.data)
-    res.status(200).json({
-      message:'successfully',
-      data:response
-    });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
-})

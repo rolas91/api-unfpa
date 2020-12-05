@@ -14,11 +14,11 @@ export default class Citas{
     @Column()
     note:string;
 
-    @Column(
+    @Column({
         type:"enum",
         enum:["presencial","remoto"],
         default:"remoto"
-    )
+    })
     typeAppointment:string;
 
     @CreateDateColumn({name:'create_at'}) 

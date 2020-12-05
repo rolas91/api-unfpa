@@ -8,34 +8,36 @@ export default class Patient{
     @Column()
     userId:number;
 
-    @Column(
-        comment:'tipo de sangre'
-    )
+    @Column({
+        comment:'tipo de sangre',
+    })
     bloodtype:string;
 
-    @Column(
-        comment:'Semanas de embarazo'
-    )
+    @Column({
+        comment:'Semanas de embarazo',
+    })
     weekspregnant:string;
 
-    @Column(
-        comment:'Enfermedades o padecimientos'
-    )
+    @Column({
+        comment:'Enfermedades o padecimientos',
+    })
     ailment:string;
 
-    @Column(
-        comment:'Tratamiento, medicacion'
-    )
+    @Column({
+        
+        comment:'Tratamiento, medicacion',
+    })
     medication:string;
 
-    @Column(
-        comment:'Alergias y reacciones'
-    )
+    @Column({
+        
+        comment:'Alergias y reacciones',
+    })
     allergicReactions:string;
 
-    @Column(
-        comment:'Informe medico'
-    )
+    @Column({
+        comment:'Informe medico',
+    })
     medicalReport:string;
 
     @CreateDateColumn({name:'create_at'}) 

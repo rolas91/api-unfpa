@@ -32,7 +32,7 @@ export default class User{
 
     @Column({
         type:"enum",
-        enum:["email","facebook","gmail"]
+        enum:["email","facebook","gmail"],
         default:'email'
     })
     typeAuth:string;

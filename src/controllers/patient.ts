@@ -9,7 +9,7 @@ const register = async(data:{
     medication:string;
     allergicReactions:string;
     medicalReport:string;
-}):Promise<any> => {
+}): Promise<any> => {
     const {userId, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;
 
     const newPatient = getRepository(Patient).create({
@@ -24,3 +24,5 @@ const register = async(data:{
 
     return await getRepository(Patient).save(newPatient);
 }
+
+export {register}
