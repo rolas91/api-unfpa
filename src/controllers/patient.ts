@@ -30,7 +30,7 @@ const getPatients = async () => {
   return await getRepository(User).createQueryBuilder("user")
     .leftJoinAndSelect("user.patients", "patient")
     // .where("user.name = :name", { name: "Timber" })
-    .getOne();
+    .getMany();
 }
 
 export {register, getPatients}
