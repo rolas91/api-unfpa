@@ -21,5 +21,11 @@ const register = async(data:{
     });
     return await getRepository(Appointment).save(newAppointment);
 }
-//comentarios
-export {register}
+const getAppointment = async () => {
+  return await getRepository(Appointment).createQueryBuilder("appointment")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    // .where()
+    // .where("user.name = :name", { name: "Timber" })
+    .getMany();
+}
+export {register, getAppointment}
