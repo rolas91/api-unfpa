@@ -1,8 +1,8 @@
 import {getRepository} from 'typeorm';
-import Patient from '../entity/Patient';
+import Patient from '../entity/Patient'
 
 const register = async(data:{
-    userId:number;
+    user:any;
     bloodtype:string;
     weekspregnant:string;
     ailment:string;
@@ -10,10 +10,10 @@ const register = async(data:{
     allergicReactions:string;
     medicalReport:string;
 }): Promise<any> => {
-    const {userId, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;
+    const {user, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;
 
     const newPatient = getRepository(Patient).create({
-        userId, 
+        user, 
         bloodtype,  
         weekspregnant, 
         ailment, 
@@ -23,6 +23,10 @@ const register = async(data:{
     })
 
     return await getRepository(Patient).save(newPatient);
+}
+
+const getPacients = async () => {
+   
 }
 
 export {register}

@@ -1,12 +1,13 @@
-import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity} from 'typeorm';
+import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne} from 'typeorm';
+import User from './User'
 
 @Entity()
 export default class Patient{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
-    userId:number;
+    @ManyToOne(() => User, user => user.patients)
+    user:User;
 
     @Column({
         comment:'tipo de sangre',

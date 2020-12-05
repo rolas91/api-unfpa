@@ -1,4 +1,5 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
+import Patient from './Patient';
 
 
 @Entity()
@@ -43,6 +44,9 @@ export default class User{
         default:"paciente"
     })
     typeUser:string;
+
+    @OneToMany(() => Patient, patient => patient.user)
+    patients: Patient[];
 
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
