@@ -21,3 +21,5 @@ const register = async(data:{
     });
     return await getRepository(Appointment).save(newAppointment);
 }
+
+export {register}
