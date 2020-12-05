@@ -28,7 +28,7 @@ const register = async(data:{
 
 const getPatients = async () => {
   return await getRepository(User).createQueryBuilder("user")
-    .rigthJoinAndSelect("patient", "patient","patient.user = user.id")
+    .leftJoinAndSelect("patient", "patient","patient.user = user.id")
     // .where("user.name = :name", { name: "Timber" })
     .getMany();
 }
