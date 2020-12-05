@@ -27,10 +27,10 @@ const register = async(data:{
 }
 
 const getPatients = async () => {
-  return await getRepository(Patient).createQueryBuilder("patient")
-    .innerJoinAndSelect("user", "user")
+  return await getRepository(User).createQueryBuilder("user")
+    .leftJoinAndSelect("user.patients", "patient")
     // .where("user.name = :name", { name: "Timber" })
-    .getMany();
+    .getOne();
 }
 
 export {register, getPatients}
