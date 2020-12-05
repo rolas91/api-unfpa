@@ -7,6 +7,7 @@ import * as profile from '../controllers/profile';
 import * as user from '../controllers/users';
 import * as center from '../controllers/center';
 import * as patient from '../controllers/patient';
+import * as appointment from '../controllers/appointments';
 
 import tokens from '../controllers/tokens';
 
@@ -177,6 +178,18 @@ export default (app: Application): void => {
     }
   })
 
+//Appointment
+app.post('/api/v1/appointment/register', async(req, res) => {
+    try {
+      const response = await appointment.register(req.body)
+      res.status(200).json({
+        message:'successfully',
+        data:response
+      });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
 
 };
 

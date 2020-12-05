@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn} from 'typeorm';
 
 @Entity()
-export default class Citas{
+export default class Appointment{
     @PrimaryGeneratedColumn()
     id:number;
 
@@ -21,11 +21,14 @@ export default class Citas{
     })
     typeAppointment:string;
 
-    @CreateDateColumn({name:'create_at'}) 
-    create_at: Date;
+    @Column()
+    date:Date;
 
     @Column()
     hour:Date;
+
+    @CreateDateColumn({name:'create_at'}) 
+    create_at: Date;
 
     @UpdateDateColumn({name:'update_at'}) 
     update_at: Date;
