@@ -1,9 +1,20 @@
 import {getRepository} from 'typeorm';
+import bcrypt from 'bcrypt';
 import Patient from '../entity/Patient';
-import User from '../entity/User';
+import Users from '../entity/User';
 
 const register = async(data:{
-    user:any;
+    //campos para usuario
+    firstname: string;
+    lastname:string,
+    email: string;
+    password: string;
+    cedula: string;
+    birth:Date;
+    phone:string;
+    typeAuth:string;
+    typeUser:string;
+    ////
     bloodtype:string;
     weekspregnant:string;
     ailment:string;
@@ -11,8 +22,24 @@ const register = async(data:{
     allergicReactions:string;
     medicalReport:string;
 }): Promise<any> => {
-    const {user, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;
+    const { bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
+    let { password } = data;
+    password = await bcrypt.hash(password, 10);
 
+    const newUser = getRepository(Users).create({
+        firstname,
+        lastname,
+        email,
+        cedula,
+        birth,
+        phone,
+        password,
+        typeAuth,
+        typeUser
+    });
+    
+    const result = await getRepository(Users).save(newUser);
+    const user = await result;
     const newPatient = getRepository(Patient).create({
         user, 
         bloodtype,  
