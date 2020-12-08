@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, Timestamp} from 'typeorm';
 import Patient from "./Patient";
 
 @Entity()
@@ -26,7 +26,7 @@ export default class Appointment{
     date:Date;
 
     @Column()
-    hour:Date;
+    hour:Timestamp;
 
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
