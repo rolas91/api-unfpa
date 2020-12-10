@@ -22,7 +22,7 @@ export default class Appointment{
     })
     typeAppointment:string;
 
-    @Column()
+    @Column({type:'date'})
     date:Date;
 
     @Column('time')
@@ -33,5 +33,6 @@ export default class Appointment{
 
     @UpdateDateColumn({name:'update_at'}) 
     update_at: Date;
+
 
 }

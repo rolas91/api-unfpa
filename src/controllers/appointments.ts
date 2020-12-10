@@ -24,8 +24,6 @@ const register = async(data:{
 const getAppointment = async ():Promise<any> => {
   return await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
-    // .where()
-    // .where("user.name = :name", { name: "Timber" })
     .getMany();
 }
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
@@ -35,7 +33,18 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
       .leftJoinAndSelect("patient.user", "user")
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       .andWhere("appointment.date = :today", {today:today})
-      // .where("user.name = :name", { name: "Timber" })
       .getMany();
 }
-export {register, getAppointment, getAppointmentByDoctor}
+
+const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
+    return await getRepository(Appointment).createQueryBuilder("appointment")
+      .leftJoinAndSelect("appointment.patient", "patient")
+      .leftJoinAndSelect("patient.user", "user")
+      .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
+      .andWhere("appointment.date = :today", {today:today})
+      .andWhere("appointment.hour >= :hour", {hour:hour})
+      .orderBy("appointment.hour","ASC")
+      .limit(1)
+      .getMany();
+}
+export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour}
