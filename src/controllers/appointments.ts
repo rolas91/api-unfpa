@@ -32,6 +32,7 @@ const getAppointmentByDoctor = async (doctorId:any) => {
    
     return await getRepository(Appointment).createQueryBuilder("appointment")
       .leftJoinAndSelect("appointment.patient", "patient")
+      .leftJoinAndSelect("patient.user", "user")
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       // .where("user.name = :name", { name: "Timber" })
       .getMany();
