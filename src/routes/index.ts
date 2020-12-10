@@ -217,11 +217,18 @@ export default (app: Application): void => {
   app.post('/api/v1/appointment/getbyday', async(req, res) => {
     try {
       const result = await appointment.getAppointmentByHour(req.body.doctorid, req.body.today, req.body.hour);
+      if(result){
+        res.status(200).json({
+          message:'successfully',
+          data:result
+        })
+      }else{
+        res.status(200).json({
+          message:'error',
+          data:result
+        })
+      }
       
-      res.status(200).json({
-        message:'successfully',
-        data:result
-      })
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
