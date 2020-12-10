@@ -224,7 +224,7 @@ export default (app: Application): void => {
         })
       }else{
         res.status(200).json({
-          error:'error',
+          message:'error',
           data:result
         })
       }
