@@ -178,8 +178,8 @@ export default (app: Application): void => {
     }
   })
 
-//Appointment
-app.post('/api/v1/appointment/register', async(req, res) => {
+  //Appointment
+  app.post('/api/v1/appointment/register', async(req, res) => {
     try {
       const response = await appointment.register(req.body)
       res.status(200).json({
@@ -191,9 +191,21 @@ app.post('/api/v1/appointment/register', async(req, res) => {
     }
   })
 
-app.get('/api/v1/appointment/getAll', async(req, res) => {
+  app.get('/api/v1/appointment/getAll', async(req, res) => {
     try {
       const result = await appointment.getAppointment();
+      res.status(200).json({
+        message:'successfully',
+        data:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+
+  app.get('/api/v1/appointment/getbydoctor', async(req, res) => {
+    try {
+      const result = await appointment.getAppointmentByDoctor(req.body.doctorid);
       res.status(200).json({
         message:'successfully',
         data:result

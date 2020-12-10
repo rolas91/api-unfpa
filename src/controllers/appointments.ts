@@ -21,11 +21,21 @@ const register = async(data:{
     });
     return await getRepository(Appointment).save(newAppointment);
 }
-const getAppointment = async () => {
+const getAppointment = async ():Promise<any> => {
   return await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
     // .where()
     // .where("user.name = :name", { name: "Timber" })
     .getMany();
 }
-export {register, getAppointment}
+const getAppointmentByDoctor = async (data:{
+    doctorId:any;
+}) => {
+    const {doctorId} = data;
+    return await getRepository(Appointment).createQueryBuilder("appointment")
+      .leftJoinAndSelect("appointment.patient", "patient")
+      .where("appointment.doctorId = :doctorId", {doctorId})
+      // .where("user.name = :name", { name: "Timber" })
+      .getMany();
+  }
+export {register, getAppointment, getAppointmentByDoctor}
