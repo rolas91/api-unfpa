@@ -203,7 +203,7 @@ export default (app: Application): void => {
     }
   });
 
-  app.get('/api/v1/appointment/getbydoctor', async(req, res) => {
+  app.post('/api/v1/appointment/getbydoctor', async(req, res) => {
     try {
       const result = await appointment.getAppointmentByDoctor(req.body.doctorid, req.body.today);
       res.status(200).json({
