@@ -45,6 +45,6 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .andWhere("appointment.hour >= :hour", {hour:hour})
       .orderBy("appointment.hour","ASC")
       .limit(1)
-      .getOne();
+      .getMany();
 }
 export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour}
