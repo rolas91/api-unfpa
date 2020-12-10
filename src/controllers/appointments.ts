@@ -28,14 +28,12 @@ const getAppointment = async ():Promise<any> => {
     // .where("user.name = :name", { name: "Timber" })
     .getMany();
 }
-const getAppointmentByDoctor = async (data:{
-    doctorId:any;
-}) => {
-    const {doctorId} = data;
+const getAppointmentByDoctor = async (doctorId:any) => {
+   
     return await getRepository(Appointment).createQueryBuilder("appointment")
       .leftJoinAndSelect("appointment.patient", "patient")
-      .where("appointment.doctorId = :doctorId", {doctorId})
+      .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       // .where("user.name = :name", { name: "Timber" })
       .getMany();
-  }
+}
 export {register, getAppointment, getAppointmentByDoctor}
