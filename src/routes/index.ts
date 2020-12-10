@@ -214,7 +214,7 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
-  app.get('/api/v1/appointment/getbyday', async(req, res) => {
+  app.post('/api/v1/appointment/getbyday', async(req, res) => {
     try {
       const result = await appointment.getAppointmentByHour(req.body.doctorid, req.body.today, req.body.hour);
       
