@@ -40,9 +40,11 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
     
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
-        SELECT * FROM appointment 
-        left join patient on patient.id = appointment.patientId
-        left join user on user.id = patient.userId
+        SELECT appointment.patientId, appointment.doctorId, appointment.note, appointment.typeAppointment, appointment.hour,appointment.date, 
+        patient.userId, user.firstname, user.lastname, user.email, user.typeAuth, user.typeUser
+        FROM appointment 
+        inner join patient on patient.id = appointment.patientId
+        inner join user on user.id = patient.userId
         where appointment.date = '${today}' and 
         appointment.doctorId = ${doctorId} 
         order by appointment.hour asc 
@@ -64,3 +66,4 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .getOne();
 }
 export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour}
+
