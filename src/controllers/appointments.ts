@@ -3,17 +3,17 @@ import Appointment from '../entity/Appointment';
 
 const register = async(data:{
     patient:any;
-    doctor:number;
+    doctorId:number;
     note:string;
     typeAppointment:string;
     date: Date;
     hour:Date;
 }): Promise<any> => {
-    const {patient, doctor, note, typeAppointment, date, hour} = data;
+    const {patient, doctorId, note, typeAppointment, date, hour} = data;
 
     const newAppointment = getRepository(Appointment).create({
         patient,
-        doctor,
+        doctorId,
         note,
         typeAppointment,
         date,
