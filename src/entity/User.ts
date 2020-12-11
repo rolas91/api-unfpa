@@ -48,7 +48,7 @@ export default class User{
     @OneToMany(() => Patient, patient => patient.user)
     patients: Patient[];
 
-    @OneToMany(() => Appointment, appointment => appointment.doctorId)
+    @OneToMany(() => Appointment, appointment => appointment.doctor)
     appointments: Appointment[];
 
     @CreateDateColumn({name:'create_at'}) 
