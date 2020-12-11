@@ -34,6 +34,7 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       .andWhere("appointment.date = :today", {today:today})
       .orderBy("appointment.hour","ASC")
+      .limit(18446744073709551615)
       .getMany();
 }
 
@@ -45,7 +46,7 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .andWhere("appointment.date = :today", {today:today})
       .andWhere("appointment.hour >= :hour", {hour:hour})
       .orderBy("appointment.hour","ASC")
-      .limit(18446744073709551615)
+      .limit(1)
       .getOne();
 }
 export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour}
