@@ -1,5 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne} from 'typeorm';
 import Patient from "./Patient";
+import User from "./User";
 
 @Entity()
 export default class Appointment{
@@ -9,8 +10,9 @@ export default class Appointment{
     @ManyToOne(() => Patient, patient => patient.appointments)
     patient:Patient;
 
+    @ManyToOne(() => User, user => user.appointments)
     @Column()
-    doctorId:number;
+    doctor:number;
 
     @Column()
     note:string;

@@ -233,4 +233,23 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+  app.post('/api/v1/appointment/getbypatient', async(req, res) => {
+    try {
+      const result = await appointment.getAppointmentByPatient(req.body.patient, req.body.today, req.body.hour);
+      if(result){
+        res.status(200).json({
+          message:'successfully',
+          data:result
+        })
+      }else{
+        res.status(200).json({
+          message:'null',
+          data:result
+        })
+      }
+      
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
 };
