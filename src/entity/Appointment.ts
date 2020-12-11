@@ -11,7 +11,10 @@ export default class Appointment{
     patient:Patient;
 
     @ManyToOne(() => User, user => user.appointments)
-    @Column('int')
+    @Column({
+        type:'int',
+        name:'doctorId'
+    })
     doctor:User;
 
     @Column()
