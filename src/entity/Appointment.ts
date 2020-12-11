@@ -11,8 +11,8 @@ export default class Appointment{
     patient:Patient;
 
     @ManyToOne(() => User, user => user.appointments)
-    @Column()
-    doctor:number;
+    @Column('int')
+    doctor:User;
 
     @Column()
     note:string;

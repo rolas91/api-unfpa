@@ -3,7 +3,7 @@ import Appointment from '../entity/Appointment';
 
 const register = async(data:{
     patient:any;
-    doctor:number;
+    doctor:any;
     note:string;
     typeAppointment:string;
     date: Date;
