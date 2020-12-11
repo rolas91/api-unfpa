@@ -33,6 +33,7 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
       .leftJoinAndSelect("patient.user", "user")
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       .andWhere("appointment.date = :today", {today:today})
+      .orderBy("appointment.hour","ASC")
       .getMany();
 }
 
