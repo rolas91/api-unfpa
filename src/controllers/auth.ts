@@ -79,4 +79,33 @@ const login = async (data: {
   throw { code: 403, message: 'Invalid password' };
 };
 
-export { register, login };
+const resetPassword = async(data:{
+  email:string;
+  password:string;
+}):Promise<any> => {
+
+  const {email} = data;
+  let {password} =data;
+  console.log(email);
+  
+  password = await bcrypt.hash(password, 10);
+
+  let searchUser = await getRepository(Users).findOne({
+    where:{
+      email:email
+    }
+  });
+
+  if(!searchUser){
+    throw {
+      message:'error', 
+    }
+  }else{
+    await getRepository(Users).update(searchUser.id,{password})
+    return {
+        message:'success'        
+    }
+  }
+
+}
+export { register, login, resetPassword };

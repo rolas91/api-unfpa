@@ -252,4 +252,13 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+
+  app.post('/api/v1/auth/resetpassword', async(req, res) => {
+      try{
+        const result = await auth.resetPassword(req.body)
+        res.status(200).json(result);
+      }catch(e){
+        console.log(`error ${e}`)
+      }
+  });
 };
