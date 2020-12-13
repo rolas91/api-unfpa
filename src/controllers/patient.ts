@@ -2,8 +2,10 @@ import {getRepository} from 'typeorm';
 import bcrypt from 'bcrypt';
 import Patient from '../entity/Patient';
 import Users from '../entity/User';
+import Appointment from '../entity/Appointment';
 
 const register = async(data:{
+    doctorid:number;
     //campos para usuario
     firstname: string;
     lastname:string,
@@ -22,10 +24,12 @@ const register = async(data:{
     allergicReactions:string;
     medicalReport:string;
 }): Promise<any> => {
-    const { bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
+    const {doctorid, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
     let { password } = data;
     password = await bcrypt.hash(password, 10);
 
+    const doctor = await getRepository(Users).findOne(doctorid);
+    
     const newUser = getRepository(Users).create({
         firstname,
         lastname,
@@ -47,7 +51,8 @@ const register = async(data:{
         ailment, 
         medication, 
         allergicReactions, 
-        medicalReport
+        medicalReport,
+        doctors:[doctor]
     })
 
     return await getRepository(Patient).save(newPatient);
@@ -61,4 +66,18 @@ const getPatients = async () => {
     .getMany();
 }
 
-export {register, getPatients}
+const getPatientsAndTotalAppointment = async (doctorId:any) => {
+    return await getRepository(Patient)
+    .createQueryBuilder("patient")
+    .leftJoinAndSelect("patient.user","user")
+    .leftJoin("patient.appointments","appointments")
+    .leftJoin("patient.doctors", "doctors")
+    .where("doctors.id = :id",{id:doctorId})
+    .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 1 THEN 1 ELSE NULL END) as totalPresencial')
+    .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 2 THEN 1 ELSE NULL END) as totalRemoto')
+    // .addSelect('COUNT(DISTINCT(appointments.id)) as totalRemote')
+    .groupBy('patient.id')
+    .getRawMany();
+  }
+
+export {register, getPatients, getPatientsAndTotalAppointment}

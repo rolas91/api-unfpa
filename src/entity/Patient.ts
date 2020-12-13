@@ -1,4 +1,4 @@
-import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, OneToMany} from 'typeorm';
+import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm';
 import User from './User';
 import Appointment from './Appointment';
 
@@ -44,6 +44,10 @@ export default class Patient{
 
     @OneToMany(() => Appointment, appointment => appointment.patient)
     appointments: Appointment[];
+
+    @ManyToMany(() => User, user => user.id)
+    @JoinTable()
+    doctors:User[]
 
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;

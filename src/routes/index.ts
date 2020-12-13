@@ -178,6 +178,18 @@ export default (app: Application): void => {
     }
   })
 
+  app.get('/api/v1/patients/andtotalappointment/:docid', async(req, res) => {
+    try {
+      const result = await patient.getPatientsAndTotalAppointment(req.params.docid);
+      res.status(200).json({
+        message:'successfully',
+        patient:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
   //Appointment
   app.post('/api/v1/appointment/register', async(req, res) => {
     try {
