@@ -26,18 +26,7 @@ const getAppointment = async ():Promise<any> => {
     .leftJoinAndSelect("appointment.patient", "patient")
     .getMany();
 }
-const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
-   
-    // return await getRepository(Appointment).createQueryBuilder("appointment")
-    //   .leftJoinAndSelect("appointment.patient", "patient")
-    //   .leftJoinAndSelect("patient.user", "user")
-    //   .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
-    //   .andWhere("appointment.date = :today", {today:today})
-    //   .orderBy("appointment.hour","ASC")
-    //   .limit(1)
-    //   .getMany();
-    console.log(today);
-    
+const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
         SELECT appointment.patientId, appointment.doctorId, appointment.note, appointment.typeAppointment, appointment.hour,appointment.date, 

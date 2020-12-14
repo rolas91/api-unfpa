@@ -19,7 +19,7 @@ export default class User{
     @Column()
     cedula: string;
 
-    @Column()
+    @Column({type:'date'})
     birth:Date;
 
     @Column()

@@ -89,9 +89,19 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .where("doctors.id = :id",{id:doctorId})
     .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 1 THEN 1 ELSE NULL END) as totalPresencial')
     .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 2 THEN 1 ELSE NULL END) as totalRemoto')
-    // .addSelect('COUNT(DISTINCT(appointments.id)) as totalRemote')
     .groupBy('patient.id')
     .getRawMany();
   }
 
-export {register, getPatients, getPatientsAndTotalAppointment}
+  const getpatientDetail = async(patient): Promise<any> =>{
+    return await getRepository(Patient)
+    .createQueryBuilder("patient")
+    .leftJoinAndSelect("patient.user","user")
+    // .addSelect('TIMESTAMPDIFF(YEAR, user.birth, CURDATE()) as edad')
+    .leftJoinAndSelect("patient.appointments","appointments")
+    .where("user.id = :id",{id:patient})
+    .orderBy("appointments.date","DESC")
+    .getMany();
+  }
+
+export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail}

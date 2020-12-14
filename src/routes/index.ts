@@ -149,7 +149,7 @@ export default (app: Application): void => {
       const response = await center.getCenters();
       res.status(200).send(response);
     } catch (error) {
-      res.status(500).send({ message: error.message });
+      res.status(500).send({ message: error.message});
     }
   });
 
@@ -181,6 +181,19 @@ export default (app: Application): void => {
   app.get('/api/v1/patients/andtotalappointment/:docid', async(req, res) => {
     try {
       const result = await patient.getPatientsAndTotalAppointment(req.params.docid);
+      res.status(200).json({
+        message:'successfully',
+        patient:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+  app.get('/api/v1/patients/detail/:patientid', async(req, res) => {
+    try {
+     
+      const result = await patient.getpatientDetail(req.params.patientid);
       res.status(200).json({
         message:'successfully',
         patient:result
