@@ -37,7 +37,7 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
         where appointment.date = '${today}' and 
         appointment.doctorId = ${doctorId} 
         order by appointment.hour asc 
-        limit 1, 18446744073709551615
+        limit 1
     `);
     return responseQuery;
 
