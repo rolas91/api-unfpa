@@ -25,11 +25,19 @@ const register = async(data:{
     medicalReport:string;
 }): Promise<any> => {
     const {doctorid, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
+   
     let { password } = data;
     password = await bcrypt.hash(password, 10);
 
-    const doctor = await getRepository(Users).findOne(doctorid);
+    const doctor = await getRepository(Users).findOne({
+        where:{
+            id:doctorid,
+            typeUser:'medico'
+        }
+    });
+    console.log(doctor);
     
+   if(doctor){
     const newUser = getRepository(Users).create({
         firstname,
         lastname,
@@ -56,6 +64,12 @@ const register = async(data:{
     })
 
     return await getRepository(Patient).save(newPatient);
+   }else{
+    throw {
+        code:"error",
+        message:'tiene que enviar el id del medico', 
+    }
+   }
 }
 
 const getPatients = async () => {
