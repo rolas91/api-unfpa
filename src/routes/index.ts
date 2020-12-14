@@ -178,9 +178,9 @@ export default (app: Application): void => {
     }
   })
 
-  app.get('/api/v1/patients/andtotalappointment/:docid', async(req, res) => {
+  app.post('/api/v1/patients/andtotalappointment', async(req, res) => {
     try {
-      const result = await patient.getPatientsAndTotalAppointment(req.params.docid);
+      const result = await patient.getPatientsAndTotalAppointment(req.body.docid);
       res.status(200).json({
         message:'successfully',
         patient:result
@@ -190,10 +190,10 @@ export default (app: Application): void => {
     }
   })
 
-  app.get('/api/v1/patients/detail/:patientid', async(req, res) => {
+  app.post('/api/v1/patients/detail', async(req, res) => {
     try {
      
-      const result = await patient.getpatientDetail(req.params.patientid);
+      const result = await patient.getpatientDetail(req.body.patientid);
       res.status(200).json({
         message:'successfully',
         patient:result
