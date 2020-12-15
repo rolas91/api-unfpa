@@ -8,6 +8,8 @@ import * as user from '../controllers/users';
 import * as center from '../controllers/center';
 import * as patient from '../controllers/patient';
 import * as appointment from '../controllers/appointments';
+import * as categorylist from '../controllers/categorytips';
+import * as tip from '../controllers/tips';
 
 import tokens from '../controllers/tokens';
 
@@ -26,6 +28,15 @@ export default (app: Application): void => {
   });
   
   // authenticate
+  app.post('/api/v1/auth/resetpassword', async(req, res) => {
+    try{
+      const result = await auth.resetPassword(req.body)
+      res.status(200).json(result);
+    }catch(e){
+      console.log(`error ${e}`)
+    }
+  });
+
   app.post('/api/v1/auth/register', async (req, res) => {
     try {
       const response = await auth.register(req.body);
@@ -278,12 +289,40 @@ export default (app: Application): void => {
     }
   });
 
-  app.post('/api/v1/auth/resetpassword', async(req, res) => {
-      try{
-        const result = await auth.resetPassword(req.body)
-        res.status(200).json(result);
-      }catch(e){
-        console.log(`error ${e}`)
+  
+
+  //categories tips
+  app.get('/api/v1/category-tips/all', async(req, res) => {
+    try{
+      const result = await categorylist.getCategoryTips();
+      if(result){
+        res.status(200).json({
+          categories:result
+        })
       }
+    }catch(e){
+      res.status(500).json({
+        message:'error'+e
+      })
+    }
+  });
+
+  app.post('/api/v1/tips/detail', async(req, res) => {
+    try{
+      const result = await tip.getTips(req.body.categoryid);
+      if(result){
+        res.status(200).json({
+          tips:result
+        })
+      }else{
+        res.status(200).json({
+          tips:'empty'
+        })
+      }
+    }catch(e){
+      res.status(500).json({
+        message:'error'+e
+      })
+    }
   });
 };
