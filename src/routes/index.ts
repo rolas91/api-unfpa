@@ -134,7 +134,7 @@ export default (app: Application): void => {
       const response = await user.getUser(req.body);
  
       if(response.length > 0){
-          res.status(200).send({massage:"ok", response:response[0]});
+          res.status(200).send({message:"ok", response:response[0]});
       }else{
         res.status(200).send({message:"error", response:{}})
       }
