@@ -132,7 +132,12 @@ export default (app: Application): void => {
   app.post('/api/v1/user/getuser', async (req, res) => {
     try {
       const response = await user.getUser(req.body);
-      res.status(200).send({response:response[0]});
+ 
+      if(response.length > 0){
+          res.status(200).send({response:response[0]});
+      }else{
+        res.status(200).send({message:"no data"})
+      }
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
