@@ -54,6 +54,7 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .getOne();
 }
 
+
 const getAppointmentByPatient = async(userId:any,today:Date, hour:any) => {
     return await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
@@ -65,5 +66,18 @@ const getAppointmentByPatient = async(userId:any,today:Date, hour:any) => {
     .orderBy("appointment.hour","ASC")
     .getOne();
 }
-export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient}
+
+const getAppointmentNotes = async(userId:any) => {
+    const entityManager = getManager();
+    const responseQuery = entityManager.query(`
+        SELECT appointment.note
+        FROM appointment 
+        left join patient on patient.id = appointment.patientId
+        left join user on user.id = patient.userId
+        where user.id = ${userId} 
+        order by appointment.hour asc 
+    `);
+    return responseQuery;
+}
+export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes}
 
