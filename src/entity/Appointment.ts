@@ -23,7 +23,7 @@ export default class Appointment{
     @Column({
         type:"enum",
         enum:["presencial","telemedicina"],
-        default:"remoto"
+        default:"telemedicina"
     })
     typeAppointment:string;
 
