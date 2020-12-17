@@ -10,6 +10,7 @@ const getUsers = async (): Promise<any> => {
   return _.omit(user, 'password', '__v');
 };
 
+//get user by identification cedula o phone
 const getUser = async (data:{
   identification:string;
 }): Promise<any> => {
