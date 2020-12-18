@@ -67,6 +67,17 @@ const getAppointmentByPatient = async(userId:any,today:Date, hour:any) => {
     .getOne();
 }
 
+const getAppointmentsByPatient = async(userId:any,today:Date) => {
+    return await getRepository(Appointment).createQueryBuilder("appointment")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("appointment.doctor", "doctor")
+    .leftJoinAndSelect("patient.user", "user")
+    .where("user.id = :id", {id:userId})
+    .andWhere("appointment.date = :today", {today:today})
+    .orderBy("appointment.hour","ASC")
+    .getMany();
+}
+
 const getAppointmentNotes = async(userId:any) => {
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
@@ -79,5 +90,5 @@ const getAppointmentNotes = async(userId:any) => {
     `);
     return responseQuery;
 }
-export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes}
+export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes, getAppointmentsByPatient}
 
