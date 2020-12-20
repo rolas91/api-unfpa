@@ -1,4 +1,4 @@
-import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm';
+import {Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, JoinColumn} from 'typeorm';
 import User from './User';
 import Appointment from './Appointment';
 
@@ -9,6 +9,9 @@ export default class Patient{
 
     @ManyToOne(() => User, user => user.patients)
     user:User;
+
+    @ManyToOne(() => User, user => user.patients,{nullable:true})
+    brigadista:User;
 
     @Column({
         comment:'tipo de sangre',
@@ -26,7 +29,6 @@ export default class Patient{
     ailment:string;
 
     @Column({
-        
         comment:'Tratamiento, medicacion',
     })
     medication:string;
@@ -48,6 +50,7 @@ export default class Patient{
     @ManyToMany(() => User, user => user.id)
     @JoinTable()
     doctors:User[]
+
 
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;

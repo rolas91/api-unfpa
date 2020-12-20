@@ -1,8 +1,69 @@
-import {getRepository} from 'typeorm';
+import {getRepository, getConnection} from 'typeorm';
 import bcrypt from 'bcrypt';
 import Patient from '../entity/Patient';
 import Users from '../entity/User';
 import Appointment from '../entity/Appointment';
+
+const addBrigadista = async(data:{
+    userid:number;
+    brigadistaid:number
+}):Promise<any> => {
+    const {brigadistaid, userid} = data;
+    const brigadista = await getRepository(Users).findOne({id:brigadistaid});
+   return  await getConnection()
+    .createQueryBuilder()
+    .relation(Users,"user")
+    .update(Patient)
+    .set({ 
+        brigadista:brigadista
+    })
+    .where("user.id = :id", { id: userid })
+    .execute();
+}
+
+const registerPatient = async(data:{
+    userid:number;
+    doctorid:number;
+    bloodtype:string;
+    weekspregnant:string;
+    ailment:string;
+    medication:string;
+    allergicReactions:string;
+    medicalReport:string;
+}):Promise<any> => {
+    const {userid,doctorid, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;    
+    const doctor = await getRepository(Users).findOne({
+        where:{
+            id:doctorid,
+            typeUser:'medico'
+        }
+    });
+    const user = await getRepository(Users).findOne({
+        where:{
+            id:userid,
+        }
+    });
+    if(doctor && user){
+        const newPatient = getRepository(Patient).create({
+            user, 
+            brigadista:null,
+            bloodtype,  
+            weekspregnant, 
+            ailment, 
+            medication, 
+            allergicReactions, 
+            medicalReport,
+            doctors:[doctor]
+        })
+        return await getRepository(Patient).save(newPatient);
+    }else{
+        throw {
+            code:"error",
+            message:'verifique que sea un usurio valido y un medico valido', 
+        }
+    }
+
+}
 
 const register = async(data:{
     doctorid:number;
@@ -93,6 +154,18 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getRawMany();
   }
 
+  const getPatientsAndTotalAppointmentByBrigadist = async (brigadistaid:any) => {
+    return await getRepository(Patient)
+    .createQueryBuilder("patient")
+    .leftJoinAndSelect("patient.user","user")
+    .leftJoin("patient.appointments","appointments")
+    .where("patient.brigadistaid = :brigadistaid",{brigadistaid:brigadistaid})
+    .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 1 THEN 1 ELSE NULL END) as totalPresencial')
+    .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 2 THEN 1 ELSE NULL END) as totalRemoto')
+    .groupBy('patient.id')
+    .getRawMany();
+  }
+
   const getpatientDetail = async(patient): Promise<any> =>{
     return await getRepository(Patient)
     .createQueryBuilder("patient")
@@ -104,4 +177,4 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getMany();
   }
 
-export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail}
+export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist}

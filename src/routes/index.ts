@@ -143,6 +143,20 @@ export default (app: Application): void => {
     }
   });
 
+  app.post('/api/v1/user/getbrigadista', async (req, res) => {
+    try {
+      const response = await user.getUsersTypeBrigadista();
+ 
+      if(response.length > 0){
+          res.status(200).send({message:"ok", response:response});
+      }else{
+        res.status(200).send({message:"error", response:{}})
+      }
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+
   app.post('/api/v1/user/update-avatar',isLogin, uploader.single('attachment'), async (req, res) => {
     try {
       const { file } = req;
@@ -170,6 +184,31 @@ export default (app: Application): void => {
   });
 
   //patients
+
+  app.post('/api/v1/patients/addbrigadist', async(req, res) => {
+    try{
+        const response = await patient.addBrigadista(req.body)
+        res.status(200).json({
+          message:'successfully',
+          data:response
+        });
+    }catch(error){
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+  app.post('/api/v1/patients/registerpatient', async(req, res) => {
+    try {
+      const response = await patient.registerPatient(req.body)
+      res.status(200).json({
+        message:'successfully',
+        data:response
+      });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
   app.post('/api/v1/patients/register', async(req, res) => {
     try {
       const response = await patient.register(req.body)
@@ -197,6 +236,18 @@ export default (app: Application): void => {
   app.post('/api/v1/patients/andtotalappointment', async(req, res) => {
     try {
       const result = await patient.getPatientsAndTotalAppointment(req.body.docid);
+      res.status(200).json({
+        message:'successfully',
+        patient:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+  app.post('/api/v1/patients/totalappointmentbybrigadist', async(req, res) => {
+    try {
+      const result = await patient.getPatientsAndTotalAppointmentByBrigadist(req.body.brigadistaid);
       res.status(200).json({
         message:'successfully',
         patient:result

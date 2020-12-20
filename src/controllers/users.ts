@@ -28,5 +28,9 @@ const getUser = async (data:{
   // return _.omit(user, 'password', '__v');
 };
 
+const getUsersTypeBrigadista = async (): Promise<any> => {
+  return await getRepository(Users).find({where:{typeUser:3}});
+};
 
-export { getUsers, getUser };
+
+export { getUsers, getUser, getUsersTypeBrigadista };
