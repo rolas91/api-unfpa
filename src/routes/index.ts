@@ -34,7 +34,7 @@ export default (app: Application): void => {
       res.status(200).json(result);
     }catch(e){
       console.log(`error ${e.message}`)
-      res.status(200).json({error:e.message})
+      res.status(200).json({message:e.message})
     }
   });
 
