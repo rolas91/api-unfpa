@@ -86,8 +86,7 @@ const resetPassword = async(data:{
 
   const {email} = data;
   let {password} =data;
-  console.log(email);
-  
+
   password = await bcrypt.hash(password, 10);
 
   let searchUser = await getRepository(Users).findOne({
@@ -96,14 +95,14 @@ const resetPassword = async(data:{
     }
   });
 
-  if(!searchUser){
-    throw {
-      message:'error', 
-    }
-  }else{
+  if(searchUser != undefined){
     await getRepository(Users).update(searchUser.id,{password})
     return {
         message:'success'        
+    }
+  }else{
+    throw {
+      message:'error', 
     }
   }
 
