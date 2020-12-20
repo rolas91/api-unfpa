@@ -67,6 +67,18 @@ const getAppointmentByPatient = async(userId:any,today:Date, hour:any) => {
     .getOne();
 }
 
+const getAppointmentByBrigadista = async(brigadistaid:any,today:Date, hour:any) => {
+    return await getRepository(Appointment).createQueryBuilder("appointment")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("appointment.doctor", "doctor")
+    .leftJoinAndSelect("patient.brigadista", "brigadista")
+    .where("brigadista.id = :id", {id:brigadistaid})
+    .andWhere("appointment.date = :today", {today:today})
+    .andWhere("appointment.hour >= :hour", {hour:hour})
+    .orderBy("appointment.hour","ASC")
+    .getOne();
+}
+
 const getAppointmentsByPatient = async(userId:any,today:Date) => {
     return await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
@@ -90,5 +102,5 @@ const getAppointmentNotes = async(userId:any) => {
     `);
     return responseQuery;
 }
-export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes, getAppointmentsByPatient}
+export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes, getAppointmentsByPatient,getAppointmentByBrigadista}
 

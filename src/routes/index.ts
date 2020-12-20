@@ -345,6 +345,26 @@ export default (app: Application): void => {
     }
   });
 
+  app.post('/api/v1/appointment/getbybrigadista', async(req, res) => {
+    try {
+      const result = await appointment.getAppointmentByBrigadista(req.body.brigadistaid, req.body.today, req.body.hour);
+      if(result){
+        res.status(200).json({
+          message:'successfully',
+          data:result
+        })
+      }else{
+        res.status(200).json({
+          message:'null',
+          data:result
+        })
+      }
+      
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+
   app.post('/api/v1/appointments/getbypatient', async(req, res) => {
     try {
       const result = await appointment.getAppointmentsByPatient(req.body.patient, req.body.today);
