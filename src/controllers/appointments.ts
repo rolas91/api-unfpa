@@ -42,6 +42,22 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
 
 }
 
+const getAppointmentsByBrigadista = async (brigadistId:any, today:Date) => {   
+    const entityManager = getManager();
+    const responseQuery = entityManager.query(`
+        SELECT appointment.patientId, appointment.doctorId, appointment.note, appointment.typeAppointment, appointment.hour,appointment.date, 
+        patient.userId, user.firstname, user.lastname, user.email, user.typeAuth, user.typeUser
+        FROM appointment 
+        inner join patient on patient.id = appointment.patientId
+        inner join user on user.id = patient.userId
+        where appointment.date = '${today}' and 
+        patient.brigadistaId = ${brigadistId} 
+        order by appointment.hour asc 
+    `);
+    return responseQuery;
+
+}
+
 const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
     return await getRepository(Appointment).createQueryBuilder("appointment")
       .leftJoinAndSelect("appointment.patient", "patient")
@@ -102,5 +118,15 @@ const getAppointmentNotes = async(userId:any) => {
     `);
     return responseQuery;
 }
-export {register, getAppointment, getAppointmentByDoctor, getAppointmentByHour, getAppointmentByPatient, getAppointmentNotes, getAppointmentsByPatient,getAppointmentByBrigadista}
+export {
+    register, 
+    getAppointment, 
+    getAppointmentByDoctor, 
+    getAppointmentByHour, 
+    getAppointmentByPatient, 
+    getAppointmentNotes, 
+    getAppointmentsByPatient,
+    getAppointmentByBrigadista,
+    getAppointmentsByBrigadista
+}
 
