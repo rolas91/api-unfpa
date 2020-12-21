@@ -41,18 +41,4 @@ app.use('/peerjs', peerServer);
 
 api(app);
 
-// mongoose.set('useCreateIndex', true);
-
-
-// mongoose
-//   .connect(process.env.MONGO!, {
-//     useNewUrlParser: true
-//   })
-//   .then(() => {
-//     
-//   })
-//   .catch((e) => {
-//     console.error(`error to trying connected to mongodb ${e}`);
-//   });
-
 

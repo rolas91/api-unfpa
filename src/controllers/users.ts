@@ -28,9 +28,19 @@ const getUser = async (data:{
   // return _.omit(user, 'password', '__v');
 };
 
+//get only user by identification cedula o phone
+const getOnlyUser = async (data:{
+  identification:string;
+}): Promise<any> => {
+  const entityManager = getManager();
+  const {identification} = data;
+
+  return entityManager.query(`SELECT * FROM user where phone = '${identification}' OR cedula = '${identification}'`)
+};
+
 const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };
 
 
-export { getUsers, getUser, getUsersTypeBrigadista };
+export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser };
