@@ -45,6 +45,8 @@ export default class User{
     })
     typeUser:string;
 
+    idCenter:string;
+
     @OneToMany(() => Patient, patient => patient.user)
     patients: Patient[];
 

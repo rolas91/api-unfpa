@@ -17,8 +17,9 @@ const register = async (data: {
   phone:string;
   typeAuth:string;
   typeUser:string;
+  idCenter:string;
 }): Promise<any> => {
-  const { firstname, lastname, email,cedula, birth,phone, typeUser, typeAuth } = data;
+  const { firstname, lastname, email,cedula, birth,phone, typeUser, typeAuth, idCenter } = data;
   let { password } = data;
  
   if (!validator.isEmail(email)) throw new Error('invalid email');
@@ -34,7 +35,8 @@ const register = async (data: {
     phone,
     password,
     typeAuth,
-    typeUser
+    typeUser,
+    idCenter
   });
 
   const result = await getRepository(Users).save(newUser);
