@@ -159,7 +159,7 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .createQueryBuilder("patient")
     .leftJoin("patient.user","user")
     .leftJoinAndSelect("patient.doctors", "doctors")
-    .where("user.id = :id",{id:userid}).getMany();
+    .where("user.id = :id",{id:userid}).getRawMany();
   }
 
   const getPatientsAndTotalAppointmentByBrigadist = async (brigadistaid:any) => {
