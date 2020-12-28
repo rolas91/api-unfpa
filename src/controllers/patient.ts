@@ -154,6 +154,14 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getRawMany();
   }
 
+  const getDoctorByPatient = async (userid:any) => {
+    return await getRepository(Patient)
+    .createQueryBuilder("patient")
+    .leftJoin("patient.user","user")
+    .leftJoinAndSelect("patient.doctors", "doctors")
+    .where("user.id = :id",{id:userid}).getMany();
+  }
+
   const getPatientsAndTotalAppointmentByBrigadist = async (brigadistaid:any) => {
     return await getRepository(Patient)
     .createQueryBuilder("patient")
@@ -177,4 +185,4 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getMany();
   }
 
-export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist}
+export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist,getDoctorByPatient}

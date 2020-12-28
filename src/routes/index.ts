@@ -260,6 +260,18 @@ export default (app: Application): void => {
     }
   })
 
+  app.post('/api/v1/patients/getdoctors', async(req, res) => {
+    try {
+      const result = await patient.getDoctorByPatient(req.body.userid);
+      res.status(200).json({
+        message:'successfully',
+        patient:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
   app.post('/api/v1/patients/totalappointmentbybrigadist', async(req, res) => {
     try {
       const result = await patient.getPatientsAndTotalAppointmentByBrigadist(req.body.brigadistaid);
