@@ -121,7 +121,7 @@ export default (app: Application): void => {
     }
   });
   
-  app.get('/api/v1/user/getusers', isLogin, async (req, res) => {
+  app.post('/api/v1/user/getusers', isLogin, async (req, res) => {
     try {
       const response = await user.getUsers();
       res.status(200).send(response);
