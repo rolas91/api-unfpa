@@ -124,7 +124,7 @@ export default (app: Application): void => {
   app.post('/api/v1/user/getusers', async (req, res) => {
     try {
       const response = await user.getUsers();
-      res.status(200).json({users:response});
+      res.status(200).json({users:[response]});
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
