@@ -7,7 +7,8 @@ const getUsers = async (): Promise<any> => {
   // const user = await Users.findById(id);
   const user = await getRepository(Users).find();
   if (!user) throw new Error('user not found');
-  return _.omit(user, 'password', '__v');
+  // return _.omit(user, 'password', '__v');
+  return user;
 };
 
 //get user by identification cedula o phone
