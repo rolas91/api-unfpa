@@ -17,4 +17,7 @@ export default class Message{
 
     @Column()
     date:Date
+
+    @Column()
+    state:string;
 }

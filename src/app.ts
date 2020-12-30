@@ -75,15 +75,17 @@ io.on('connection',function(socket) {
         const messageData = JSON.parse(data)
         const messageContent = messageData.messageContent
         const roomName = messageData.roomName
+        const state = messageData.state
 
         console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
 
         const chatData = {
             userName : userName,
             messageContent : messageContent,
-            roomName : roomName
+            roomName : roomName,
+            state : state
         }
-        user.addMessages(chatData.messageContent,chatData.roomName)
+        user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
 

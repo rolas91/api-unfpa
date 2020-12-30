@@ -50,13 +50,14 @@ const getMessages = async(data:{
 
 }
 
-const addMessages = async(message:string, roomName:any):Promise<any> => {
+const addMessages = async(message:string, roomName:any, state:string):Promise<any> => {
   const room = roomName.split(",")
   const newMessage = getRepository(Message).create({
     message:message,
     date:new Date,
     sender:room[0],
-    receiver:room[1]
+    receiver:room[1],
+    state:state.
   });
   await getRepository(Message).save(newMessage)
 }
