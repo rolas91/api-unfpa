@@ -45,9 +45,16 @@ const getUsersTypeBrigadista = async (): Promise<any> => {
 };
 
 const getMessages = async(data:{
-  
+  sender:number, 
+  receive:number
 }):Promise<any> => {
-
+  const {sender, receive} = data;
+  
+  return await getRepository(Message).createQueryBuilder("message")
+              .leftJoinAndSelect("message.sender", "sender")
+              .leftJoinAndSelect("message.receiver", "receiver")
+              .where("sender.id = :sender", {sender})
+              .andWhere("receiver.id = :receive", {receive}).getMany()
 }
 
 const addMessages = async(message:string, roomName:any, state:string):Promise<any> => {
@@ -62,5 +69,4 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   await getRepository(Message).save(newMessage)
 }
 
-
-export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages};
+export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages};

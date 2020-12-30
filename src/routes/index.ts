@@ -111,6 +111,15 @@ export default (app: Application): void => {
   });
   
   //users
+  app.post('/api/v1/user/getmessage', async(req, res) => {
+      try{
+        const response = await user.getMessages(req.body);
+        res.status(200).json({response})
+      }catch(error){
+        res.status(500).send({ message: error.message });
+      }
+  });
+
   app.get('/api/v1/user/user-info', isLogin, async (req, res) => {
     try {
       console.log('userId', req.userId!);
