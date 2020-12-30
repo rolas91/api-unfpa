@@ -57,7 +57,7 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
     date:new Date,
     sender:room[0],
     receiver:room[1],
-    state:state.
+    state:state
   });
   await getRepository(Message).save(newMessage)
 }
