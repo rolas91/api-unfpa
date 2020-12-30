@@ -21,7 +21,7 @@ const app = express();
 createConnection();
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -32,7 +32,7 @@ app.set('view engine', 'ejs');
 // public files
 app.use(express.static('public'));
 
-const server = app.listen(PORT, () => {
+var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
 });
 
