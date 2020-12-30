@@ -1,6 +1,7 @@
 import {getRepository, getManager} from 'typeorm';
 import _ from 'lodash';
 import Users from '../entity/User';
+import Message from '../entity/Messages';
 
 // get the unser info from db
 const getUsers = async (): Promise<any> => {
@@ -43,5 +44,22 @@ const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };
 
+const getMessages = async(data:{
+  
+}):Promise<any> => {
 
-export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser };
+}
+
+const addMessages = async(message:string, roomName:any):Promise<any> => {
+  const room = roomName.split(",")
+  const newMessage = getRepository(Message).create({
+    message:message,
+    date:new Date,
+    sender:room[0],
+    receiver:room[1]
+  });
+  await getRepository(Message).save(newMessage)
+}
+
+
+export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages};

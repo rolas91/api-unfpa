@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import fs from 'fs';
 import cors from 'cors';
 import api from './routes';
+import * as user from './controllers/users'
 const PORT = process.env.PORT || 7000;
 require('dotenv').config();
 
@@ -82,7 +83,8 @@ io.on('connection',function(socket) {
             messageContent : messageContent,
             roomName : roomName
         }
-        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) // Need to be parsed into Kotlin object in Kotlin
+        user.addMessages(chatData.messageContent,chatData.roomName)
+        socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
 
     // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here

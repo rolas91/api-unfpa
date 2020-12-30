@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany} from 'typeorm';
 import Patient from './Patient';
 import Appointment from './Appointment';
+import Message from './Messages';
 
 @Entity()
 export default class User{
@@ -53,6 +54,10 @@ export default class User{
 
     @OneToMany(() => Appointment, appointment => appointment.doctor)
     appointments: Appointment[];
+
+
+    @OneToMany(() => Message, message => message)
+    messages:Message[];
 
 
     @CreateDateColumn({name:'create_at'}) 
