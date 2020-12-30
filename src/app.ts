@@ -83,7 +83,7 @@ io.on('connection',function(socket) {
             messageContent : messageContent,
             roomName : roomName
         }
-        user.addMessages(chatData.messageContent,chatData.userName)
+        user.addMessages(chatData.messageContent,chatData.roomName)
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
 
