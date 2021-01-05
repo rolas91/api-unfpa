@@ -47,7 +47,7 @@ const getUserLike = async (data:{
   const entityManager = getManager();
   const {params} = data;
 
-  let d = entityManager.query(`SELECT * FROM user WHERE concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%'`)
+  let d = await entityManager.query(`SELECT * FROM user WHERE concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%'`)
   console.log(d);
   
   return d;
