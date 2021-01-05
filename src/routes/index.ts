@@ -171,7 +171,7 @@ export default (app: Application): void => {
     try {
       const response = await user.getUserLike(req.body);
       if(response.length > 0){
-          res.status(200).send({message:"ok", response:response[0]});
+          res.status(200).send({message:"ok", response:response});
       }else{
         res.status(200).send({message:"error", response:{}})
       }
