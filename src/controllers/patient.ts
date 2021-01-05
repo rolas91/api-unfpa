@@ -174,13 +174,13 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getRawMany();
   }
 
-  const getpatientDetail = async(patient): Promise<any> =>{
+  const getpatientDetail = async(userid): Promise<any> =>{
     return await getRepository(Patient)
     .createQueryBuilder("patient")
     .leftJoinAndSelect("patient.user","user")
     // .addSelect('TIMESTAMPDIFF(YEAR, user.birth, CURDATE()) as edad')
     .leftJoinAndSelect("patient.appointments","appointments")
-    .where("user.id = :id",{id:patient})
+    .where("user.id = :id",{id:userid})
     .orderBy("appointments.date","DESC")
     .getMany();
   }

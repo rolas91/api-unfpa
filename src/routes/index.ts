@@ -309,7 +309,7 @@ export default (app: Application): void => {
   app.post('/api/v1/patients/detail', async(req, res) => {
     try {
      
-      const result = await patient.getpatientDetail(req.body.patientid);
+      const result = await patient.getpatientDetail(req.body.userid);
       res.status(200).json({
         message:'successfully',
         patient:result
