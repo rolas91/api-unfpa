@@ -37,7 +37,17 @@ const getOnlyUser = async (data:{
   const entityManager = getManager();
   const {identification} = data;
 
-  return entityManager.query(`SELECT * FROM user where phone = '${identification}' OR cedula = '${identification}'`)
+  return entityManager.query(`SELECT * FROM user WHERE phone = '${identification}' OR cedula = '${identification}'`)
+};
+
+//obtengo usuario por parametro like
+const getUserLike = async (data:{
+  params:string;
+}): Promise<any> => {
+  const entityManager = getManager();
+  const {params} = data;
+
+  return entityManager.query(`SELECT * FROM user WHERE concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%'`)
 };
 
 const getUsersTypeBrigadista = async (): Promise<any> => {
@@ -69,4 +79,4 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   await getRepository(Message).save(newMessage)
 }
 
-export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages};
+export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};

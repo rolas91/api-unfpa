@@ -167,6 +167,19 @@ export default (app: Application): void => {
     }
   });
 
+  app.post('/api/v1/user/getuserlike', async (req, res) => {
+    try {
+      const response = await user.getUserLike(req.body);
+      if(response.length > 0){
+          res.status(200).send({message:"ok", response:response[0]});
+      }else{
+        res.status(200).send({message:"error", response:{}})
+      }
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  });
+
   app.post('/api/v1/user/getbrigadista', async (req, res) => {
     try {
       const response = await user.getUsersTypeBrigadista();
