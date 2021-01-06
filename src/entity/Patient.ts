@@ -47,6 +47,9 @@ export default class Patient{
     @OneToMany(() => Appointment, appointment => appointment.patient)
     appointments: Appointment[];
 
+    @OneToMany(() => Appointment, appointment => appointment.patient)
+    nextappointment: Appointment[];
+
     @ManyToMany(() => User, user => user.id)
     @JoinTable()
     doctors:User[]
