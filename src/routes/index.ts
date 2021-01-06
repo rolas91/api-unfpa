@@ -251,10 +251,15 @@ export default (app: Application): void => {
       const response = await patient.register(req.body)
       res.status(200).json({
         message:'successfully',
+        success:true,
         data:response
       });
     } catch (error) {
-      res.status(500).send({ message: error.message });
+      res.status(200).send({
+         message: error.message,
+         success:false,
+         data:{}
+      });
     }
   })
 
