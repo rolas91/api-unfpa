@@ -95,7 +95,7 @@ const sendMailResetPassword = async(data:{
   });
 
   const token = jsonwebtoken.sign({userId:searchUser.id},process.env.SECRET!,{expiresIn:'10m'})
-  let verificationLink = `https://api-unfpa.herokuapp.com/new-password/${token}`;
+  let verificationLink = `https://api-unfpa.herokuapp.com/new-password`;
 
   try{
     if(searchUser != undefined){
