@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
+import path from 'path';
 import {ExpressPeerServer} from 'peer';
 // import mongoose from 'mongoose';
 import {createConnection} from 'typeorm';
@@ -18,6 +19,8 @@ const socketio = require('socket.io')
 process.env.TZ = 'America/Managua'; // zona horaria de la app
 
 const app = express();
+// public files
+app.use('/static',express.static(__dirname + '/public'));
 createConnection();
 
 // parse application/x-www-form-urlencoded
@@ -27,10 +30,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
-app.set('view engine', 'ejs');
+app.set('views',  './views');
+app.set('view engine', 'pug');
 
-// public files
-app.use(express.static('public'));
 
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);

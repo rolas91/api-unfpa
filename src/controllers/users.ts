@@ -59,6 +59,8 @@ const getUserLike = async (data:{
   
 };
 
+
+
 const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };

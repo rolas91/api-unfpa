@@ -23,8 +23,22 @@ const EXPIRES_IN = 60 * 60; // 1 hour
 export default (app: Application): void => {
 
   
-  app.get('/', (req, res) => {
-    res.send('Api');     
+  app.get('/new-password', (req, res) => {
+    res.render('changepass');     
+  });
+
+  app.post('/new-password', async(req, res) => {
+    try{
+      const result = await auth.resetPassword(req.body)
+      if(result.message === 'success'){
+        res.render('changepass',{message:"Has cambiado correctamente tu contraseña"});   
+      }else{
+        res.render('changepass',{message:"Ha habido un error al cambiar tu contraseña"});  
+      }
+    }catch(e){
+      console.log(`error ${e.message}`)
+      res.render('changepass',{message:"Ha habido un error al cambiar tu contraseña"});
+    }
   });
   
   // authenticate
