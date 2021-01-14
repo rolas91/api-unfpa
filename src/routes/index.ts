@@ -30,6 +30,16 @@ export default (app: Application): void => {
   // authenticate
   app.post('/api/v1/auth/resetpassword', async(req, res) => {
     try{
+      const result = await auth.sendMailResetPassword(req.body)
+      res.status(200).json(result);
+    }catch(e){
+      console.log(`error ${e.message}`)
+      res.status(200).json({message:e.message})
+    }
+  });
+
+  app.post('/api/v1/auth/resetpassword-mail', async(req, res) => {
+    try{
       const result = await auth.resetPassword(req.body)
       res.status(200).json(result);
     }catch(e){

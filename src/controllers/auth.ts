@@ -1,7 +1,10 @@
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 import _ from 'lodash';
+import {transporter} from '../config/mailer';
 import {getRepository} from 'typeorm';
+
+import jsonwebtoken from 'jsonwebtoken';
 
 import Users from '../entity/User';
 
@@ -81,6 +84,37 @@ const login = async (data: {
   throw { code: 403, message: 'Invalid password' };
 };
 
+const sendMailResetPassword = async(data:{
+  email:string;
+}):Promise<any> => {
+  const {email} = data;
+  let searchUser = await getRepository(Users).findOne({
+    where:{
+      email:email
+    }
+  });
+
+  const token = jsonwebtoken.sign({userId:searchUser.id},process.env.SECRET!,{expiresIn:'10m'})
+  let verificationLink = `https://api-unfpa.herokuapp.com/new-password/${token}`;
+
+  try{
+    if(searchUser != undefined){
+     await transporter.sendMail({
+      from: '"Forgot password 👻" <rsanchezbaltodano@gmail.com>', // sender address
+      to: searchUser.email, // list of receivers
+      subject: "Forgot password", // Subject line
+      html: `
+      <b>Por favor de click en el siguiente link, o pega este enlace en tu navegador web para completar el proceso</b>
+      <a href="${verificationLink}">${verificationLink}</a>
+      `, // html body
+    });
+  }
+
+  }catch(e){
+    console.log(`error send mail ${e}`);
+  }
+}
+
 const resetPassword = async(data:{
   email:string;
   password:string;
@@ -88,15 +122,14 @@ const resetPassword = async(data:{
 
   const {email} = data;
   let {password} =data;
-
   password = await bcrypt.hash(password, 10);
-
+  
   let searchUser = await getRepository(Users).findOne({
     where:{
       email:email
     }
   });
-
+ 
   if(searchUser != undefined){
     await getRepository(Users).update(searchUser.id,{password})
     return {
@@ -109,4 +142,4 @@ const resetPassword = async(data:{
   }
 
 }
-export { register, login, resetPassword };
+export { register, login, resetPassword, sendMailResetPassword };
