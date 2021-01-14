@@ -104,7 +104,7 @@ const sendMailResetPassword = async(data:{
       to: searchUser.email, // list of receivers
       subject: "Forgot password", // Subject line
       html: `
-      <b>Por favor de click en el siguiente link, o pega este enlace en tu navegador web para completar el proceso</b></br>
+      <b>Por favor de click en el siguiente link, o pega este enlace en tu navegador web para completar el proceso</b><br>
       <a href="${verificationLink}">${verificationLink}</a>
       `, // html body
     });
