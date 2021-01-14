@@ -108,10 +108,16 @@ const sendMailResetPassword = async(data:{
       <a href="${verificationLink}">${verificationLink}</a>
       `, // html body
     });
+    return {
+      message:'success'        
+    }
   }
 
   }catch(e){
     console.log(`error send mail ${e}`);
+    throw {
+      message:'success'        
+    }
   }
 }
 
