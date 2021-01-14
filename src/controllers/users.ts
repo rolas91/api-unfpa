@@ -54,7 +54,7 @@ const getUserLike = async (data:{
   LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
   }
   else{
-    return await entityManager.query(`SELECT * FROM user WHERE concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%'`)
+    return await entityManager.query(`SELECT * FROM user WHERE (concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%') and typeUser = 'paciente' `)
   }
   
 };
