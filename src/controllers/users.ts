@@ -47,7 +47,9 @@ const getUserLike = async (data:{
   const entityManager = getManager();
   const {params} = data;
 
-  return await entityManager.query(`SELECT * FROM user INNER JOIN patient ON patient.userId = user.id   WHERE (concat(user.firstname,' ',user.lastname) LIKE '${params}%' OR user.email LIKE '${params}%' OR user.phone LIKE '${params}%' OR user.cedula LIKE '${params}%' `)
+  return await entityManager.query(`SELECT p.id as idPaciente, u.* FROM user u 
+  inner join patient p on u.id = p.userId WHERE (concat(u.firstname,' ',u.lastname) 
+  LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
 };
 
 
