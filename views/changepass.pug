@@ -1,0 +1,28 @@
+html
+    head
+        title='Cambiar contraseña'
+        style
+            include ./style.css
+    body
+        div
+            h1= "Por favor rellene el formulario para cambiar su contraseña"
+            
+            form(action="/new-password" method="POST")
+                label Correo:  
+                br              
+                input(type="email" name="email" placeholder="")
+                br
+                label Contraseña: 
+                br               
+                input(type="password" name="password" placeholder="")
+                br
+                label Repite Contraseña:
+                br                
+                input(type="password" name="password2" placeholder="")
+
+                h3 #{message}
+
+                //- h3 (class='error') #{error}
+
+                input(type="submit" name="enviar" value="Cambiar contraseña")
+                
