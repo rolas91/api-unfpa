@@ -43,13 +43,20 @@ const getOnlyUser = async (data:{
 //obtengo usuario por parametro like
 const getUserLike = async (data:{
   params:string;
+  type:string;
 }): Promise<any> => {
   const entityManager = getManager();
-  const {params} = data;
+  const {params, type} = data;
 
-  return await entityManager.query(`SELECT p.id as idPaciente, u.* FROM user u 
+  if(type == "1"){
+    return await entityManager.query(`SELECT p.id as idPaciente, u.* FROM user u 
   inner join patient p on u.id = p.userId WHERE (concat(u.firstname,' ',u.lastname) 
   LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
+  }
+  else{
+    return await entityManager.query(`SELECT * FROM user WHERE concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%'`)
+  }
+  
 };
 
 const getUsersTypeBrigadista = async (): Promise<any> => {
