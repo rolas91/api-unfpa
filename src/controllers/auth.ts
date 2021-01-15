@@ -100,9 +100,9 @@ const sendMailResetPassword = async(data:{
   try{
     if(searchUser != undefined){
      await transporter.sendMail({
-      from: '"Forgot password 👻" <rsanchezbaltodano@gmail.com>', // sender address
+      from: '"Unfpa " <rsanchezbaltodano@gmail.com>', // sender address
       to: searchUser.email, // list of receivers
-      subject: "Forgot password", // Subject line
+      subject: "Recuperar Contraseña", // Subject line
       html: `
       <b>Por favor de click en el siguiente link, o pega este enlace en tu navegador web para completar el proceso</b><br>
       <a href="${verificationLink}">${verificationLink}</a>
