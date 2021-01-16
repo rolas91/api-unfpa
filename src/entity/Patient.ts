@@ -14,35 +14,24 @@ export default class Patient{
     brigadista:User;
 
     @Column({
-        comment:'tipo de sangre',
+        comment:'Semanas de gestacion',
     })
-    bloodtype:string;
+    gestationWeeks:number;
 
     @Column({
-        comment:'Semanas de embarazo',
+        comment:'Antecedentes patologicos',
     })
-    weekspregnant:string;
+    pathologicalAntecedents:string;
 
     @Column({
-        comment:'Enfermedades o padecimientos',
+        comment:'Tratamientos recibidos',
     })
-    ailment:string;
+    treatmentsReceived:string;
 
     @Column({
-        comment:'Tratamiento, medicacion',
+        comment:'Observaciones médicas',
     })
-    medication:string;
-
-    @Column({
-        
-        comment:'Alergias y reacciones',
-    })
-    allergicReactions:string;
-
-    @Column({
-        comment:'Informe medico',
-    })
-    medicalReport:string;
+    medicalObservations:string;
 
     @OneToMany(() => Appointment, appointment => appointment.patient)
     appointments: Appointment[];

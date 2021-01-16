@@ -24,14 +24,12 @@ const addBrigadista = async(data:{
 const registerPatient = async(data:{
     userid:number;
     doctorid:number;
-    bloodtype:string;
-    weekspregnant:string;
-    ailment:string;
-    medication:string;
-    allergicReactions:string;
-    medicalReport:string;
+    gestationWeeks:number;
+    pathologicalAntecedents:string;
+    treatmentsReceived:string;
+    medicalObservations:string;
 }):Promise<any> => {
-    const {userid,doctorid, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport} = data;    
+    const {userid,doctorid, pathologicalAntecedents, treatmentsReceived, medicalObservations, gestationWeeks, } = data;    
     const doctor = await getRepository(Users).findOne({
         where:{
             id:doctorid,
@@ -47,12 +45,10 @@ const registerPatient = async(data:{
         const newPatient = getRepository(Patient).create({
             user, 
             brigadista:null,
-            bloodtype,  
-            weekspregnant, 
-            ailment, 
-            medication, 
-            allergicReactions, 
-            medicalReport,
+            gestationWeeks,  
+            pathologicalAntecedents, 
+            treatmentsReceived, 
+            medicalObservations, 
             doctors:[doctor]
         })
         return await getRepository(Patient).save(newPatient);
@@ -78,14 +74,13 @@ const register = async(data:{
     typeAuth:string;
     typeUser:string;
     ////
-    bloodtype:string;
-    weekspregnant:string;
-    ailment:string;
-    medication:string;
-    allergicReactions:string;
-    medicalReport:string;
+
+    gestationWeeks:number;
+    pathologicalAntecedents:string;
+    treatmentsReceived:string;
+    medicalObservations:string;
 }): Promise<any> => {
-    const {doctorid, bloodtype,  weekspregnant, ailment, medication, allergicReactions, medicalReport, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
+    const {doctorid, gestationWeeks,  pathologicalAntecedents, treatmentsReceived, medicalObservations, firstname, lastname, email, cedula, birth, phone, typeAuth, typeUser} = data;
    
     let { password } = data;
     password = await bcrypt.hash(password, 10);
@@ -115,12 +110,10 @@ const register = async(data:{
     const user = await result;
     const newPatient = getRepository(Patient).create({
         user, 
-        bloodtype,  
-        weekspregnant, 
-        ailment, 
-        medication, 
-        allergicReactions, 
-        medicalReport,
+        gestationWeeks,  
+        pathologicalAntecedents, 
+        treatmentsReceived, 
+        medicalObservations, 
         doctors:[doctor]
     })
 

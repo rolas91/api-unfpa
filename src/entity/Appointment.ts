@@ -17,8 +17,30 @@ export default class Appointment{
     })
     doctor:User;
 
+    @Column({
+        comment:'Semanas de gestacion',
+    })
+    gestationWeeks:number;
+
+    @Column({
+        comment:'Reporte de movimientos fetales',
+    })
+    reportOfFetalMovements
+
     @Column()
-    note:string;
+    arObro:string;
+
+    @Column({comment:'Motivo principal de la consulta'})
+    mainReasonForTheConsultation:string
+
+    @Column({comment:'Diagnostico'})
+    diagnostics:string
+
+    @Column({comment:'Planes'})
+    plans:string
+
+    @Column({comment:'Otras observaciones'})
+    otherRemarks:string;
 
     @Column({
         type:"enum",
