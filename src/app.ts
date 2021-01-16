@@ -34,12 +34,12 @@ app.use(morgan('dev'));
 app.set('views',  './views');
 app.set('view engine', 'pug');
 
+cron.schedule('* * * * *', () => {
+    console.log("hola loco man ya me estoy ejecutando")
+});
 
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
-    cron.schedule('* * * * *', () => {
-        console.log("hola loco man ya me estoy ejecutando")
-    });
 });
 
 //Chat Server
