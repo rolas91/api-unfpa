@@ -97,9 +97,10 @@ io.on('connection',function(socket) {
         console.log("jajaa loco",userData)
         socket.join(`${userId}`)
         cron.schedule('* * * * *', () => {
-            console.log("hola loco man ya me estoy ejecutando con "+userId)
-            let message = "hola ya estas listo para la cita"
-            socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(message))
+            const messageData = {
+                messageContent:"Estas Listo para la cita comienza en 1 hora"
+            }
+            socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
         });
     });
 
