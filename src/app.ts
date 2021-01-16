@@ -34,10 +34,6 @@ app.use(morgan('dev'));
 app.set('views',  './views');
 app.set('view engine', 'pug');
 
-cron.schedule('* * * * *', () => {
-    console.log("hola loco man ya me estoy ejecutando")
-});
-
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
 });
@@ -94,6 +90,17 @@ io.on('connection',function(socket) {
         user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
+
+    socket.on('sendNotificationAppointment', function(data){
+        const userData = JSON.parse(data);
+        const userId = userData.userId;
+
+        cron.schedule('* * * * *', () => {
+            console.log("hola loco man ya me estoy ejecutando")
+            let message = "hola ya estas listo para la cita"
+            socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(message))
+        });
+    });
 
     // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
     //     console.log('typing triggered')
