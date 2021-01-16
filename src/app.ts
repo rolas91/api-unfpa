@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express from 'express';
+import cron = require('node-cron');
 import path from 'path';
 import {ExpressPeerServer} from 'peer';
 // import mongoose from 'mongoose';
@@ -36,6 +37,9 @@ app.set('view engine', 'pug');
 
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
+    cron.schedule('* * * * *', () => {
+        console.log("hola loco man ya me estoy ejecutando")
+    });
 });
 
 //Chat Server
