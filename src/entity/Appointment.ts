@@ -25,7 +25,7 @@ export default class Appointment{
     @Column({
         comment:'Reporte de movimientos fetales',
     })
-    reportOfFetalMovements
+    reportOfFetalMovements:string;
 
     @Column()
     arObro:string;
