@@ -96,7 +96,8 @@ io.on('connection',function(socket) {
         const userId = userData.userId;
         console.log("usuarios conectados",userId)
        
-        // socket.join(`${userId}`)
+        socket.join(`${userId}`)
+        console.log(`me estoy ejecutando con ${userId}`);
     
         // cron.schedule('* * * * *', async() => {
            
