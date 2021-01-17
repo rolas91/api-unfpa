@@ -27,7 +27,7 @@ export default (app: Application): void => {
     res.render('changepass');     
   });
 
-  app.post('/fcm/token', async(req, res) => {
+  app.post('/api/v1/auth/fcm/token', async(req, res) => {
     try{
       await auth.postToken(req.body)
     }catch(e){
