@@ -91,7 +91,7 @@ io.on('connection',function(socket) {
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
 
-    socket.on('sendNotificationAppointment', function(data){
+    socket.once('sendNotificationAppointment', function(data){
         const userData = JSON.parse(data);
         const userId = userData.userId;
         console.log("usuarios conectados",userId)
