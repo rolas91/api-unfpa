@@ -52,7 +52,7 @@ io.on('connection',function(socket) {
         const room_data = JSON.parse(data)
         userName = room_data.userName;
         const roomName = room_data.roomName;
-    
+        
         socket.join(`${roomName}`)
         // console.log(`Username : ${userName} joined Room Name : ${roomName}`)
         
@@ -95,6 +95,7 @@ io.on('connection',function(socket) {
         const userData = JSON.parse(data);
         const userId = userData.userId;
         console.log("usuarios conectados",userId)
+        console.log(socket.room)
         socket.join(`${userId}`)
     
         // cron.schedule('* * * * *', async() => {
