@@ -94,7 +94,6 @@ io.on('connection',function(socket) {
     socket.on('sendNotificationAppointment', function(data){
         const userData = JSON.parse(data);
         const userId = userData.userId;
-        console.log("jajaa loco",userData)
         socket.join(`${userId}`)
         cron.schedule('* * * * *', () => {
             const messageData = {
