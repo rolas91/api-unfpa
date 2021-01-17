@@ -12,7 +12,8 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 import cors from 'cors';
 import api from './routes';
-import * as user from './controllers/users'
+import * as user from './controllers/users';
+import * as appointment from './controllers/appointments';
 const PORT = process.env.PORT || 7000;
 require('dotenv').config();
 
@@ -37,6 +38,11 @@ app.set('view engine', 'pug');
 
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
+
+    cron.schedule(
+		'* * * * *',() => {
+            appointment.getDateForReminder();
+    });
 });
 
 //Chat Server

@@ -40,7 +40,32 @@ const getAppointment = async ():Promise<any> => {
 }
 
 const getDateForReminder = async() => {
-
+    try{
+        var notification = {
+            'title': 'Notificación para las citas',
+            'text': 'Estas es una prueba de envio'
+          };
+          var fcm_tokens = ['emRb0DwEZ80:APA91bEM6soiDaAM9NrDQj-b4YtOfUj3DZndkDAn0BRgZl8m7-jd9InAmrv6zHA6MhBrWbkPspqGpJpJ5jrRtkL01KN28AoBs3qEemvJnHpv8hP-s-EuqBeZOToR7IIPY2yyi58o-pu6'];
+      
+          var notification_body = {
+            'notification': notification,
+            'registration_ids': fcm_tokens
+          }
+          fetch('https://fcm.googleapis.com/fcm/send',{
+            'method':'POST',
+            'headers':{
+              'Authorization':'key='+'AAAAMlKxqsI:APA91bHAMWrxCQfE-pirqMRpJbaE0q-YhO0b36EcplbqAQ3ed_BZpZv29QNuOPxrGsFJhXyR_roCFaLKoK9m8CcIG9QhplujT2wk2YMMtsKzUh16V1OSsus02EsrjvuIFe3gp7WRx06C',
+              'Content-Type':'application/json'
+            },
+            'body':JSON.stringify(notification_body)
+          }).then(() => {
+            console.log('successfully')
+          }).catch((error) => {
+            console.log(`error ${error}`);
+          });
+    }catch(e){
+        console.log(`error ${e}`)
+    }
 }
 
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   

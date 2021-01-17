@@ -46,8 +46,8 @@ export default (app: Application): void => {
     }).catch((error) => {
       res.status(400).json('something went wrong!')
       console.log(error);
-    })
-  })
+    });
+  });
   
   app.get('/new-password', (req, res) => {
     res.render('changepass');     
