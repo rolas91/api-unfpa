@@ -94,6 +94,7 @@ io.on('connection',function(socket) {
     socket.on('sendNotificationAppointment', function(data){
         const userData = JSON.parse(data);
         const userId = userData.userId;
+        console.log("usuarios conectados",userId)
         socket.join(`${userId}`)
         let count = 0
         cron.schedule('* * * * *', async() => {
