@@ -96,11 +96,11 @@ io.on('connection',function(socket) {
         const userId = userData.userId;
         console.log("usuarios conectados",userId)
         socket.join(`${userId}`)
-        let count = 0
+    
         cron.schedule('* * * * *', async() => {
            
-            count = count++
-            console.log(`me estoy ejecutando por ${count} vez`);
+        
+            console.log(`me estoy ejecutando con ${userId}`);
             
             const messageData = {
                 messageContent:"Estas Listo para la cita comienza en 1 hora"
