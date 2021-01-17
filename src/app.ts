@@ -95,7 +95,11 @@ io.on('connection',function(socket) {
         const userData = JSON.parse(data);
         const userId = userData.userId;
         socket.join(`${userId}`)
-        cron.schedule('* * * * *', () => {
+        cron.schedule('* * * * *', async() => {
+            let count = 0
+            count = count++
+            console.log(`me estoy ejecutando por ${count} vez`);
+            
             const messageData = {
                 messageContent:"Estas Listo para la cita comienza en 1 hora"
             }

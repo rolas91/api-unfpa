@@ -38,6 +38,11 @@ const getAppointment = async ():Promise<any> => {
     .leftJoinAndSelect("appointment.patient", "patient")
     .getMany();
 }
+
+const getDateForReminder = async() => {
+
+}
+
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
@@ -140,6 +145,7 @@ export {
     getAppointmentNotes, 
     getAppointmentsByPatient,
     getAppointmentByBrigadista,
-    getAppointmentsByBrigadista
+    getAppointmentsByBrigadista,
+    getDateForReminder
 }
 
