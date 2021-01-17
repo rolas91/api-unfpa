@@ -90,7 +90,7 @@ io.on('connection',function(socket) {
         user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
-
+    var sentHolder = {}
     socket.once('sendNotificationAppointment', function(data){
         const userData = JSON.parse(data);
         const userId = userData.userId;
@@ -104,7 +104,11 @@ io.on('connection',function(socket) {
                 messageContent:"Estas Listo para la cita comienza en 1 hora"
             }
 
-            socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
+            if(sentHolder[socket.id] == false) {
+                socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
+                sentHolder[socket.id] = true
+             }
+
        },60 * 1000);
     
         // cron.schedule('* * * * *', async() => {
