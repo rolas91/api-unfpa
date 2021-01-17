@@ -90,39 +90,36 @@ io.on('connection',function(socket) {
         user.addMessages(chatData.messageContent,chatData.roomName, chatData.state)
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
-    var sentHolder = {}
-    socket.once('sendNotificationAppointment', function(data){
-        const userData = JSON.parse(data);
-        const userId = userData.userId;
-        console.log("usuarios conectados",userId)
+  
+    // socket.on('sendNotificationAppointment', function(data){
+    //     const userData = JSON.parse(data);
+    //     const userId = userData.userId;
+    //     console.log("usuarios conectados",userId)
        
-        socket.join(`${userId}`)
-        console.log(`me estoy ejecutando con ${userId}`);
+    //     socket.join(`${userId}`)
+    //     console.log(`me estoy ejecutando con ${userId}`);
 
-       setTimeout(() => {
-           console.log("estoy en el timeout")
-            const messageData = {
-                messageContent:"Estas Listo para la cita comienza en 1 hora"
-            }
+    //    setTimeout(() => {
+    //        console.log("estoy en el timeout")
+    //         const messageData = {
+    //             messageContent:"Estas Listo para la cita comienza en 1 hora"
+    //         }
 
-            if(sentHolder[socket.id] == false) {
-                socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
-                sentHolder[socket.id] = true
-             }
+    //         socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
 
-       },60 * 1000);
+    //    },60 * 1000);
     
-        // cron.schedule('* * * * *', async() => {
+    //     // cron.schedule('* * * * *', async() => {
            
         
-        //     console.log(`me estoy ejecutando con ${userId}`);
+    //     //     console.log(`me estoy ejecutando con ${userId}`);
             
-        //     const messageData = {
-        //         messageContent:"Estas Listo para la cita comienza en 1 hora"
-        //     }
-        //     socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
-        // });
-    });
+    //     //     const messageData = {
+    //     //         messageContent:"Estas Listo para la cita comienza en 1 hora"
+    //     //     }
+    //     //     socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
+    //     // });
+    // });
 
     // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
     //     console.log('typing triggered')
