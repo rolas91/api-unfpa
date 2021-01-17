@@ -95,8 +95,9 @@ io.on('connection',function(socket) {
         const userData = JSON.parse(data);
         const userId = userData.userId;
         socket.join(`${userId}`)
+        let count = 0
         cron.schedule('* * * * *', async() => {
-            let count = 0
+           
             count = count++
             console.log(`me estoy ejecutando por ${count} vez`);
             
