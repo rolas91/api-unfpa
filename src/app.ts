@@ -91,23 +91,23 @@ io.on('connection',function(socket) {
         socket.broadcast.to(`${roomName}`).emit('updateChat',JSON.stringify(chatData)) 
     })
 
-    // socket.on('sendNotificationAppointment', function(data){
-    //     const userData = JSON.parse(data);
-    //     const userId = userData.userId;
-    //     console.log("usuarios conectados",userId)
-    //     socket.join(`${userId}`)
+    socket.on('sendNotificationAppointment', function(data){
+        const userData = JSON.parse(data);
+        const userId = userData.userId;
+        console.log("usuarios conectados",userId)
+        socket.join(`${userId}`)
     
-    //     // cron.schedule('* * * * *', async() => {
+        // cron.schedule('* * * * *', async() => {
            
         
-    //     //     console.log(`me estoy ejecutando con ${userId}`);
+        //     console.log(`me estoy ejecutando con ${userId}`);
             
-    //     //     const messageData = {
-    //     //         messageContent:"Estas Listo para la cita comienza en 1 hora"
-    //     //     }
-    //     //     socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
-    //     // });
-    // });
+        //     const messageData = {
+        //         messageContent:"Estas Listo para la cita comienza en 1 hora"
+        //     }
+        //     socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
+        // });
+    });
 
     // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
     //     console.log('typing triggered')
