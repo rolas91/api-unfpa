@@ -100,6 +100,7 @@ io.on('connection',function(socket) {
         console.log(`me estoy ejecutando con ${userId}`);
 
        setTimeout(() => {
+           console.log("estoy en el timeout")
             const messageData = {
                 messageContent:"Estas Listo para la cita comienza en 1 hora"
             }
