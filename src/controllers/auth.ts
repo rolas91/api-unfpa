@@ -159,7 +159,7 @@ const postToken = async(data:{
   
   let searchUser = await getRepository(Users).findOne({
     where:{
-      userId:userId
+      id:userId
     }
   });
  
