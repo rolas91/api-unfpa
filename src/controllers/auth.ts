@@ -148,4 +148,24 @@ const resetPassword = async(data:{
   }
 
 }
-export { register, login, resetPassword, sendMailResetPassword };
+
+const postToken = async(data:{
+  userId:number;
+  token:string;
+}):Promise<any> => {
+
+  const {userId} = data;
+  let {token} =data;
+  
+  let searchUser = await getRepository(Users).findOne({
+    where:{
+      userId:userId
+    }
+  });
+ 
+  if(searchUser != undefined){
+    return await getRepository(Users).update(searchUser.id,{token})
+  }
+}
+
+export { register, login, resetPassword, sendMailResetPassword, postToken };

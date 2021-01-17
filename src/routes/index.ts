@@ -27,6 +27,14 @@ export default (app: Application): void => {
     res.render('changepass');     
   });
 
+  app.post('/fcm/token', async(req, res) => {
+    try{
+      await auth.postToken(req.body)
+    }catch(e){
+      console.log(`error ${e.message}`)
+    }
+  });
+
   app.post('/new-password', async(req, res) => {
     try{
       const result = await auth.resetPassword(req.body)

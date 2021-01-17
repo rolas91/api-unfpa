@@ -49,6 +49,9 @@ export default class User{
     @Column()
     centerId:number;
 
+    @Column()
+    token:string;
+
     @OneToMany(() => Patient, patient => patient.user)
     patients: Patient[];
 
