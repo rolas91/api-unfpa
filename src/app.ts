@@ -105,7 +105,7 @@ io.on('connection',function(socket) {
             }
 
             socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
-       },60000);
+       },60 * 1000);
     
         // cron.schedule('* * * * *', async() => {
            
