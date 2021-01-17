@@ -8,6 +8,7 @@ import {createConnection} from 'typeorm';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import morgan from 'morgan';
+import fetch from 'node-fetch';
 import fs from 'fs';
 import cors from 'cors';
 import api from './routes';

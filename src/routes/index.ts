@@ -10,6 +10,7 @@ import * as patient from '../controllers/patient';
 import * as appointment from '../controllers/appointments';
 import * as categorylist from '../controllers/categorytips';
 import * as tip from '../controllers/tips';
+import fetch from 'node-fetch';
 
 import tokens from '../controllers/tokens';
 
@@ -22,6 +23,31 @@ const EXPIRES_IN = 60 * 60; // 1 hour
 
 export default (app: Application): void => {
 
+  app.post('/api/v1/auth/fcm/send', (req, res) =>{
+    var notification = {
+      'title': 'Title of notification',
+      'text': 'subtitle'
+    };
+    var fcm_tokens = ['emRb0DwEZ80:APA91bEM6soiDaAM9NrDQj-b4YtOfUj3DZndkDAn0BRgZl8m7-jd9InAmrv6zHA6MhBrWbkPspqGpJpJ5jrRtkL01KN28AoBs3qEemvJnHpv8hP-s-EuqBeZOToR7IIPY2yyi58o-pu6'];
+
+    var notification_body = {
+      'notification': notification,
+      'registration_ids': fcm_tokens
+    }
+    fetch('https://fcm.googleapis.com/fcm/send',{
+      'method':'POST',
+      'headers':{
+        'Authorization':'key='+'AAAAMlKxqsI:APA91bHAMWrxCQfE-pirqMRpJbaE0q-YhO0b36EcplbqAQ3ed_BZpZv29QNuOPxrGsFJhXyR_roCFaLKoK9m8CcIG9QhplujT2wk2YMMtsKzUh16V1OSsus02EsrjvuIFe3gp7WRx06C',
+        'Content-Type':'application/json'
+      },
+      'body':JSON.stringify(notification_body)
+    }).then(() => {
+      res.status(200).json('successfully')
+    }).catch((error) => {
+      res.status(400).json('something went wrong!')
+      console.log(error);
+    })
+  })
   
   app.get('/new-password', (req, res) => {
     res.render('changepass');     
