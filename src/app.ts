@@ -95,8 +95,8 @@ io.on('connection',function(socket) {
         const userData = JSON.parse(data);
         const userId = userData.userId;
         console.log("usuarios conectados",userId)
-        console.log(socket.room)
-        socket.join(`${userId}`)
+       
+        // socket.join(`${userId}`)
     
         // cron.schedule('* * * * *', async() => {
            
