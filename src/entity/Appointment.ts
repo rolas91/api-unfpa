@@ -55,6 +55,16 @@ export default class Appointment{
     @Column('time')
     hour:Date;
 
+    @Column({
+        default:false
+    })
+    fcm:boolean
+
+    @Column({
+        default:false
+    })
+    fcm2:boolean
+
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
 

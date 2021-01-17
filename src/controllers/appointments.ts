@@ -43,31 +43,127 @@ const getAppointment = async ():Promise<any> => {
 
 const getDateForReminder = async() => {
     try{
-        console.log(moment().tz("America/Managua").format())
-        var notification = {
-            'title': 'Notificación para las citas',
-            'text': 'Estas es una prueba de envio'
-          };
-          var fcm_tokens = ['emRb0DwEZ80:APA91bEM6soiDaAM9NrDQj-b4YtOfUj3DZndkDAn0BRgZl8m7-jd9InAmrv6zHA6MhBrWbkPspqGpJpJ5jrRtkL01KN28AoBs3qEemvJnHpv8hP-s-EuqBeZOToR7IIPY2yyi58o-pu6'];
-      
-          var notification_body = {
-            'notification': notification,
-            'registration_ids': fcm_tokens
-          }
-          fetch('https://fcm.googleapis.com/fcm/send',{
-            'method':'POST',
-            'headers':{
-              'Authorization':'key='+'AAAAMlKxqsI:APA91bHAMWrxCQfE-pirqMRpJbaE0q-YhO0b36EcplbqAQ3ed_BZpZv29QNuOPxrGsFJhXyR_roCFaLKoK9m8CcIG9QhplujT2wk2YMMtsKzUh16V1OSsus02EsrjvuIFe3gp7WRx06C',
-              'Content-Type':'application/json'
-            },
-            'body':JSON.stringify(notification_body)
-          }).then(() => {
-            console.log('successfully')
-          }).catch((error) => {
-            console.log(`error ${error}`);
-          });
+        executeReminder24horas();
+        executeReminderForDay();
     }catch(e){
         console.log(`error ${e}`)
+    }
+}
+
+const executeReminderForDay = async() =>{
+    let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
+    let dateNow = moment().tz("America/Managua").format('YYYY-MM-DD');
+    let dateTime = moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss');
+    let nowDay = moment(dateTime).format('YYYY-MM-DD');
+    let nowAddHour = moment(dateTime).add(60,'minutes').format('YYYY-MM-DD HH:mm:ss')
+    let hourRest = moment(nowAddHour).subtract(3, 'minutes').format('HH:mm:ss');
+    let hourAdd = moment(nowAddHour).add(2, 'minutes').format('HH:mm:ss');
+    let fcm_tokens = [];
+    let dataAppointment ;
+      
+    console.log(nowDay.toString(), 'hora menos 3 '+hourRest.toString(), 'hora mas 2 '+ hourAdd.toString())
+    let result = await getRepository(Appointment).createQueryBuilder("appointment")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("patient.user", "user")
+    .leftJoinAndSelect("appointment.doctor", "doctor")
+    .leftJoinAndSelect("patient.brigadista", "brigadista")
+    .where("appointment.date = :today", {today:nowDay})
+    .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
+    .andWhere('appointment.fcm2 = false')
+    .getMany()
+    if(result.length > 0){
+        for(let appointment of result){
+            dataAppointment = {date:appointment.date, hour:appointment.hour}
+            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, appointment.patient.brigadista.token)
+        }
+        
+        var notification = {
+            'title': 'Recuerda Tu Cita Médica',
+            'text': `Dentro de un hora tiene una cita médica. Iniciará a las ${dataAppointment.hour}, favor estar atento unos minutos antes.`
+            };
+        
+        var notification_body = {
+        'notification': notification,
+        'registration_ids': fcm_tokens
+        }
+        fetch('https://fcm.googleapis.com/fcm/send',{
+        'method':'POST',
+        'headers':{
+            'Authorization':`key=${process.env.FCM!}`,
+            'Content-Type':'application/json'
+        },
+            'body':JSON.stringify(notification_body)
+        }).then(async() => {
+            fcm_tokens.length = 0;
+            console.log('successfully')
+            for(let appointment of result){
+                await getRepository(Appointment).update(appointment.id,{fcm2:true})
+            }
+            return {
+                message:'success'        
+            }
+            
+        }).catch((error) => {
+            console.log(`error ${error}`);
+        });
+    }
+}
+
+const executeReminder24horas = async() =>{
+    let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
+    let dateNow = moment().tz("America/Managua").format('YYYY-MM-DD');
+    let dateTime = moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss');
+    let nowAddDay = moment(dateTime).add(1,'d').format('YYYY-MM-DD');
+    let hourRest = moment(dateTime).subtract(3, 'minutes').format('HH:mm:ss');
+    let hourAdd = moment(dateTime).add(2, 'minutes').format('HH:mm:ss');
+    let fcm_tokens = [];
+    let dataAppointment ;
+    
+    // console.log(nowAddDay.toString(), 'hora restada '+hourRest.toString(), 'hora agregada '+ hourAdd.toString())
+    let result = await getRepository(Appointment).createQueryBuilder("appointment")
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("patient.user", "user")
+    .leftJoinAndSelect("appointment.doctor", "doctor")
+    .leftJoinAndSelect("patient.brigadista", "brigadista")
+    .where("appointment.date = :today", {today:nowAddDay})
+    .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
+    .andWhere('appointment.fcm = false')
+    .getMany()
+    if(result.length > 0){
+        for(let appointment of result){
+            dataAppointment = {date:appointment.date, hour:appointment.hour}
+            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, appointment.patient.brigadista.token)
+        }
+        
+        var notification = {
+            'title': 'Recuerda Tu Cita Médica',
+            'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
+            };
+        
+        var notification_body = {
+        'notification': notification,
+        'registration_ids': fcm_tokens
+        }
+        fetch('https://fcm.googleapis.com/fcm/send',{
+        'method':'POST',
+        'headers':{
+            'Authorization':`key=${process.env.FCM!}`,
+            'Content-Type':'application/json'
+        },
+            'body':JSON.stringify(notification_body)
+        }).then(async() => {
+            fcm_tokens.length = 0;
+            console.log('successfully')
+            for(let appointment of result){
+                await getRepository(Appointment).update(appointment.id,{fcm:true})
+            }
+            return {
+                message:'success'        
+            }
+            
+        }).catch((error) => {
+            console.log(`error ${error}`);
+        });
     }
 }
 
