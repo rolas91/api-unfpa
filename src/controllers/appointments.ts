@@ -1,5 +1,6 @@
 import {getRepository, getManager} from 'typeorm';
 import fetch from 'node-fetch';
+import moment from 'moment-timezone';
 import Appointment from '../entity/Appointment';
 
 const register = async(data:{
@@ -42,6 +43,7 @@ const getAppointment = async ():Promise<any> => {
 
 const getDateForReminder = async() => {
     try{
+        console.log(moment().tz("America/Managua").format())
         var notification = {
             'title': 'Notificación para las citas',
             'text': 'Estas es una prueba de envio'
