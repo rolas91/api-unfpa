@@ -29,7 +29,13 @@ export default (app: Application): void => {
 
   app.post('/api/v1/auth/fcm/token', async(req, res) => {
     try{
-      await auth.postToken(req.body)
+      let response = await auth.postToken(req.body)
+      if(response != undefined){
+        res.status(200).json({
+          message:'success',
+          data:'no necesary data'
+        })
+      }
     }catch(e){
       console.log(`error ${e.message}`)
     }
