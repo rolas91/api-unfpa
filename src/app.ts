@@ -97,16 +97,16 @@ io.on('connection',function(socket) {
         console.log("usuarios conectados",userId)
         socket.join(`${userId}`)
     
-        cron.schedule('* * * * *', async() => {
+        // cron.schedule('* * * * *', async() => {
            
         
-            console.log(`me estoy ejecutando con ${userId}`);
+        //     console.log(`me estoy ejecutando con ${userId}`);
             
-            const messageData = {
-                messageContent:"Estas Listo para la cita comienza en 1 hora"
-            }
-            socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
-        });
+        //     const messageData = {
+        //         messageContent:"Estas Listo para la cita comienza en 1 hora"
+        //     }
+        //     socket.broadcast.to(`${userId}`).emit('sendNotificationAppointment',JSON.stringify(messageData))
+        // });
     });
 
     // socket.on('typing',function(roomNumber){ //Only roomNumber is needed here
