@@ -1,4 +1,5 @@
 import {getRepository, getManager} from 'typeorm';
+import fetch from 'node-fetch';
 import Appointment from '../entity/Appointment';
 
 const register = async(data:{
