@@ -77,7 +77,8 @@ const executeReminderForDay = async() =>{
     if(result.length > 0){
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
-            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, appointment.patient.brigadista.token)
+            let brigadistToken = appointment.patient.brigadista != null ? appointment.patient.brigadista.token : ''
+            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, brigadistToken)
         }
         
         var notification = {
