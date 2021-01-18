@@ -154,13 +154,12 @@ const postToken = async(data:{
   token:string;
 }):Promise<any> => {
 
-  const {userId} = data;
-  let {token} =data;
+  const {userId, token} = data;
   
   
   let searchUser = await getRepository(Users).findOne({
     where:{
-      userId:userId
+      id:userId
     }
   });
  
