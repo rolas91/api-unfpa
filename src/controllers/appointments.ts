@@ -71,6 +71,8 @@ const executeReminderForDay = async() =>{
     .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     .andWhere('appointment.fcm2 = false')
     .getMany()
+    console.log(result);
+    
     if(result.length > 0){
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
@@ -129,6 +131,7 @@ const executeReminder24horas = async() =>{
     .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     .andWhere('appointment.fcm = false')
     .getMany()
+    console.log(result);
     if(result.length > 0){
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
