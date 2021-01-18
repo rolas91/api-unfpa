@@ -401,6 +401,18 @@ export default (app: Application): void => {
     }
   })
 
+  app.post('/api/v1/appointment/update',async(req, res) => {
+    try {
+      const response = await appointment.updateAppointment(req.body)
+      res.status(200).json({
+        message:'successfully',
+        data:response
+      });
+    } catch (error) {
+      res.status(200).send({ message:'unsuccessful', data:error.message });
+    }
+  })
+
   app.get('/api/v1/appointment/getAll', async(req, res) => {
     try {
       const result = await appointment.getAppointment();

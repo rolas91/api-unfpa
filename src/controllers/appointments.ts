@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 import moment from 'moment-timezone';
 import Appointment from '../entity/Appointment';
 import { addBrigadista } from './patient';
+import Patient from '../entity/Patient';
+import { result } from 'lodash';
 
 const register = async(data:{
     patient:any;
@@ -17,8 +19,9 @@ const register = async(data:{
     diagnostics:string;
     date: Date;
     hour:Date;
+    note:string
 }): Promise<any> => {
-    const {patient, doctor, gestationWeeks, reportOfFetalMovements,arObro,typeAppointment,otherRemarks,plans, diagnostics, mainReasonForTheConsultation,date, hour} = data;
+    const {patient, doctor, gestationWeeks, reportOfFetalMovements,arObro,typeAppointment,otherRemarks,plans, diagnostics, mainReasonForTheConsultation,date, hour,note} = data;
 
     const newAppointment = getRepository(Appointment).create({
         patient,
@@ -32,7 +35,8 @@ const register = async(data:{
         otherRemarks,
         typeAppointment,
         date,
-        hour
+        hour,
+        note
     });
     return await getRepository(Appointment).save(newAppointment);
 }
@@ -174,6 +178,33 @@ const executeReminder24horas = async() =>{
     }
 }
 
+const updateAppointment = async(data:{
+    patient:number;
+    gestationWeeks:number;
+    reportOfFetalMovements:string;
+    arObro:string;
+    mainReasonForTheConsultation:string;
+    diagnostics:string;
+    plans:string;
+    otherRemarks:string;
+}):Promise<any> => {
+    try{
+        const {patient, gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks} = data;
+        let response = await getRepository(Appointment).findOne({
+            where:{
+                id:patient
+            }
+        })
+        if(response != undefined || response != null){
+            return await getRepository(Appointment).update(response.id,{gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks})
+        }else{
+            return null
+        }
+    }catch(e){
+        console.log(`error ${e}`);        
+    }
+}
+
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
@@ -277,6 +308,7 @@ export {
     getAppointmentsByPatient,
     getAppointmentByBrigadista,
     getAppointmentsByBrigadista,
-    getDateForReminder
+    getDateForReminder,
+    updateAppointment
 }
 

@@ -65,6 +65,9 @@ export default class Appointment{
     })
     fcm2:boolean
 
+    @Column()
+    note:string;
+
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
 
