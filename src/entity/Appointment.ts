@@ -17,6 +17,9 @@ export default class Appointment{
     })
     doctor:User;
 
+    @Column()
+    gestationWeeksDate:Date;
+
     @Column({
         comment:'Semanas de gestacion',
     })

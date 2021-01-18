@@ -34,9 +34,10 @@ const register = async(data:{
         plans,
         otherRemarks,
         typeAppointment,
-        date:moment(date).tz("America/Managua").format('YYYY-MM-DD'),
-        hour:moment(hour).tz("America/Managua").format('HH:mm:ss'),
-        note
+        date:date,
+        hour:hour,
+        note,
+        gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
     });
     return await getRepository(Appointment).save(newAppointment);
 }
