@@ -179,7 +179,7 @@ const executeReminder24horas = async() =>{
 }
 
 const updateAppointment = async(data:{
-    patient:number;
+    appointment:number;
     gestationWeeks:number;
     reportOfFetalMovements:string;
     arObro:string;
@@ -189,10 +189,10 @@ const updateAppointment = async(data:{
     otherRemarks:string;
 }):Promise<any> => {
     try{
-        const {patient, gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks} = data;
+        const {appointment, gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks} = data;
         let response = await getRepository(Appointment).findOne({
             where:{
-                id:patient
+                id:appointment
             }
         })
         if(response != undefined || response != null){
