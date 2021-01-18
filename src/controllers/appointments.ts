@@ -209,7 +209,7 @@ const updateAppointment = async(data:{
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
-        SELECT appointment.patientId, appointment.doctorId, appointment.gestationWeeks, appointment.reportOfFetalMovements, appointment.arObro, appointment.mainReasonForTheConsultation, appointment.diagnostics, appointment.plans, appointment.otherRemarks, appointment.typeAppointment, appointment.hour,appointment.date, 
+        SELECT appointment.patientId, appointment.doctorId, appointment.gestationWeeks, appointment.reportOfFetalMovements, appointment.arObro, appointment.mainReasonForTheConsultation, appointment.diagnostics, appointment.plans, appointment.otherRemarks, appointment.typeAppointment, appointment.hour,appointment.date, appointment.gestationWeeksDate, 
         patient.userId, user.firstname, user.lastname, user.email, user.typeAuth, user.typeUser
         FROM appointment 
         inner join patient on patient.id = appointment.patientId
@@ -225,7 +225,7 @@ const getAppointmentByDoctor = async (doctorId:any, today:Date) => {
 const getAppointmentsByBrigadista = async (brigadistId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
-        SELECT appointment.patientId, appointment.doctorId, appointment.gestationWeeks, appointment.reportOfFetalMovements, appointment.arObro, appointment.mainReasonForTheConsultation, appointment.diagnostics, appointment.plans, appointment.otherRemarks, appointment.typeAppointment, appointment.hour,appointment.date, 
+        SELECT appointment.patientId, appointment.doctorId, appointment.gestationWeeks, appointment.reportOfFetalMovements, appointment.arObro, appointment.mainReasonForTheConsultation, appointment.diagnostics, appointment.plans, appointment.otherRemarks, appointment.typeAppointment, appointment.hour,appointment.date, appointment.gestationWeeksDate,
         patient.userId, user.firstname, user.lastname, user.email, user.typeAuth, user.typeUser
         FROM appointment 
         inner join patient on patient.id = appointment.patientId
