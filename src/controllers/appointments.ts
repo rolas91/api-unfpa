@@ -2,6 +2,7 @@ import {getRepository, getManager} from 'typeorm';
 import fetch from 'node-fetch';
 import moment from 'moment-timezone';
 import Appointment from '../entity/Appointment';
+import { addBrigadista } from './patient';
 
 const register = async(data:{
     patient:any;
@@ -135,7 +136,9 @@ const executeReminder24horas = async() =>{
     if(result.length > 0){
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
-            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, appointment.patient.brigadista.token)
+            let brigadistToken =appointment.patient.brigadista != null ? appointment.patient.brigadista.token : ''
+           
+            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, addBrigadista )
         }
         
         var notification = {
