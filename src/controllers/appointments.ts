@@ -197,7 +197,7 @@ const updateAppointment = async(data:{
             }
         })
         if(response != undefined || response != null){
-            return await getRepository(Appointment).update(response.id,{gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks})
+            return await getRepository(Appointment).update(response.id,{gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks, gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')})
         }else{
             return null
         }
