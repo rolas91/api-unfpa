@@ -100,51 +100,53 @@ const executeReminderForDay = async() =>{
         },
         'body':JSON.stringify(message)
         }).then(async() => {
-           
-            fcm_tokens.length = 0;
-            console.log('successfully')
-            for(let appointment of result){
-                await getRepository(Appointment).update(appointment.id,{fcm2:true})                           
-            }
-
-            for(let appointment of result){
-                if(appointment.patient.user != null){
-                    let user =  getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.patient.user
-                    })
-                    getRepository(Notification).save(user);
+            try{
+                fcm_tokens.length = 0;
+                console.log('successfully')
+                for(let appointment of result){
+                    await getRepository(Appointment).update(appointment.id,{fcm2:true})                           
                 }
-            }
-            for(let appointment of result){
-                if(appointment.patient.brigadista != null){
-                    let brigadista = getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.patient.brigadista
-                    })
-                    getRepository(Notification).save(brigadista);
-                }
-            }
 
-            for(let appointment of result){
-                if(appointment.doctor != null){
-                    let doctor = getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.doctor
-                    })
-                    getRepository(Notification).save(doctor);
+                for(let appointment of result){
+                    if(appointment.patient.user != null){
+                        let user =  getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.patient.user
+                        })
+                        getRepository(Notification).save(user);
+                    }
                 }
-            }
+                for(let appointment of result){
+                    if(appointment.patient.brigadista != null){
+                        let brigadista = getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.patient.brigadista
+                        })
+                        getRepository(Notification).save(brigadista);
+                    }
+                }
 
-           
-            return {
-                message:'success'        
+                for(let appointment of result){
+                    if(appointment.doctor != null){
+                        let doctor = getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.doctor
+                        })
+                        getRepository(Notification).save(doctor);
+                    }
+                }
+            
+                return {
+                    message:'success'        
+                }
+            }catch(e){
+                console.log(`error ${e}`);                
             }
             
         }).catch((error) => {
@@ -199,49 +201,53 @@ const executeReminder24horas = async() =>{
         },
         'body':JSON.stringify(message)
         }).then(async() => {
-            fcm_tokens.length = 0;
-            console.log('successfully')
-            for(let appointment of result){
-                await getRepository(Appointment).update(appointment.id,{fcm:true})
-            }
+            try{
+                fcm_tokens.length = 0;
+                console.log('successfully')
+                for(let appointment of result){
+                    await getRepository(Appointment).update(appointment.id,{fcm:true})
+                }
 
-            for(let appointment of result){
-                if(appointment.patient.user != null){
-                    let user =  getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.patient.user
-                    })
-                    getRepository(Notification).save(user);
+                for(let appointment of result){
+                    if(appointment.patient.user != null){
+                        let user =  getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.patient.user
+                        })
+                        getRepository(Notification).save(user);
+                    }
                 }
-            }
-            for(let appointment of result){
-                if(appointment.patient.brigadista != null){
-                    let brigadista = getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.patient.brigadista
-                    })
-                    getRepository(Notification).save(brigadista);
+                for(let appointment of result){
+                    if(appointment.patient.brigadista != null){
+                        let brigadista = getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.patient.brigadista
+                        })
+                        getRepository(Notification).save(brigadista);
+                    }
                 }
-            }
 
-            for(let appointment of result){
-                if(appointment.doctor != null){
-                    let doctor = getRepository(Notification).create({
-                        title:message.data.title,
-                        text:message.data.text,
-                        date:hourNow,
-                        user:appointment.doctor
-                    })
-                    getRepository(Notification).save(doctor);
+                for(let appointment of result){
+                    if(appointment.doctor != null){
+                        let doctor = getRepository(Notification).create({
+                            title:message.data.title,
+                            text:message.data.text,
+                            date:hourNow,
+                            user:appointment.doctor
+                        })
+                        getRepository(Notification).save(doctor);
+                    }
                 }
-            }
-            
-            return {
-                message:'success'        
+                
+                return {
+                    message:'success'        
+                }
+            }catch(e){
+                console.log(`error ${e}`);                
             }
             
         }).catch((error) => {
