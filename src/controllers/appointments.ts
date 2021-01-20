@@ -2,6 +2,7 @@ import {getRepository, getManager} from 'typeorm';
 import fetch from 'node-fetch';
 import moment from 'moment-timezone';
 import Appointment from '../entity/Appointment';
+import Notification from '../entity/Notification';
 import { addBrigadista } from './patient';
 import Patient from '../entity/Patient';
 import { result } from 'lodash';
@@ -107,8 +108,40 @@ const executeReminderForDay = async() =>{
             fcm_tokens.length = 0;
             console.log('successfully')
             for(let appointment of result){
-                await getRepository(Appointment).update(appointment.id,{fcm2:true})
+                await getRepository(Appointment).update(appointment.id,{fcm2:true})                           
             }
+
+            if(result.find(result => result.patient.user != null)){
+               let user =  getRepository(Notification).create({
+                    title:notification.title,
+                    text:notification.text,
+                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                    userId:result.find(result => result.patient.user.id)
+                })
+
+                getRepository(Notification).save(user);
+            }
+            if(result.find(result => result.patient.brigadista != null)){
+                let brigadista = getRepository(Notification).create({
+                    title:notification.title,
+                    text:notification.text,
+                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                    userId:result.find(result => result.patient.brigadista.id)
+                })
+                getRepository(Notification).save(brigadista);
+            }
+
+            if(result.find(result => result.doctor != null)){
+                let doctor = getRepository(Notification).create({
+                    title:notification.title,
+                    text:notification.text,
+                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                    userId:result.find(result => result.doctor.id)
+                })
+                getRepository(Notification).save(doctor);
+            }
+
+           
             return {
                 message:'success'        
             }
