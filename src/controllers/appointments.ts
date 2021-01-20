@@ -75,32 +75,34 @@ const executeReminderForDay = async() =>{
     .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     .andWhere('appointment.fcm2 = false')
     .getMany()
-    console.log(result.length > 0);
     
     if(result.length > 0){
+        console.log("execute reminder for day");
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
             let brigadistToken = appointment.patient.brigadista != null ? appointment.patient.brigadista.token : ''
             fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, brigadistToken)
         }
+
+        var notification = {
+            'title': 'Recuerda Tu Cita Médica',
+            'text': `Tiene una Cita dentro de una hora, exactamente el ${dataAppointment.date} a las ${dataAppointment.hour}.`
+          };
         
-        var message  = {
-            "data":{
-                'title': 'Recuerda Tu Cita Médica',
-                'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
-            },           
-            "priority": "high",
-            "tokens":fcm_tokens
-        };
+          var notification_body = {
+            'notification': notification,
+            'registration_ids': fcm_tokens
+          }
+        
         fetch('https://fcm.googleapis.com/fcm/send',{
         'method':'POST',
         'headers':{
             'Authorization':`key=${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-        'body':JSON.stringify(message)
+        'body':JSON.stringify(notification_body)
         }).then(async() => {
-            try{
+            try{                
                 let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
                 fcm_tokens.length = 0;
                 console.log('successfully')
@@ -111,32 +113,34 @@ const executeReminderForDay = async() =>{
                 for(let appointment of result){
                     if(appointment.patient.user != null){
                         let user =  getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.patient.user
                         })
                         getRepository(Notification).save(user);
                     }
                 }
+
                 for(let appointment of result){
                     if(appointment.patient.brigadista != null){
                         let brigadista = getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.patient.brigadista
                         })
                         getRepository(Notification).save(brigadista);
                     }
                 }
-
+                   
+                    
                 for(let appointment of result){
                     if(appointment.doctor != null){
                         let doctor = getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.doctor
                         })
                         getRepository(Notification).save(doctor);
@@ -166,7 +170,7 @@ const executeReminder24horas = async() =>{
     let fcm_tokens = [];
     let dataAppointment ;
     
-    // console.log(nowAddDay.toString(), 'hora restada '+hourRest.toString(), 'hora agregada '+ hourAdd.toString())
+    console.log(nowAddDay.toString(), 'hora restada '+hourRest.toString(), 'hora agregada '+ hourAdd.toString())
     let result = await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
     .leftJoinAndSelect("patient.user", "user")
@@ -176,23 +180,25 @@ const executeReminder24horas = async() =>{
     .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     .andWhere('appointment.fcm = false')
     .getMany()
-    console.log(result);
+    
     if(result.length > 0){
+        console.log('execute reminder for 24 hour');
         for(let appointment of result){
             dataAppointment = {date:appointment.date, hour:appointment.hour}
             let brigadistToken =appointment.patient.brigadista != null ? appointment.patient.brigadista.token : ''
            
             fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, brigadistToken )
         }
+
+        var notification = {
+            'title': 'Recuerda Tu Cita Médica',
+            'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
+          };
         
-        var message  = {
-            "data":{
-                'title': 'Recuerda Tu Cita Médica',
-                'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
-            },           
-            "priority": "high",
-            "tokens":fcm_tokens
-        };
+          var notification_body = {
+            'notification': notification,
+            'registration_ids': fcm_tokens
+          }
                 
         fetch('https://fcm.googleapis.com/fcm/send',{
         'method':'POST',
@@ -200,7 +206,7 @@ const executeReminder24horas = async() =>{
             'Authorization':`Bearer ${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-        'body':JSON.stringify(message)
+        'body':JSON.stringify(notification_body)
         }).then(async() => {
             try{
                 let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
@@ -213,9 +219,9 @@ const executeReminder24horas = async() =>{
                 for(let appointment of result){
                     if(appointment.patient.user != null){
                         let user =  getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.patient.user
                         })
                         getRepository(Notification).save(user);
@@ -224,9 +230,9 @@ const executeReminder24horas = async() =>{
                 for(let appointment of result){
                     if(appointment.patient.brigadista != null){
                         let brigadista = getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.patient.brigadista
                         })
                         getRepository(Notification).save(brigadista);
@@ -236,9 +242,9 @@ const executeReminder24horas = async() =>{
                 for(let appointment of result){
                     if(appointment.doctor != null){
                         let doctor = getRepository(Notification).create({
-                            title:message.data.title,
-                            text:message.data.text,
-                            date:hourNow,
+                            title:notification_body.notification.title,
+                            text:notification_body.notification.text,
+                            hour:hourNow,
                             user:appointment.doctor
                         })
                         getRepository(Notification).save(doctor);
