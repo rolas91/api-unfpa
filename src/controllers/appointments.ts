@@ -149,11 +149,11 @@ const executeReminder24horas = async() =>{
         }
         
         var message  = {
-            data:{
+            "data":{
                 'title': 'Recuerda Tu Cita Médica',
                 'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
             },
-            tokens:fcm_tokens
+            "tokens":fcm_tokens
         };
                 
         fetch('https://fcm.googleapis.com/fcm/send',{
