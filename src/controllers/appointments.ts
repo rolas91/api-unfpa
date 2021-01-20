@@ -126,7 +126,7 @@ const executeReminderForDay = async() =>{
                     title:notification.title,
                     text:notification.text,
                     date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    userId:result.find(result => result.patient.brigadista.id)
+                    user:result.find(result => result.patient.brigadista.id)
                 })
                 getRepository(Notification).save(brigadista);
             }
@@ -136,7 +136,7 @@ const executeReminderForDay = async() =>{
                     title:notification.title,
                     text:notification.text,
                     date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    userId:result.find(result => result.doctor.id)
+                    user:result.find(result => result.doctor.id)
                 })
                 getRepository(Notification).save(doctor);
             }
