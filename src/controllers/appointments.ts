@@ -148,23 +148,21 @@ const executeReminder24horas = async() =>{
             fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, addBrigadista )
         }
         
-        var notification = {
-            'title': 'Recuerda Tu Cita Médica',
-            'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
-            };
-        
-        var notification_body = {
-        'notificaton': notification,
-        'data':notification,
-        'registration_ids': fcm_tokens
-        }
+        var message  = {
+            data:{
+                'title': 'Recuerda Tu Cita Médica',
+                'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
+            },
+            tokens:fcm_tokens
+        };
+                
         fetch('https://fcm.googleapis.com/fcm/send',{
         'method':'POST',
         'headers':{
-            'Authorization':`key=${process.env.FCM!}`,
+            'Authorization':`Bearer ${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-        'body':JSON.stringify(notification_body)
+        'body':JSON.stringify(message)
         }).then(async() => {
             fcm_tokens.length = 0;
             console.log('successfully')
