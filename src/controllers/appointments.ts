@@ -101,6 +101,7 @@ const executeReminderForDay = async() =>{
         'body':JSON.stringify(message)
         }).then(async() => {
             try{
+                let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
                 fcm_tokens.length = 0;
                 console.log('successfully')
                 for(let appointment of result){
@@ -202,6 +203,7 @@ const executeReminder24horas = async() =>{
         'body':JSON.stringify(message)
         }).then(async() => {
             try{
+                let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
                 fcm_tokens.length = 0;
                 console.log('successfully')
                 for(let appointment of result){
