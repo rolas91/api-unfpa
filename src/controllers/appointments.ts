@@ -112,7 +112,7 @@ const executeReminderForDay = async() =>{
                     let user =  getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.patient.user
                     })
                     getRepository(Notification).save(user);
@@ -123,7 +123,7 @@ const executeReminderForDay = async() =>{
                     let brigadista = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.patient.brigadista
                     })
                     getRepository(Notification).save(brigadista);
@@ -135,7 +135,7 @@ const executeReminderForDay = async() =>{
                     let doctor = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.doctor
                     })
                     getRepository(Notification).save(doctor);
@@ -210,7 +210,7 @@ const executeReminder24horas = async() =>{
                     let user =  getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.patient.user
                     })
                     getRepository(Notification).save(user);
@@ -221,7 +221,7 @@ const executeReminder24horas = async() =>{
                     let brigadista = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.patient.brigadista
                     })
                     getRepository(Notification).save(brigadista);
@@ -233,7 +233,7 @@ const executeReminder24horas = async() =>{
                     let doctor = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:hourNow,
                         user:appointment.doctor
                     })
                     getRepository(Notification).save(doctor);
