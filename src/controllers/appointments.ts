@@ -116,7 +116,7 @@ const executeReminderForDay = async() =>{
                     title:notification.title,
                     text:notification.text,
                     date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    userId:result.find(result => result.patient.user.id)
+                    user:result.find(result => result.patient.user.id)
                 })
 
                 getRepository(Notification).save(user);
