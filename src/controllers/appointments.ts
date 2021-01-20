@@ -154,7 +154,7 @@ const executeReminder24horas = async() =>{
             };
         
         var notification_body = {
-        'notification': notification,
+        'notificaton': notification,
         'data':notification,
         'registration_ids': fcm_tokens
         }
