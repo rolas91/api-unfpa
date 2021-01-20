@@ -87,23 +87,21 @@ const executeReminderForDay = async() =>{
             fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, brigadistToken)
         }
         
-        var notification = {
-            'title': 'Recuerda Tu Cita Médica',
-            'text': `Dentro de un hora tiene una cita médica. Iniciará a las ${dataAppointment.hour}, favor estar atento unos minutos antes.`
-            };
-        
-        var notification_body = {
-        'notification': notification,
-        'data':notification,
-        'registration_ids': fcm_tokens
-        }
+        var message  = {
+            "data":{
+                'title': 'Recuerda Tu Cita Médica',
+                'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
+            },           
+            "priority": "high",
+            "tokens":fcm_tokens
+        };
         fetch('https://fcm.googleapis.com/fcm/send',{
         'method':'POST',
         'headers':{
             'Authorization':`key=${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-        'body':JSON.stringify(notification_body)
+        'body':JSON.stringify(message)
         }).then(async() => {
             fcm_tokens.length = 0;
             console.log('successfully')
@@ -114,9 +112,9 @@ const executeReminderForDay = async() =>{
             for(let appointment of result){
                 if(appointment.patient.user != null){
                     let user =  getRepository(Notification).create({
-                        title:notification.title,
-                        text:notification.text,
-                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.patient.user
                     })
                     getRepository(Notification).save(user);
@@ -125,9 +123,9 @@ const executeReminderForDay = async() =>{
             for(let appointment of result){
                 if(appointment.patient.brigadista != null){
                     let brigadista = getRepository(Notification).create({
-                        title:notification.title,
-                        text:notification.text,
-                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.patient.brigadista
                     })
                     getRepository(Notification).save(brigadista);
@@ -137,9 +135,9 @@ const executeReminderForDay = async() =>{
             for(let appointment of result){
                 if(appointment.doctor != null){
                     let doctor = getRepository(Notification).create({
-                        title:notification.title,
-                        text:notification.text,
-                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.doctor
                     })
                     getRepository(Notification).save(doctor);
@@ -208,6 +206,42 @@ const executeReminder24horas = async() =>{
             for(let appointment of result){
                 await getRepository(Appointment).update(appointment.id,{fcm:true})
             }
+
+            for(let appointment of result){
+                if(appointment.patient.user != null){
+                    let user =  getRepository(Notification).create({
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        user:appointment.patient.user
+                    })
+                    getRepository(Notification).save(user);
+                }
+            }
+            for(let appointment of result){
+                if(appointment.patient.brigadista != null){
+                    let brigadista = getRepository(Notification).create({
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        user:appointment.patient.brigadista
+                    })
+                    getRepository(Notification).save(brigadista);
+                }
+            }
+
+            for(let appointment of result){
+                if(appointment.doctor != null){
+                    let doctor = getRepository(Notification).create({
+                        title:message.data.title,
+                        text:message.data.text,
+                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        user:appointment.doctor
+                    })
+                    getRepository(Notification).save(doctor);
+                }
+            }
+            
             return {
                 message:'success'        
             }
