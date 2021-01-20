@@ -152,11 +152,7 @@ const executeReminder24horas = async() =>{
             "data":{
                 'title': 'Recuerda Tu Cita Médica',
                 'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
-            },
-            "notification":{
-                'title': 'Recuerda Tu Cita Médica',
-                'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
-            },
+            },           
             "priority": "high",
             "tokens":fcm_tokens
         };
