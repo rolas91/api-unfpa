@@ -3,9 +3,6 @@ import fetch from 'node-fetch';
 import moment from 'moment-timezone';
 import Appointment from '../entity/Appointment';
 import Notification from '../entity/Notification';
-import { addBrigadista } from './patient';
-import Patient from '../entity/Patient';
-import { result } from 'lodash';
 
 const register = async(data:{
     patient:any;
@@ -78,7 +75,7 @@ const executeReminderForDay = async() =>{
     .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     .andWhere('appointment.fcm2 = false')
     .getMany()
-    console.log(result);
+    console.log(result.length > 0);
     
     if(result.length > 0){
         for(let appointment of result){
@@ -103,6 +100,7 @@ const executeReminderForDay = async() =>{
         },
         'body':JSON.stringify(message)
         }).then(async() => {
+           
             fcm_tokens.length = 0;
             console.log('successfully')
             for(let appointment of result){
@@ -114,7 +112,7 @@ const executeReminderForDay = async() =>{
                     let user =  getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.patient.user
                     })
                     getRepository(Notification).save(user);
@@ -125,7 +123,7 @@ const executeReminderForDay = async() =>{
                     let brigadista = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.patient.brigadista
                     })
                     getRepository(Notification).save(brigadista);
@@ -137,7 +135,7 @@ const executeReminderForDay = async() =>{
                     let doctor = getRepository(Notification).create({
                         title:message.data.title,
                         text:message.data.text,
-                        date:moment().tz("America/Managua").format('HH:mm:ss'),
+                        date:moment(new Date).tz("America/Managua").format('HH:mm:ss'),
                         user:appointment.doctor
                     })
                     getRepository(Notification).save(doctor);
@@ -181,7 +179,7 @@ const executeReminder24horas = async() =>{
             dataAppointment = {date:appointment.date, hour:appointment.hour}
             let brigadistToken =appointment.patient.brigadista != null ? appointment.patient.brigadista.token : ''
            
-            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, addBrigadista )
+            fcm_tokens.push(appointment.doctor.token, appointment.patient.user.token, brigadistToken )
         }
         
         var message  = {
