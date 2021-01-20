@@ -111,34 +111,39 @@ const executeReminderForDay = async() =>{
                 await getRepository(Appointment).update(appointment.id,{fcm2:true})                           
             }
 
-            if(result.find(result => result.patient.user != null)){
-               let user =  getRepository(Notification).create({
-                    title:notification.title,
-                    text:notification.text,
-                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    user:result.find(result => result.patient.user.id)
-                })
-
-                getRepository(Notification).save(user);
+            for(let appointment of result){
+                if(appointment.patient.user != null){
+                    let user =  getRepository(Notification).create({
+                        title:notification.title,
+                        text:notification.text,
+                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        user:appointment.patient.user
+                    })
+                    getRepository(Notification).save(user);
+                }
             }
-            if(result.find(result => result.patient.brigadista != null)){
-                let brigadista = getRepository(Notification).create({
-                    title:notification.title,
-                    text:notification.text,
-                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    user:result.find(result => result.patient.brigadista.id)
-                })
-                getRepository(Notification).save(brigadista);
+            for(let appointment of result){
+                if(appointment.patient.brigadista != null){
+                    let brigadista = getRepository(Notification).create({
+                        title:notification.title,
+                        text:notification.text,
+                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        user:appointment.patient.brigadista
+                    })
+                    getRepository(Notification).save(brigadista);
+                }
             }
 
-            if(result.find(result => result.doctor != null)){
-                let doctor = getRepository(Notification).create({
-                    title:notification.title,
-                    text:notification.text,
-                    date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
-                    user:result.find(result => result.doctor.id)
-                })
-                getRepository(Notification).save(doctor);
+            for(let appointment of result){
+                if(appointment.doctor != null){
+                    let doctor = getRepository(Notification).create({
+                        title:notification.title,
+                        text:notification.text,
+                        date:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss'),
+                        user:appointment.doctor
+                    })
+                    getRepository(Notification).save(doctor);
+                }
             }
 
            
