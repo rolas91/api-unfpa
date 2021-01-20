@@ -16,5 +16,5 @@ export default class Notification{
     date:Date
     
     @ManyToOne(() => User, user => user.messages)
-    userId:User;
+    user:User;
 }
