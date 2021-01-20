@@ -9,6 +9,7 @@ import * as center from '../controllers/center';
 import * as patient from '../controllers/patient';
 import * as appointment from '../controllers/appointments';
 import * as categorylist from '../controllers/categorytips';
+import * as notification from '../controllers/notification';
 import * as tip from '../controllers/tips';
 import fetch from 'node-fetch';
 
@@ -580,6 +581,25 @@ export default (app: Application): void => {
       res.status(500).json({
         message:'error'+e
       })
+    }
+  });
+
+  app.post('/api/v1/notification', async(req, res) => {
+    try{
+      const result = await notification.getNotifications(req.body);
+      if(result.length > 0){
+        res.status(200).json({
+          message:'success',
+          notifications:result
+        });
+      }else{
+        res.status(200).json({
+          message:'unsuccess',
+          notifications:''
+        });
+      }
+    }catch(e){
+      console.log(`error ${e}`)
     }
   });
 };
