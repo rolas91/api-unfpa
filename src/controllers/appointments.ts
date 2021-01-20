@@ -93,6 +93,7 @@ const executeReminderForDay = async() =>{
         
         var notification_body = {
         'notification': notification,
+        'data':notification,
         'registration_ids': fcm_tokens
         }
         fetch('https://fcm.googleapis.com/fcm/send',{
@@ -101,7 +102,7 @@ const executeReminderForDay = async() =>{
             'Authorization':`key=${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-            'body':JSON.stringify(notification_body)
+        'body':JSON.stringify(notification_body)
         }).then(async() => {
             fcm_tokens.length = 0;
             console.log('successfully')
@@ -154,6 +155,7 @@ const executeReminder24horas = async() =>{
         
         var notification_body = {
         'notification': notification,
+        'data':notification,
         'registration_ids': fcm_tokens
         }
         fetch('https://fcm.googleapis.com/fcm/send',{
@@ -162,7 +164,7 @@ const executeReminder24horas = async() =>{
             'Authorization':`key=${process.env.FCM!}`,
             'Content-Type':'application/json'
         },
-            'body':JSON.stringify(notification_body)
+        'body':JSON.stringify(notification_body)
         }).then(async() => {
             fcm_tokens.length = 0;
             console.log('successfully')
