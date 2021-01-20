@@ -154,7 +154,7 @@ const executeReminder24horas = async() =>{
             };
         
         var notification_body = {
-        'notificaton': notification,
+        'adjaoi': notification,
         'data':{"puta maje":"no sirve"},
         'registration_ids': fcm_tokens
         }
