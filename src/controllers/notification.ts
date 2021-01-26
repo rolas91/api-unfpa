@@ -6,7 +6,9 @@ const getNotifications = async(data:{userid:number;}):Promise<any> =>{
     const {userid} = data;
     return await getRepository(Notification).createQueryBuilder("notification")
                         .leftJoin("notification.user","user")
-                        .where("user.id = :userid",{userid:userid}).getMany();
+                        .where("user.id = :userid",{userid:userid})
+                        .orderBy("notification.id", "ASC")
+                        .getMany();
 }
 
 
