@@ -265,6 +265,9 @@ const executeReminder24horas = async() =>{
 }
 
 const updateAppointment = async(data:{
+    typeAppointment:string;
+    date: Date;
+    hour:Date;
     appointment:number;
     gestationWeeks:number;
     reportOfFetalMovements:string;
@@ -275,14 +278,14 @@ const updateAppointment = async(data:{
     otherRemarks:string;
 }):Promise<any> => {
     try{
-        const {appointment, gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks} = data;
+        const {typeAppointment,date,hour,appointment, gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks} = data;
         let response = await getRepository(Appointment).findOne({
             where:{
                 id:appointment
             }
         })
         if(response != undefined || response != null){
-            return await getRepository(Appointment).update(response.id,{gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks, gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')})
+            return await getRepository(Appointment).update(response.id,{typeAppointment,date,hour,gestationWeeks,reportOfFetalMovements,arObro,mainReasonForTheConsultation,diagnostics,plans,otherRemarks, gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')})
         }else{
             return null
         }
