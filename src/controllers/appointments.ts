@@ -352,6 +352,7 @@ const getAppointmentsByBrigadista = async (brigadistId:any, today:Date) => {
 const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
     return await getRepository(Appointment).createQueryBuilder("appointment")
       .leftJoinAndSelect("appointment.patient", "patient")
+      .addSelect('gestationWeeksDate')
       .leftJoinAndSelect("patient.user", "user")
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
       .andWhere("appointment.date = :today", {today:today})
