@@ -1,6 +1,7 @@
 import {getRepository, getManager} from 'typeorm';
 import fetch from 'node-fetch';
 import moment from 'moment-timezone';
+import moment2 from 'moment';
 import Appointment from '../entity/Appointment';
 import Notification from '../entity/Notification';
 
@@ -324,7 +325,8 @@ const getAppointmentsByBrigadista = async (brigadistId:any, today:Date) => {
 }
 
 const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
-    return await getRepository(Appointment).createQueryBuilder("appointment")
+   
+    let response = await getRepository(Appointment).createQueryBuilder("appointment")
       .leftJoinAndSelect("appointment.patient", "patient")
       .leftJoinAndSelect("patient.user", "user")
       .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
@@ -333,6 +335,11 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .orderBy("appointment.hour","ASC")
       .limit(1)
       .getOne();
+     
+      
+     response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+    
+      return response;
 }
 
 

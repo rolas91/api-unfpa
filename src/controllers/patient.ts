@@ -147,6 +147,17 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getRawMany();
   }
 
+//   const getPatientsAndDoctors = async (doctorId:any) => {
+//     return await getRepository(Patient)
+//     .createQueryBuilder("patient")
+//     .leftJoinAndSelect("patient.user","user")
+//     .leftJoin("patient.appointments","appointments")
+//     .leftJoin("patient.doctors", "doctors")
+//     .where("doctors.id = :id",{id:doctorId})
+//     .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 1 THEN 1 ELSE NULL END) as totalPresencial')
+//     .getRawMany();
+//   }
+
   const getDoctorByPatient = async (userid:any) => {
     return await getRepository(Patient)
     .createQueryBuilder("patient")
