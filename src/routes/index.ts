@@ -352,6 +352,21 @@ export default (app: Application): void => {
     }
   })
 
+  app.post('/api/v1/patients/getcontact', async(req, res) => {
+    try {
+      const result = await user.getPatientsAndDoctors();
+      res.status(200).json({
+        message:'successfully',
+        doctors:result
+      })
+    } catch (error) {
+      res.status(200).json({ 
+        message: 'unsuccess',
+        doctors:[]
+      });
+    }
+  })
+
   app.post('/api/v1/patients/getdoctors', async(req, res) => {
     try {
       const result = await patient.getDoctorByPatient(req.body.userid);
@@ -481,6 +496,7 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+
   app.post('/api/v1/appointment/getbypatient', async(req, res) => {
     try {
       const result = await appointment.getAppointmentByPatient(req.body.patient, req.body.today, req.body.hour);
@@ -500,6 +516,7 @@ export default (app: Application): void => {
       res.status(500).send({ message: error.message });
     }
   });
+  
 
   app.post('/api/v1/appointment/getbybrigadista', async(req, res) => {
     try {

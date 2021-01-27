@@ -59,7 +59,12 @@ const getUserLike = async (data:{
   
 };
 
-
+const getPatientsAndDoctors = async () => {
+  return await getRepository(Users)
+  .createQueryBuilder('user')
+  .where("user.typeUser = 'medico'")
+  .getMany();
+}
 
 const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
@@ -90,4 +95,4 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   await getRepository(Message).save(newMessage)
 }
 
-export { getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
+export { getPatientsAndDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
