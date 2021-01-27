@@ -176,6 +176,23 @@ export default (app: Application): void => {
   });
   
   //users
+
+  
+  app.post('/api/v1/user/getdoctors', async(req, res) => {
+    try {
+      const result = await user.getUserDoctors();
+      res.status(200).json({
+        message:'successfully',
+        doctors:result
+      })
+    } catch (error) {
+      res.status(200).json({ 
+        message: 'unsuccess',
+        doctors:[]
+      });
+    }
+  })
+
   app.post('/api/v1/user/getmessage', async(req, res) => {
       try{
         const response = await user.getMessages(req.body);
@@ -349,21 +366,6 @@ export default (app: Application): void => {
       })
     } catch (error) {
       res.status(500).send({ message: error.message });
-    }
-  })
-
-  app.post('/api/v1/patients/getcontact', async(req, res) => {
-    try {
-      const result = await user.getPatientsAndDoctors();
-      res.status(200).json({
-        message:'successfully',
-        doctors:result
-      })
-    } catch (error) {
-      res.status(200).json({ 
-        message: 'unsuccess',
-        doctors:[]
-      });
     }
   })
 

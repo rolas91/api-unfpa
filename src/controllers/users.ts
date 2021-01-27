@@ -59,7 +59,7 @@ const getUserLike = async (data:{
   
 };
 
-const getPatientsAndDoctors = async () => {
+const getUserDoctors = async () => {
   return await getRepository(Users)
   .createQueryBuilder('user')
   .where("user.typeUser = 'medico'")
@@ -95,4 +95,4 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   await getRepository(Message).save(newMessage)
 }
 
-export { getPatientsAndDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
+export { getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
