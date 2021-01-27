@@ -296,17 +296,18 @@ const updateAppointmentReprogramation = async(data:{
     typeAppointment:string;
     date: Date;
     hour:Date;
+    note:string;
     appointment:number;
 }):Promise<any> => {
     try{
-        const {typeAppointment,date,hour,appointment} = data;
+        const {typeAppointment,date,hour,note,appointment} = data;
         let response = await getRepository(Appointment).findOne({
             where:{
                 id:appointment
             }
         })
         if(response != undefined || response != null){
-            return await getRepository(Appointment).update(response.id,{typeAppointment,date,hour})
+            return await getRepository(Appointment).update(response.id,{typeAppointment,date,hour,note})
         }else{
             return null
         }
