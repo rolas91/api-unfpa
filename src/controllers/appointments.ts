@@ -294,6 +294,31 @@ const updateAppointment = async(data:{
     }
 }
 
+
+const updateAppointmentReprogramation = async(data:{
+    typeAppointment:string;
+    date: Date;
+    hour:Date;
+    appointment:number;
+}):Promise<any> => {
+    try{
+        const {typeAppointment,date,hour,appointment} = data;
+        let response = await getRepository(Appointment).findOne({
+            where:{
+                id:appointment
+            }
+        })
+        if(response != undefined || response != null){
+            return await getRepository(Appointment).update(response.id,{typeAppointment,date,hour})
+        }else{
+            return null
+        }
+    }catch(e){
+        console.log(`error ${e}`);        
+    }
+}
+
+
 const getAppointmentByDoctor = async (doctorId:any, today:Date) => {   
     const entityManager = getManager();
     const responseQuery = entityManager.query(`
@@ -398,6 +423,7 @@ export {
     getAppointmentByBrigadista,
     getAppointmentsByBrigadista,
     getDateForReminder,
-    updateAppointment
+    updateAppointment,
+    updateAppointmentReprogramation
 }
 
