@@ -59,10 +59,12 @@ const getUserLike = async (data:{
   
 };
 
-const getUserDoctors = async () => {
+const getUserDoctors = async (data:{id:number}) => {
+  const {id} = data;
   return await getRepository(Users)
   .createQueryBuilder('user')
   .where("user.typeUser = 'medico'")
+  .andWhere("user.id <> :id",{id:id})
   .getMany();
 }
 

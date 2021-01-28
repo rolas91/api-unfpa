@@ -180,7 +180,7 @@ export default (app: Application): void => {
   
   app.post('/api/v1/user/getdoctors', async(req, res) => {
     try {
-      const result = await user.getUserDoctors();
+      const result = await user.getUserDoctors(req.body);
       res.status(200).json({
         message:'successfully',
         doctors:result
