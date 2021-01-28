@@ -59,7 +59,7 @@ io.on('connection',function(socket) {
         const room_data = JSON.parse(data)
         userName = room_data.userName;
         const roomName = room_data.roomName;
-        
+        console.log(roomName)
         socket.join(`${roomName}`)
         // console.log(`Username : ${userName} joined Room Name : ${roomName}`)
         
