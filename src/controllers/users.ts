@@ -44,17 +44,22 @@ const getOnlyUser = async (data:{
 const getUserLike = async (data:{
   params:string;
   type:string;
+  doctorId:number
 }): Promise<any> => {
   const entityManager = getManager();
-  const {params, type} = data;
+  const {params, type, doctorId} = data;
 
   if(type == "1"){
-    return await entityManager.query(`SELECT p.id as idPaciente, u.* FROM user u 
-  inner join patient p on u.id = p.userId WHERE (concat(u.firstname,' ',u.lastname) 
-  LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
+  //   return await entityManager.query(`SELECT DISTINCT(u.id), u.firstname,u.lastname, p.id as idPaciente FROM user u 
+  // inner join patient p on u.id = p.userId WHERE (concat(u.firstname,' ',u.lastname) 
+  // LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
+  return await entityManager.query(`SELECT * FROM user u 
+  inner join patient p on u.id = p.userId inner join patient_doctors_user pu on p.id = pu.patientId WHERE (concat(u.firstname,' ',u.lastname) 
+  LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and pu.userId = ${doctorId}`)
   }
   else{
-    return await entityManager.query(`SELECT * FROM user WHERE (concat(firstname,' ',lastname) LIKE '${params}%' OR email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%') and typeUser = 'paciente' `)
+    return await entityManager.query(`SELECT * FROM user  WHERE (concat(firstname,' ',lastname) LIKE '${params}%' OR 
+    email LIKE '${params}%' OR phone LIKE '${params}%' OR cedula LIKE '${params}%') and typeUser = 'paciente' `)
   }
   
 };
