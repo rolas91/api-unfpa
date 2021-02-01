@@ -87,7 +87,8 @@ const executeReminderForDay = async() =>{
 
         var notification = {
             'title': 'Recuerda Tu Cita Médica',
-            'text': `Tiene una Cita dentro de una hora, exactamente el ${dataAppointment.date} a las ${dataAppointment.hour}.`
+            'text': `Tiene una Cita dentro de una hora, exactamente el ${dataAppointment.date} a las ${dataAppointment.hour}. 
+                     Favor estar pendiente dentro de la app al menos 5 min antes de la cita`
           };
         
           var notification_body = {
@@ -193,7 +194,8 @@ const executeReminder24horas = async() =>{
 
         var notification = {
             'title': 'Recuerda Tu Cita Médica',
-            'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}.`
+            'text': `Tiene una Cita Médica mañana ${dataAppointment.date} a las ${dataAppointment.hour}. 
+                    Favor estar pendiente dentro de la app al menos 5 min antes de la cita`
           };
         
           var notification_body = {
