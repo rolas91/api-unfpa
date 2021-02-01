@@ -131,8 +131,9 @@ const resetPassword = async(data:{
 
   let {token} = data;
   let {password} =data;
+  
   password = await bcrypt.hash(password, 10);
-  console.log(JSON.parse(),password)
+  console.log(token,password)
   let searchUser = await getRepository(Users).findOne({
     where:{
       emailToken:token
