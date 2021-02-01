@@ -64,7 +64,11 @@ const registerPatient = async(data:{
                     medicalObservations, 
                     doctors:[doctor]
                 })
-                return await getRepository(Patient).save(newPatient);               
+                await getRepository(Patient).save(newPatient);
+                return {
+                    code:"sucess",
+                    message:'Paciente asignada correctamente.', 
+                }             
             }else{
                return {
                     code:"duplicate",
