@@ -7,11 +7,7 @@ html
         div
             h1= "Por favor rellene el formulario para cambiar su contraseña"
             
-            form(action="/new-password" method="POST")
-                label Correo:  
-                br              
-                input(type="email" name="email" placeholder="")
-                br
+            form(action="/success-recovery-password" method="POST")                
                 label Contraseña: 
                 br               
                 input(type="password" name="password" placeholder="")
@@ -19,6 +15,8 @@ html
                 label Repite Contraseña:
                 br                
                 input(type="password" name="password2" placeholder="")
+
+                input(type="hidden" name="token" value={token})
 
                 h3 #{message}
 

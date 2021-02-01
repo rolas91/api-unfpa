@@ -52,6 +52,9 @@ export default class User{
     @Column()
     token:string;
 
+    @Column({nullable:true})
+    emailToken:string;
+
     @OneToMany(() => Patient, patient => patient.user)
     patients: Patient[];
 

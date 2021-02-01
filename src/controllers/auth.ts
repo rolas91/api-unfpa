@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import validator from 'validator';
-import _ from 'lodash';
+import _, { update } from 'lodash';
 import {transporter} from '../config/mailer';
 import {getRepository} from 'typeorm';
 
@@ -93,9 +93,12 @@ const sendMailResetPassword = async(data:{
       email:email
     }
   });
+  
 
   const token = jsonwebtoken.sign({userId:searchUser.id},process.env.SECRET!,{expiresIn:'10m'})
-  let verificationLink = `https://api-unfpa.herokuapp.com/new-password`;
+  let verificationLink = `https://api-unfpa.herokuapp.com/new-password/${token}`;
+
+  await getRepository(Users).update(searchUser.id, {emailToken:token})
 
   try{
     if(searchUser != undefined){
@@ -122,17 +125,17 @@ const sendMailResetPassword = async(data:{
 }
 
 const resetPassword = async(data:{
-  email:string;
+  token:any;
   password:string;
 }):Promise<any> => {
 
-  const {email} = data;
+  let {token} = data;
   let {password} =data;
   password = await bcrypt.hash(password, 10);
-  
+  console.log(JSON.parse(),password)
   let searchUser = await getRepository(Users).findOne({
     where:{
-      email:email
+      emailToken:token
     }
   });
  

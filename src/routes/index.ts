@@ -50,8 +50,8 @@ export default (app: Application): void => {
     });
   });
   
-  app.get('/new-password', (req, res) => {
-    res.render('changepass');     
+  app.get('/new-password/:token', (req, res) => {
+    res.render('changepass',{token:req.params.token});     
   });
 
   app.post('/api/v1/auth/fcm/token', async(req, res) => {
@@ -68,11 +68,11 @@ export default (app: Application): void => {
     }
   });
 
-  app.post('/new-password', async(req, res) => {
+  app.post('/success-recovery-password', async(req, res) => {
     try{
       const result = await auth.resetPassword(req.body)
       if(result.message === 'success'){
-        res.render('changepass',{message:"Has cambiado correctamente tu contraseña"});   
+        res.render('success',{message:"Has cambiado correctamente tu contraseña"});   
       }else{
         res.render('changepass',{message:"Ha habido un error al cambiar tu contraseña"});  
       }
@@ -410,7 +410,7 @@ export default (app: Application): void => {
       const response = await appointment.register(req.body)
       if(response){
         res.status(200).json({
-          message:'successfully',
+          message:'successfuly',
           data:response
         });
       }else{
