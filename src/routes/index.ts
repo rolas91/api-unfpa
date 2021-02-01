@@ -117,7 +117,6 @@ export default (app: Application): void => {
         expiresIn: EXPIRES_IN
       });
     } catch (e) {
-      console.log(e);
       if (e.errors) {
         let duplicatedValues = [] as string[];
         if (e.errors.email) {

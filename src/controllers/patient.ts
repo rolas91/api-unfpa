@@ -1,4 +1,4 @@
-import {getRepository, getConnection} from 'typeorm';
+import {getRepository, getConnection,getManager} from 'typeorm';
 import bcrypt from 'bcrypt';
 import Patient from '../entity/Patient';
 import Users from '../entity/User';
@@ -28,33 +28,65 @@ const registerPatient = async(data:{
     treatmentsReceived:string;
     medicalObservations:string;
 }):Promise<any> => {
-    const {userid,doctorid, pathologicalAntecedents, treatmentsReceived, medicalObservations, gestationWeeks, } = data;    
-    const doctor = await getRepository(Users).findOne({
-        where:{
-            id:doctorid,
-            typeUser:'medico'
-        }
-    });
+    const entityManager = getManager();
+    const {userid,doctorid, pathologicalAntecedents, treatmentsReceived, medicalObservations, gestationWeeks, } = data;   
+
     const user = await getRepository(Users).findOne({
         where:{
             id:userid,
+            typeUser:'paciente'
         }
     });
-    if(doctor && user){
-        const newPatient = getRepository(Patient).create({
-            user, 
-            brigadista:null,
-            gestationWeeks,  
-            pathologicalAntecedents, 
-            treatmentsReceived, 
-            medicalObservations, 
-            doctors:[doctor]
-        })
-        return await getRepository(Patient).save(newPatient);
+    
+    if(user != undefined){
+        const patient = await getRepository(Patient).createQueryBuilder("patient")
+        .leftJoinAndSelect("patient.user", "user")
+        .where("user.id = :userid", {userid}).getOne();
+
+        const doctor = await getRepository(Users).findOne({
+            where:{
+                id:doctorid,
+                typeUser:'medico'
+            }
+        });
+
+        if(patient != undefined){
+            const validaPatientDoctor = await entityManager.query(`SELECT * FROM patient_doctors_user pu 
+            inner join patient p on pu.patientId = p.id inner join user u on p.userId = u.id WHERE pu.userId = ${doctorid} AND p.userId = ${patient.user.id}`)
+            
+            if(validaPatientDoctor.length == 0){                               
+                const newPatient = getRepository(Patient).create({
+                    user, 
+                    brigadista:null,
+                    gestationWeeks,  
+                    pathologicalAntecedents, 
+                    treatmentsReceived, 
+                    medicalObservations, 
+                    doctors:[doctor]
+                })
+                return await getRepository(Patient).save(newPatient);               
+            }else{
+                throw {
+                    code:"error",
+                    message:'Ya te has asignado este paciente', 
+                }
+            }
+        }else{
+            const newPatient = getRepository(Patient).create({
+                user, 
+                brigadista:null,
+                gestationWeeks,  
+                pathologicalAntecedents, 
+                treatmentsReceived, 
+                medicalObservations, 
+                doctors:[doctor]
+            })
+            return await getRepository(Patient).save(newPatient);
+        }
     }else{
         throw {
             code:"error",
-            message:'verifique que sea un usurio valido y un medico valido', 
+            message:'verifique que sea un usurio valido', 
         }
     }
 
