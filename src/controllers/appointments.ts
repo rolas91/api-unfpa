@@ -21,7 +21,16 @@ const register = async(data:{
     note:string
 }): Promise<any> => {
     const {patient, doctor, gestationWeeks, reportOfFetalMovements,arObro,typeAppointment,otherRemarks,plans, diagnostics, mainReasonForTheConsultation,date, hour,note} = data;
+    
+    let response = await getRepository(Appointment).findOne({
+        where:{
+            date,
+            hour
+        }
+    })
 
+
+   if(response == undefined){
     const newAppointment = getRepository(Appointment).create({
         patient,
         doctor,
@@ -39,6 +48,9 @@ const register = async(data:{
         gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
     });
     return await getRepository(Appointment).save(newAppointment);
+   }else{
+       return false;
+   }
 }
 const getAppointment = async ():Promise<any> => {
   return await getRepository(Appointment).createQueryBuilder("appointment")
