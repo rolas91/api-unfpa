@@ -68,7 +68,7 @@ const registerPatient = async(data:{
             }else{
                return {
                     code:"duplicate",
-                    message:'Ya te has asignado este paciente', 
+                    message:'Esta paciente ya se te ha asignado.', 
                 }
             }
         }else{
