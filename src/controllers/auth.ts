@@ -107,8 +107,10 @@ const sendMailResetPassword = async(data:{
       to: searchUser.email, // list of receivers
       subject: "Recuperar Contraseña", // Subject line
       html: `
-      <b>Por favor de click en el siguiente link, o pega este enlace en tu navegador web para completar el proceso</b><br>
-      <a href="${verificationLink}">${verificationLink}</a>
+      <p>Por favor de click en el siguiente <b></b><a href="${verificationLink}">Link</a></b>, o bien pega este enlace en tu navegador web para completar el proceso</p><br>
+
+      <p>${verificationLink}</p>
+      
       `, // html body
     });
     return {
@@ -131,12 +133,13 @@ const resetPassword = async(data:{
 
   let {token} = data;
   let {password} =data;
-  
+
   password = await bcrypt.hash(password, 10);
-  console.log(token,password)
+  let tokenParse = JSON.parse(token)
+
   let searchUser = await getRepository(Users).findOne({
     where:{
-      emailToken:token
+      emailToken:tokenParse.token
     }
   });
  
