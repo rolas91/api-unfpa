@@ -66,7 +66,7 @@ const registerPatient = async(data:{
                 })
                 await getRepository(Patient).save(newPatient);
                 return {
-                    code:"sucess",
+                    code:"success",
                     message:'Paciente asignada correctamente.', 
                 }             
             }else{
