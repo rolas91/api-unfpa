@@ -53,7 +53,7 @@ const registerPatient = async(data:{
         if(patient != undefined){
             const validaPatientDoctor = await entityManager.query(`SELECT * FROM patient_doctors_user pu 
             inner join patient p on pu.patientId = p.id inner join user u on p.userId = u.id WHERE pu.userId = ${doctorid} AND p.userId = ${patient.user.id}`)
-            
+
             if(validaPatientDoctor.length == 0){                               
                 const newPatient = getRepository(Patient).create({
                     user, 
@@ -66,8 +66,8 @@ const registerPatient = async(data:{
                 })
                 return await getRepository(Patient).save(newPatient);               
             }else{
-                throw {
-                    code:"error",
+               return {
+                    code:"duplicate",
                     message:'Ya te has asignado este paciente', 
                 }
             }
@@ -84,7 +84,7 @@ const registerPatient = async(data:{
             return await getRepository(Patient).save(newPatient);
         }
     }else{
-        throw {
+        return {
             code:"error",
             message:'verifique que sea un usurio valido', 
         }
