@@ -23,7 +23,7 @@ process.env.TZ = 'America/Managua'; // zona horaria de la app
 
 const app = express();
 // public files
-app.use('/static',express.static(__dirname + '/public'));
+app.use('/static',express.static('views/public'));
 createConnection();
 
 // parse application/x-www-form-urlencoded

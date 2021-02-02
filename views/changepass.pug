@@ -2,25 +2,26 @@ html
     head
         title='Cambiar contraseña'
         style
-            include ./style.css
-    body
+            include ./public/css/style.css
+    body.background
         div
-            h1= "Por favor rellene el formulario para cambiar su contraseña"
-            
-            form(action="/success-recovery-password" method="POST")                
-                label Contraseña: 
-                br               
-                input(type="password" name="password" placeholder="")
-                br
-                label Repite Contraseña:
-                br                
-                input(type="password" name="password2" placeholder="")
+            form(action="/success-recovery-password" method="POST")
+                div.box-center
+                    img(src="/static/img/logo.png", alt="logo")
+                div.box-center               
+                    label Contraseña
+                    br               
+                    input(type="password" name="password" placeholder="")
+                    br
+                    label Repite Contraseña
+                    br                
+                    input(type="password" name="password2" placeholder="")
 
-                input(type="hidden" name="token" value={token})
+                    input(type="hidden" name="token" value={token})
 
-                h3 #{message}
+                    h3 #{message}
 
-                //- h3 (class='error') #{error}
+                    //- h3 (class='error') #{error}
 
-                input(type="submit" name="enviar" value="Cambiar contraseña")
+                    input(type="submit" name="enviar" value="Cambiar contraseña")
                 

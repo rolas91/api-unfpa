@@ -1,8 +1,11 @@
 html
     head
-        title='Contraseña actualizada correctamente'
+        title='Exito!'
         style
-            include ./style.css
-    body
-        div
-            h1 #{message}
+            include ./public/css/style.css
+    body.background
+        .box-center-img-success
+             img.img-success(src="/static/img/check_icon.png", alt="check")
+             h3.h3-success #{message}
+            
+                

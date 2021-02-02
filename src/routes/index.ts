@@ -73,6 +73,8 @@ export default (app: Application): void => {
       const result = await auth.resetPassword(req.body)
       if(result.message === 'success'){
         res.render('success',{message:"Has cambiado correctamente tu contraseña"});   
+      }else if(result.message === 'not-same-password'){
+        res.render('changepass',{message:"Las contraseñas no coinciden"}); 
       }else{
         res.render('changepass',{message:"Ha habido un error al cambiar tu contraseña"});  
       }

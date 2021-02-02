@@ -129,10 +129,17 @@ const sendMailResetPassword = async(data:{
 const resetPassword = async(data:{
   token:any;
   password:string;
+  password2:string;
 }):Promise<any> => {
 
   let {token} = data;
-  let {password} =data;
+  let {password, password2} =data;
+
+  if(password != password2){
+    return {
+      message:'not-same-password'
+    }
+  }
 
   password = await bcrypt.hash(password, 10);
   let tokenParse = JSON.parse(token)
