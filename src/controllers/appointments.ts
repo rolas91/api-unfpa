@@ -5,6 +5,18 @@ import moment2 from 'moment';
 import Appointment from '../entity/Appointment';
 import Notification from '../entity/Notification';
 
+const cancelAppointment = async(data:{
+    appointment:number;
+    reason:string;
+}) =>{
+    const {appointment,reason} = data;
+    try{
+        return await getRepository(Appointment).update(appointment,{reasonCancel:reason, cancel:true})
+    }catch(e){
+        console.log(e);
+    }
+}
+
 const register = async(data:{
     patient:any;
     doctor:any;
@@ -444,6 +456,7 @@ export {
     getAppointmentsByBrigadista,
     getDateForReminder,
     updateAppointment,
-    updateAppointmentReprogramation
+    updateAppointmentReprogramation,
+    cancelAppointment
 }
 

@@ -71,6 +71,12 @@ export default class Appointment{
     @Column()
     note:string;
 
+    @Column({default:false})
+    cancel:boolean;
+
+    @Column()
+    reasonCancel:string;
+
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
 

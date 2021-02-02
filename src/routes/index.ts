@@ -407,6 +407,24 @@ export default (app: Application): void => {
   })
 
   //Appointment
+  app.post('/api/v1/appointment/cancel',async(req, res) => {
+      try{
+        let result = await appointment.cancelAppointment(req.body)
+        if(result != undefined){
+          res.status(200).json({
+            message:'successfuly'
+          })
+        }else{
+          res.status(200).json({
+            message:'unsuccessfuly'
+          })
+        }
+      }catch(e){
+        res.status(200).json({
+          message:`successfuly ${e}`
+        })
+      }
+  });
   app.post('/api/v1/appointment/register', async(req, res) => {
     try {
       const response = await appointment.register(req.body)
