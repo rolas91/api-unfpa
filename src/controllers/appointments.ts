@@ -378,26 +378,24 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:string) => {
     let dateTime = moment().tz("America/Managua").format('YYYY-MM-DD');
     let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
     let hourAdd = moment(dateTime).add(15, 'minutes').format('HH:mm:ss');
-    let dateHour = hour.split(":")
-    let newHour = parseInt(dateHour[0])+15
-    let completeHour = newHour+':'+dateHour[1]+':'+dateHour[2]
-    console.log(completeHour);
+   
     
     let response = await getRepository(Appointment).createQueryBuilder("appointment")
     .leftJoinAndSelect("appointment.patient", "patient")
     .leftJoinAndSelect("patient.user", "user")
     .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
     .andWhere("appointment.date = :today", {today:today})
-    .andWhere("appointment.hour >= :hour", {hour:hour})
-    // .andWhere("appointment.hour <= :hourfinal", {hourfinal:completeHour})
-    // .andWhere(`appointment.hour BETWEEN '${hour}' AND '${completeHour}'`)
+    .andWhere("ADDTIME(appointment.hour,'00:15:00') >= :hour", {hour:hour})
+    // .andWhere(`appointment.hour BETWEEN '${hour}' AND  ADDTIME (appointment.hour, '00: 10: 00')`)
     // .addSelect('appointment.gestationWeeksDate as mierda')
+    
     .orderBy("appointment.hour","ASC")
     .limit(1)
     .getOne();
      
       
     //  response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+    console.log(response);
     
       return response;
 }
