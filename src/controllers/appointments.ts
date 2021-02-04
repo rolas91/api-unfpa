@@ -374,27 +374,30 @@ const getAppointmentsByBrigadista = async (brigadistId:any, today:Date) => {
 
 }
 
-const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
-    let dateTime = moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss');
-    let nowAddHour = moment(dateTime).add(60,'minutes').format('YYYY-MM-DD HH:mm:ss')
-    let hourRest = moment(nowAddHour).subtract(1, 'minutes').format('HH:mm:ss');
-    let hourAdd = moment(nowAddHour).add(14, 'minutes').format('HH:mm:ss');
-
-   
+const getAppointmentByHour = async (doctorId:any, today:Date, hour:string) => {
+    let dateTime = moment().tz("America/Managua").format('YYYY-MM-DD');
+    let hourNow = moment().tz("America/Managua").format('HH:mm:ss');
+    let hourAdd = moment(dateTime).add(15, 'minutes').format('HH:mm:ss');
+    let dateHour = hour.split(":")
+    let newHour = parseInt(dateHour[0])+15
+    let completeHour = newHour+':'+dateHour[1]+':'+dateHour[2]
+    console.log(completeHour);
+    
     let response = await getRepository(Appointment).createQueryBuilder("appointment")
-      .leftJoinAndSelect("appointment.patient", "patient")
-      .leftJoinAndSelect("patient.user", "user")
-      .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
-      .andWhere("appointment.date = :today", {today:today})
-      .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
-    //   .andWhere("appointment.hour >= :hour", {hour:hour})
-    //   .addSelect('appointment.gestationWeeksDate as mierda')
-      .orderBy("appointment.hour","ASC")
-      .limit(1)
-      .getOne();
+    .leftJoinAndSelect("appointment.patient", "patient")
+    .leftJoinAndSelect("patient.user", "user")
+    .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
+    .andWhere("appointment.date = :today", {today:today})
+    .andWhere("appointment.hour >= :hour", {hour:hour})
+    // .andWhere("appointment.hour <= :hourfinal", {hourfinal:completeHour})
+    // .andWhere(`appointment.hour BETWEEN '${hour}' AND '${completeHour}'`)
+    // .addSelect('appointment.gestationWeeksDate as mierda')
+    .orderBy("appointment.hour","ASC")
+    .limit(1)
+    .getOne();
      
       
-     response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+    //  response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
     
       return response;
 }
