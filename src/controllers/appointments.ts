@@ -389,14 +389,14 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:string) => {
     .andWhere("ADDTIME(appointment.hour,'00:15:00') >= :hour", {hour:hour})
     .andWhere("appointment.cancel != 1")
     // .andWhere(`appointment.hour BETWEEN '${hour}' AND  ADDTIME (appointment.hour, '00: 10: 00')`)
-    // .addSelect('appointment.gestationWeeksDate as mierda')
-    
+        
     .orderBy("appointment.hour","ASC")
     .limit(1)
     .getOne();
      
-      
-    response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+    if(response != undefined){        
+        response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+    }  
     
     
     return response;
