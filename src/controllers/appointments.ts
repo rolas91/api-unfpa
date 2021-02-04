@@ -385,7 +385,8 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:string) => {
     .leftJoinAndSelect("patient.user", "user")
     .where("appointment.doctorId = :doctorId", {doctorId:doctorId})
     .andWhere("appointment.date = :today", {today:today})
-    .andWhere("ADDTIME(appointment.hour,'00:15:00') >= :hour", {hour:hour})
+    .andWhere("appointment.hour >= :hour", {hour:hour})
+    // .andWhere("ADDTIME(appointment.hour,'00:15:00') >= :hour", {hour:hour})
     // .andWhere(`appointment.hour BETWEEN '${hour}' AND  ADDTIME (appointment.hour, '00: 10: 00')`)
     // .addSelect('appointment.gestationWeeksDate as mierda')
     
