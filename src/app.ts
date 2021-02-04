@@ -49,8 +49,6 @@ var server = app.listen(PORT, () => {
 var io = socketio.listen(server)
 
 io.on('connection',function(socket) {
-
-    // console.log(`Connection : SocketId = ${socket.id}`)
    
     var userName = '';
     
@@ -59,7 +57,6 @@ io.on('connection',function(socket) {
         const room_data = JSON.parse(data)
         userName = room_data.userName;
         const roomName = room_data.roomName;
-        console.log(roomName)
         socket.join(`${roomName}`)
         // console.log(`Username : ${userName} joined Room Name : ${roomName}`)
         
