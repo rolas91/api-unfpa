@@ -103,4 +103,5 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   await getRepository(Message).save(newMessage)
 }
 
+
 export { getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};

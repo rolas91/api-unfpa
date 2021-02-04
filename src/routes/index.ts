@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 
-import _ from 'lodash';
+import _, { join } from 'lodash';
 import { Application } from 'express';
 import * as auth from '../controllers/auth';
 import * as profile from '../controllers/profile';
@@ -10,6 +10,7 @@ import * as patient from '../controllers/patient';
 import * as appointment from '../controllers/appointments';
 import * as categorylist from '../controllers/categorytips';
 import * as notification from '../controllers/notification';
+import * as joinuser from '../controllers/joinroom';
 import * as tip from '../controllers/tips';
 import fetch from 'node-fetch';
 
@@ -658,4 +659,10 @@ export default (app: Application): void => {
       console.log(`error ${e}`)
     }
   });
+
+  app.post('/api/v1/joinusers', async(req, res) => {
+      let result = await joinuser.joinUsers(req.body);
+      res.status(200).json({result})
+  });
 };
+

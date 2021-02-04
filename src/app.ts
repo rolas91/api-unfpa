@@ -85,7 +85,9 @@ io.on('connection',function(socket) {
         const messageContent = messageData.messageContent
         const roomName = messageData.roomName
         const state = messageData.state
-
+        
+        console.log(messageData);
+        
         // console.log(`[Room Number ${roomName}] ${userName} : ${messageContent}`)
 
         const chatData = {
