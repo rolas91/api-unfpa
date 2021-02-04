@@ -388,7 +388,7 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:any) => {
       .andWhere("appointment.date = :today", {today:today})
       .andWhere(`appointment.hour BETWEEN '${hourRest}' AND '${hourAdd}'`)
     //   .andWhere("appointment.hour >= :hour", {hour:hour})
-      .addSelect('appointment.gestationWeeksDate as mierda')
+    //   .addSelect('appointment.gestationWeeksDate as mierda')
       .orderBy("appointment.hour","ASC")
       .limit(1)
       .getOne();
