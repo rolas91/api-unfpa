@@ -68,12 +68,10 @@ const login = async (data: {
   //     typeUser:typeUser
   //   }
   // );
-  const user:any = await getTreeRepository(Users).createQueryBuilder('user')
-                  .where('user.email = :email or user.ceula = :email', {email})
+  const user:any = await getRepository(Users).createQueryBuilder('user')
+                  .where('user.email = :email', {email})
                   .andWhere('user.typeUser = :typeUser', {typeUser})
-                  
-
-  // const user = await Users.findOne({ email });
+                  .orWhere('user.cedula = :email',{email}).getOne()
 
   if (!user || user.typeAuth != typeAuth)
     throw {
