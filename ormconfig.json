@@ -1,10 +1,10 @@
 {
     "type":"mysql",
-    "host":"vrk7xcrab1wsx4r1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "host":"dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "port":3306,
-    "username":"lu5se04b4mhb5h5v",
-    "password":"qv2831ivehsvmtty",
-    "database":"plzrkxwlwlx7bs7m",
+    "username":"ttvjfl61en0qfwp5",
+    "password":"nfn0420tox66qfhx",
+    "database":"w1bcz164tmqxkzz2",
     "entities":["dist/entity/**/*.js"],
     "synchronize":true
 }
