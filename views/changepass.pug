@@ -6,16 +6,18 @@ html
     body.background
         div
             form(action="/success-recovery-password" method="POST")
-                div.box-center
-                    img(src="/static/img/logo.png", alt="logo")
+                div.box-center                   
+                img(src="/static/img/logo.png", alt="logo")
                 div.box-center               
-                    label Contraseña
+                    label Contraseña 
+                    img.eye(src="/static/img/eye.png", alt="logo",id="showp1")
                     br               
-                    input(type="password" name="password" placeholder="")
+                    input(type="password" name="password" placeholder="" id="pass1")
                     br
                     label Repite Contraseña
+                    img.eye(src="/static/img/eye.png", alt="logo" id="showp2")
                     br                
-                    input(type="password" name="password2" placeholder="")
+                    input(type="password" name="password2" placeholder=""  id="pass2")
 
                     input(type="hidden" name="token" value={token})
 
@@ -25,3 +27,6 @@ html
 
                     input(type="submit" name="enviar" value="Cambiar contraseña")
                 
+       
+        script(src='/static/js/jquery.min.js', type='text/javascript')
+        script(src='/static/js/index.js', type='text/javascript')

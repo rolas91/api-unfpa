@@ -37,8 +37,8 @@ form label{
 	font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
-form input[type="password"],
-form input[type="email"]{
+
+form input{
 	width:100%;
 	padding:5px 10px;
 	border:1px solid #ccc;
@@ -109,4 +109,11 @@ img{
     text-align: center;
   	font-size: 18px;
     color:#fff;
+}
+.eye{
+	width: 20px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+
 }
