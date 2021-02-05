@@ -109,7 +109,7 @@ const sendMailResetPassword = async(data:{
       to: searchUser.email, // list of receivers
       subject: "Recuperar Contraseña", // Subject line
       html: `
-      <p>Por favor de click en el siguiente <b></b><a href="${verificationLink}">Link</a></b>, o bien pega este enlace en tu navegador web para completar el proceso</p><br>
+      <p>Por favor de click en el siguiente <b></b><a href="${verificationLink}">Link</a></b>, o bien pega este enlace en tu navegador web para recuperar acceso a su cuenta.</p><br>
 
       <p>${verificationLink}</p>
       
