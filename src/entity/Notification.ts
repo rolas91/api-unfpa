@@ -15,6 +15,6 @@ export default class Notification{
     @Column('time')
     hour:Date
     
-    @ManyToOne(() => User, user => user.messages)
+    @ManyToOne(() => User, user => user.messagesreceiver)
     user:User;
 }

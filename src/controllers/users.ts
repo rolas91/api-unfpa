@@ -87,11 +87,12 @@ const getMessages = async(data:{
   return await getRepository(Message).createQueryBuilder("message")
               .leftJoinAndSelect("message.sender", "sender")
               .leftJoinAndSelect("message.receiver", "receiver")
+              // .leftJoinAndSelect("receiver.messages", "messages")
               .where("sender.id = :sender", {sender})
               .andWhere("receiver.id = :receive", {receive})
-              .orWhere("sender.id = :receive", {sender})
-              .orWhere("receiver.id = :sender", {receive})
-              .getMany()
+              .orWhere("sender.id = :receive", {receive})
+              .andWhere("receiver.id = :sender", {sender})
+              .getMany();              
 }
 
 const addMessages = async(message:string, roomName:any, state:string):Promise<any> => {

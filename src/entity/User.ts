@@ -62,8 +62,11 @@ export default class User{
     appointments: Appointment[];
 
 
-    @OneToMany(() => Message, message => message)
-    messages:Message[];
+    @OneToMany(() => Message, messager => messager.receiver)
+    messagesreceiver:Message[];
+
+    @OneToMany(() => Message, messages => messages.sender)
+    messagessender:Message[];
 
 
     @CreateDateColumn({name:'create_at'}) 

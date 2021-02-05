@@ -6,10 +6,10 @@ export default class Message{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @ManyToOne(() => User, user => user.messages)
+    @ManyToOne(() => User, user => user.messagessender)
     sender:User;
 
-    @ManyToOne(() => User, user => user.messages)
+    @ManyToOne(() => User, user => user.messagesreceiver)
     receiver:User;
 
     @Column("text")
