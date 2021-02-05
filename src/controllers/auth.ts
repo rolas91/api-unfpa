@@ -69,7 +69,7 @@ const login = async (data: {
   //   }
   // );
   const user:any = await getTreeRepository(Users).createQueryBuilder('user')
-                  .where('user.email = :email || user.ceula = :email', {email})
+                  .where('user.email = :email or user.ceula = :email', {email})
                   .andWhere('user.typeUser = :typeUser', {typeUser})
                   
 
