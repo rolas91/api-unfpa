@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import _, { update } from 'lodash';
 import {transporter} from '../config/mailer';
-import {getRepository} from 'typeorm';
+import {getRepository, getTreeRepository} from 'typeorm';
 
 import jsonwebtoken from 'jsonwebtoken';
 
@@ -62,12 +62,16 @@ const login = async (data: {
 }): Promise<any> => {
   const { email, password, typeUser,typeAuth } = data;
 
-  const user:any  = await getRepository(Users).findOne(
-    {
-      email: email,
-      typeUser:typeUser
-    }
-  );
+  // const user:any  = await getRepository(Users).findOne(
+  //   {
+  //     email: email,
+  //     typeUser:typeUser
+  //   }
+  // );
+  const user:any = await getTreeRepository(Users).createQueryBuilder('user')
+                  .where('user.email = :email || user.ceula = :email', {email})
+                  .andWhere('user.typeUser = :typeUser', {typeUser})
+                  
 
   // const user = await Users.findOne({ email });
 
