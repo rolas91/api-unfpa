@@ -88,7 +88,10 @@ const getMessages = async(data:{
               .leftJoinAndSelect("message.sender", "sender")
               .leftJoinAndSelect("message.receiver", "receiver")
               .where("sender.id = :sender", {sender})
-              .andWhere("receiver.id = :receive", {receive}).getMany()
+              .andWhere("receiver.id = :receive", {receive})
+              .orWhere("sender.id = :receive", {sender})
+              .orWhere("receiver.id = :sender", {receive})
+              .getMany()
 }
 
 const addMessages = async(message:string, roomName:any, state:string):Promise<any> => {
