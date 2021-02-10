@@ -105,7 +105,7 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
     state:state
   });
   for(let user of room){    
-    const sendMessage = getRepository(Users).findOne({where:{id : user}});
+    const sendMessage = await getRepository(Users).findOne({where:{id : user}});
     console.log(sendMessage);
     
   }
