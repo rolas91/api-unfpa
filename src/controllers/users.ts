@@ -49,14 +49,12 @@ const getUserLike = async (data:{
   const entityManager = getManager();
   const {params, type, doctorId} = data;
 
-  if(type == "1"){
-  
-  // return await entityManager.query(`SELECT p.id as idPaciente, u.* FROM user u 
-  // inner join patient p on u.id = p.userId WHERE (concat(u.firstname,' ',u.lastname) 
-  // LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and u.typeUser = 'paciente'`)
-  return await entityManager.query(`SELECT * FROM user u 
+  let isPatient = await entityManager.query(`SELECT * FROM user u 
   inner join patient p on u.id = p.userId inner join patient_doctors_user pu on p.id = pu.patientId WHERE (concat(u.firstname,' ',u.lastname) 
   LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and pu.userId = ${doctorId}`)
+
+  if(isPatient != undefined){
+    return await isPatient
   }
   else{
     return await entityManager.query(`SELECT * FROM user  WHERE (concat(firstname,' ',lastname) LIKE '${params}%' OR 
