@@ -2,7 +2,7 @@ import {getRepository, getManager} from 'typeorm';
 import _ from 'lodash';
 import Users from '../entity/User';
 import Message from '../entity/Messages';
-
+import fetch from 'node-fetch';
 // get the unser info from db
 const getUsers = async (): Promise<any> => {
   // const user = await Users.findById(id);
