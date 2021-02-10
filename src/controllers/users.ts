@@ -134,6 +134,7 @@ const sendFCM = async(title, message, fcmToken) =>{
   'body':JSON.stringify(notification_body)
   }).then(resp => {
     if(resp){
+      console.log(resp, 'exito')
       return true;
     }else{
       return false;
