@@ -106,10 +106,41 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
   });
   for(let user of room){    
     const sendMessage = await getRepository(Users).findOne({where:{id : user}});
-    console.log(sendMessage);
+    if(sendMessage != undefined){
+      sendFCM('Nuevo mensaje de prueba',message, sendMessage.token)
+    }
     
   }
   await getRepository(Message).save(newMessage)
+}
+
+const sendFCM = async(title, message, fcmToken) =>{
+  var notification = {
+    'title': title,
+    'text': message
+  };
+
+  var notification_body = {
+    'notification': notification,
+    'registration_ids': fcmToken
+  }
+
+  fetch('https://fcm.googleapis.com/fcm/send',{
+  'method':'POST',
+  'headers':{
+      'Authorization':`key=${process.env.FCM!}`,
+      'Content-Type':'application/json'
+  },
+  'body':JSON.stringify(notification_body)
+  }).then(resp => {
+    if(resp){
+      return true;
+    }else{
+      return false;
+    }
+  }).catch((error) => {
+      console.log(`error ${error}`);
+  });
 }
 
 
