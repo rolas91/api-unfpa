@@ -95,7 +95,7 @@ const getMessages = async(data:{
               .getMany();              
 }
 
-const addMessages = async(message:string, roomName:any, state:string):Promise<any> => {
+const addMessages = async(username:string,message:string, roomName:any, state:string):Promise<any> => {
   const room = roomName.split(",")
   let tokens:any = [];
   const newMessage = getRepository(Message).create({
@@ -111,7 +111,7 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
       tokens.push(sendMessage.token)
     } 
   }
-  sendFCM('Nuevo mensaje de prueba',message, tokens)
+  sendFCM(`Nuevo mensaje de ${username}`,message, tokens)
   await getRepository(Message).save(newMessage)
 }
 
