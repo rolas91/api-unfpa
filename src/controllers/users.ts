@@ -104,10 +104,10 @@ const addMessages = async(message:string, roomName:any, state:string):Promise<an
     receiver:room[1],
     state:state
   });
-  for(let r of room){
-    console.log(r);
+  for(let user of room){    
+    const sendMessage = getRepository(Users).findOne({where:{id : user}});
+    console.log(sendMessage);
     
-    // const senMensage = getRepository(Users).findOne({where:{}})
   }
   await getRepository(Message).save(newMessage)
 }
