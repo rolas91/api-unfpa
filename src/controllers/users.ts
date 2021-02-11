@@ -55,13 +55,9 @@ const getUserLike = async (data:{
     LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and pu.userId = ${doctorId}`)
   }
   else{   
-    let j = await entityManager.query(`SELECT u.id, u.firstname,u.lastname, u.email, u.cedula, u.birth, u.phone, u.password, u.avatar, u.typeAuth, u.typeUser, u.create_at, u.update_at, u.centerId, u.token, u.emailToken, p.userId, p.brigadistaId, p.gestationWeeks, p.treatmentsReceived, p.medicalObservations, pu.patientId FROM user u 
+    return await entityManager.query(`SELECT u.id, u.firstname,u.lastname, u.email, u.cedula, u.birth, u.phone, u.password, u.avatar, u.typeAuth, u.typeUser, u.create_at, u.update_at, u.centerId, u.token, u.emailToken, p.userId, p.brigadistaId, p.gestationWeeks, p.pathologicalAntecedents, p.treatmentsReceived, p.medicalObservations, pu.patientId FROM user u 
     inner join patient p on u.id = p.userId inner join patient_doctors_user pu on p.id = pu.patientId WHERE (concat(u.firstname,' ',u.lastname) 
     LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') GROUP BY p.userId`)
-
-    console.log(j);
-
-    return j
     
   }
   
