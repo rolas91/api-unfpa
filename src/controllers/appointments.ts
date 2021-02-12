@@ -37,7 +37,8 @@ const register = async(data:{
     let response = await getRepository(Appointment).findOne({
         where:{
             date,
-            hour
+            hour,
+            cancel:false
         }
     })
 
