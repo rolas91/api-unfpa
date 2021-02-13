@@ -20,8 +20,10 @@ export default class Appointment{
     @Column()
     gestationWeeksDate:Date;
 
-    @Column({
+    @Column({     
         type:'decimal',
+        precision : 10 ,  
+        scale : 2  ,   
         comment:'Semanas de gestacion',
     })
     gestationWeeks:number;
