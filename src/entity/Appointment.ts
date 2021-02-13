@@ -21,6 +21,7 @@ export default class Appointment{
     gestationWeeksDate:Date;
 
     @Column({
+        type:'decimal',
         comment:'Semanas de gestacion',
     })
     gestationWeeks:number;

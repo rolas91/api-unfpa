@@ -14,6 +14,7 @@ export default class Patient{
     brigadista:User;
 
     @Column({
+        type:'decimal',
         comment:'Semanas de gestacion',
     })
     gestationWeeks:number;
