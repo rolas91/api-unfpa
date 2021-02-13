@@ -16,7 +16,7 @@ export default class Patient{
     @Column({
         type:'decimal',
         precision : 10 ,  
-        scale : 2 ,
+        scale : 1 ,
         comment:'Semanas de gestacion',
     })
     gestationWeeks:number;
