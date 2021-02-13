@@ -2,6 +2,7 @@ import {getRepository, getConnection,getManager} from 'typeorm';
 import bcrypt from 'bcrypt';
 import Patient from '../entity/Patient';
 import Users from '../entity/User';
+import moment from 'moment-timezone';
 
 const addBrigadista = async(data:{
     userid:number;
@@ -62,7 +63,8 @@ const registerPatient = async(data:{
                     pathologicalAntecedents, 
                     treatmentsReceived, 
                     medicalObservations, 
-                    doctors:[doctor]
+                    doctors:[doctor],
+                    gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
                 })
                 await getRepository(Patient).save(newPatient);
                 return {
@@ -83,7 +85,8 @@ const registerPatient = async(data:{
                 pathologicalAntecedents, 
                 treatmentsReceived, 
                 medicalObservations, 
-                doctors:[doctor]
+                doctors:[doctor],
+                gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
             })
             return await getRepository(Patient).save(newPatient);
         }
@@ -149,7 +152,8 @@ const register = async(data:{
         pathologicalAntecedents, 
         treatmentsReceived, 
         medicalObservations, 
-        doctors:[doctor]
+        doctors:[doctor],
+        gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
     })
 
     return await getRepository(Patient).save(newPatient);

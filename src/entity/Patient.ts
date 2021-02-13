@@ -46,6 +46,9 @@ export default class Patient{
     @JoinTable()
     doctors:User[]
 
+    @Column()
+    gestationWeeksDate:Date;
+
 
     @CreateDateColumn({name:'create_at'}) 
     create_at: Date;
