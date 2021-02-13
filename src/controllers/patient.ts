@@ -200,7 +200,7 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 1 THEN 1 ELSE NULL END) as totalPresencial')
     .addSelect('COUNT(CASE WHEN appointments.typeAppointment = 2 THEN 1 ELSE NULL END) as totalRemoto')
     .orderBy('user.firstname','ASC')
-    .groupBy('patient.id')
+    .groupBy('user.id')
     .getRawMany();
   }
 
