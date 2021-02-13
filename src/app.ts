@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import cron = require('node-cron');
 import path from 'path';
-import { ExpressPeerServer, ice } from 'peer';
+import { ExpressPeerServer } from 'peer';
 // import mongoose from 'mongoose';
 import {createConnection} from 'typeorm';
 import bodyParser from 'body-parser';
@@ -144,7 +144,7 @@ io.on('connection',function(socket) {
 
 
 const peerServer = ExpressPeerServer(server, {
-    port:443,    
+    port:443,  
     path: '/videocallapp'
 });
 
