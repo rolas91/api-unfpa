@@ -69,6 +69,7 @@ const getUserDoctors = async (data:{id:number}) => {
   .createQueryBuilder('user')
   .where("user.typeUser = 'medico'")
   .andWhere("user.id <> :id",{id:id})
+  .orderBy("user.id","ASC")
   .getMany();
 }
 
