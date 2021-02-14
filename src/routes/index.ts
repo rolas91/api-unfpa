@@ -206,10 +206,10 @@ export default (app: Application): void => {
 
   app.post('/api/v1/user/countmessage', async(req, res) => {
     try{
-      const response = await user.totalMessage(req.body);
-      res.status(200).json({response})
+      const result = await user.totalMessage(req.body);
+      res.status(200).json({result})
     }catch(error){
-      res.status(500).send({ message: error.message });
+      res.status(200).send({ message: error.message });
     }
 });
 
