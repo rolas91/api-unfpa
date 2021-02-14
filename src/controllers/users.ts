@@ -91,7 +91,7 @@ const totalMessage = async (data:{
   .addSelect('COUNT(CASE WHEN message.read = 0 THEN 1 ELSE NULL END) as totalMessage')
   .orderBy("message.id","ASC")
   .limit(1)
-  .getRawMany();
+  .getRawOne();
 }
 
 const getUsersTypeBrigadista = async (): Promise<any> => {
