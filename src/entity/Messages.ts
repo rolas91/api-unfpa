@@ -15,6 +15,9 @@ export default class Message{
     @Column("text")
     message:string;
 
+    @Column({default:false})
+    read:boolean;
+
     @Column()
     date:Date
 

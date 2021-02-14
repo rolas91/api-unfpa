@@ -73,6 +73,27 @@ const getUserDoctors = async (data:{id:number}) => {
   .getMany();
 }
 
+const totalMessage = async (data:{
+  sender:number,
+  receive:number
+}) => {
+  const {sender, receive} = data;
+  return await getRepository(Message)
+  .createQueryBuilder("message")
+  .leftJoin("message.sender", "sender")
+  .leftJoin("message.receiver", "receiver")
+  .where("sender.id = :sender", {sender})
+  .andWhere("receiver.id = :receive", {receive})
+  .andWhere("message.state = 'r'")
+  .orWhere("sender.id = :receive", {receive})
+  .andWhere("receiver.id = :sender", {sender})
+  .andWhere("message.state = 's'") 
+  .addSelect('COUNT(CASE WHEN message.read = 0 THEN 1 ELSE NULL END) as totalMessage')
+  .orderBy("message.id","ASC")
+  .limit(1)
+  .getRawMany();
+}
+
 const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };
@@ -146,4 +167,4 @@ const sendFCM = async(title, message, fcmToken) =>{
 }
 
 
-export { getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
+export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};

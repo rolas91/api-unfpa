@@ -3,7 +3,6 @@ import express from 'express';
 import cron = require('node-cron');
 import path from 'path';
 import { ExpressPeerServer } from 'peer';
-// import mongoose from 'mongoose';
 import {createConnection} from 'typeorm';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
@@ -16,6 +15,7 @@ import * as user from './controllers/users';
 import * as appointment from './controllers/appointments';
 const PORT = process.env.PORT || 7000;
 require('dotenv').config();
+
 
 const socketio = require('socket.io')
 
@@ -35,6 +35,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.set('views',  './views');
 app.set('view engine', 'pug');
+
 
 var server = app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
