@@ -103,6 +103,8 @@ const getMessages = async(data:{
   receive:number
 }):Promise<any> => {
   const {sender, receive} = data;
+
+  getRepository(Message).update(receive,{read:true})
   
   return await getRepository(Message).createQueryBuilder("message")
               .leftJoinAndSelect("message.sender", "sender")
