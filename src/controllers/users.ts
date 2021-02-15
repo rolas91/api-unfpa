@@ -109,6 +109,9 @@ const getMessages = async(data:{
   .set({ read: true })
   .where("receiverId = :receive", { receive: receive })
   .andWhere("state = 'r'")
+  .orWhere("senderId = :sender", { sender: sender })
+  .andWhere("state = 's'")
+
   .execute();
 
   
