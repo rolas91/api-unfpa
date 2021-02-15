@@ -204,6 +204,24 @@ export default (app: Application): void => {
       }
   });
 
+  app.post('/api/v1/message/readmessagepatient', async(req, res) => {
+    try{
+      const response = await user.readmessagePatient(req.body);
+      res.status(200).json({response})
+    }catch(error){
+      res.status(500).send({ message: error.message });
+    }
+});
+
+app.post('/api/v1/message/readmessagedoctor', async(req, res) => {
+  try{
+    const response = await user.readmessageDoctor(req.body);
+    res.status(200).json({response})
+  }catch(error){
+    res.status(500).send({ message: error.message });
+  }
+});
+
   app.post('/api/v1/user/countmessage', async(req, res) => {
     try{
       const result = await user.totalMessage(req.body);

@@ -98,22 +98,51 @@ const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };
 
+const readmessagePatient = async(data:{
+  sender:number, 
+  receive:number
+}):Promise<any> =>{
+  const {sender, receive} = data;
+  let result = await getConnection().createQueryBuilder()
+  .update(Message)
+  .set({ read: true })
+  .where("senderId = :sender", { sender: sender })
+  .where("receiverId = :sender", { receive: receive })
+  .andWhere("state = 's'")
+  .execute();
+  if(result != undefined){
+    return true
+  }else{
+    return false
+  }
+
+}
+
+const readmessageDoctor = async(data:{
+  sender:number, 
+  receive:number
+}):Promise<any> =>{
+  const {sender, receive} = data;
+  let result = await getConnection().createQueryBuilder()
+  .update(Message)
+  .set({ read: true })
+  .where("senderId = :sender", { sender: sender })
+  .where("receiverId = :sender", { receive: receive })
+  .andWhere("state = 'r'")
+  .execute();
+  if(result != undefined){
+    return true
+  }else{
+    return false
+  }
+
+}
+
 const getMessages = async(data:{
   sender:number, 
   receive:number
 }):Promise<any> => {
   const {sender, receive} = data;
-
-  getConnection().createQueryBuilder()
-  .update(Message)
-  .set({ read: true })
-  .where("receiverId = :receive", { receive: receive })
-  .andWhere("state = 'r'")
-  .orWhere("senderId = :sender", { sender: sender })
-  .andWhere("state != 'r'")
-
-  .execute();
-
   
   return await getRepository(Message).createQueryBuilder("message")
               .leftJoinAndSelect("message.sender", "sender")
@@ -178,4 +207,4 @@ const sendFCM = async(title, message, fcmToken) =>{
 }
 
 
-export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike};
+export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike, readmessageDoctor, readmessagePatient};
