@@ -1,4 +1,4 @@
-import {getRepository, getManager} from 'typeorm';
+import { getRepository, getManager, getConnection } from 'typeorm';
 import _ from 'lodash';
 import Users from '../entity/User';
 import Message from '../entity/Messages';
@@ -104,7 +104,11 @@ const getMessages = async(data:{
 }):Promise<any> => {
   const {sender, receive} = data;
 
-  getRepository(Message).update(receive,{read:true})
+  getConnection().createQueryBuilder()
+  .update(Message)
+  .set({ read: true })
+  .where("receiverId = :receive", { receive: receive })
+  .execute();
   
   return await getRepository(Message).createQueryBuilder("message")
               .leftJoinAndSelect("message.sender", "sender")
