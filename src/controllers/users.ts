@@ -109,6 +109,8 @@ const getMessages = async(data:{
   .set({ read: true })
   .where("receiverId = :receive", { receive: receive })
   .andWhere("state = 'r'")
+  .orWhere("senderId = :receive", { sender: sender })
+  .andWhere("state = 's'")
   .execute();
   
   return await getRepository(Message).createQueryBuilder("message")
