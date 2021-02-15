@@ -98,6 +98,7 @@ const getUsersTypeBrigadista = async (): Promise<any> => {
   return await getRepository(Users).find({where:{typeUser:3}});
 };
 
+
 const readmessagePatient = async(data:{
   sender:number, 
   receive:number
@@ -115,7 +116,6 @@ const readmessagePatient = async(data:{
   }else{
     return false
   }
-
 }
 
 const readmessageDoctor = async(data:{

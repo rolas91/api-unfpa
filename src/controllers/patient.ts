@@ -212,12 +212,21 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     userid:number;
   }): Promise<any> =>{
       const {userid} = data;      
-    return await getRepository(Patient)
+    let response = await getRepository(Patient)
     .createQueryBuilder("patient")
     .leftJoinAndSelect("patient.user","user")
     .leftJoinAndSelect("patient.appointments","appointments")
     .where("user.id = :id",{id:userid})
     .getMany();
+
+    response.map((val, index) => {
+        val.gestationWeeksDate = <any> moment(response[index].gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+        val.appointments.map((val,index2) => {
+            val.gestationWeeksDate = <any> moment(response[index].appointments[index2].gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+        })
+    })
+
+    return response;
   }
 
 export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist,getDoctorByPatient}
