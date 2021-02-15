@@ -107,7 +107,7 @@ const readmessagePatient = async(data:{
   .update(Message)
   .set({ read: true })
   .where("senderId = :sender", { sender: sender })
-  .andWhere("receiverId = :sender", { receive: receive })
+  .andWhere("receiverId = :receive", { receive: receive })
   .andWhere("state = 's'")
   .execute();
   if(result != undefined){
@@ -127,7 +127,7 @@ const readmessageDoctor = async(data:{
   .update(Message)
   .set({ read: true })
   .where("senderId = :sender", { sender: sender })
-  .andWhere("receiverId = :sender", { receive: receive })
+  .andWhere("receiverId = :receive", { receive: receive })
   .andWhere("state = 'r'")
   .execute();
   if(result != undefined){
