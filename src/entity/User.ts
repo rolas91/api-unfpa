@@ -41,7 +41,7 @@ export default class User{
 
     @Column({
         type:"enum",
-        enum:["paciente","medico","brigadista"],
+        enum:["paciente","medico","brigadista","admin"],
         default:"paciente"
     })
     typeUser:string;

@@ -2,8 +2,8 @@
 .background{
 	background-image: url(../static/img/background.jpg);
 	background-repeat: no-repeat;
-	background-attachment: cover;
-	background-size:100% 100%;
+
+	background-size:cover;
 	background-color: #cccccc;
 }
 
@@ -14,6 +14,7 @@ form{
 	margin:100px auto;
 	background-color:#fff;
 	box-shadow: 0px 0px 15px #f7581d;	
+	text-align:center;
 }
 
 h1{
@@ -85,6 +86,7 @@ textarea{
 	width: 70%;
 	margin: 0 auto;
 	padding: 20px;
+	text-align:left;
 }
 
 .box-center-img-success{
@@ -97,6 +99,9 @@ img{
 	margin:0 auto;
 	width: 80px;
 	display: block;
+}
+#principal{
+	margin-bottom:20px;
 }
 .img-success{
 	margin:0 auto;

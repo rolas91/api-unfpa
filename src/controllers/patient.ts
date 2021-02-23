@@ -187,6 +187,32 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .getRawMany();
   }
 
+  const getListPatientWithMessage = async (data:{
+      doctorId:any,
+      sender:number,
+      receive:number
+    }) => {
+        const {  sender, receive, doctorId} = data;
+    return await getRepository(Patient)
+    .createQueryBuilder("patient")
+    .leftJoinAndSelect("patient.user","user")
+    .leftJoin("user.messagessender","messagessender")
+    .leftJoin("user.messagesreceiver","messagesreceiver")
+    .leftJoin("patient.doctors", "doctors")
+    .where("doctors.id = :id",{id:doctorId})
+    .orWhere("messagesreceiver.id = :receive", {receive})
+    // .orWhere("messagessender.id = :sender", {sender})
+    .orWhere("messagessender.state = 'r'")
+    // .orWhere("messagessender.id = :receive", {receive})
+    // .andWhere("messagesreceiver.id = :sender", {sender})
+    // .andWhere("messagessender.state = 's'") 
+    .addSelect('COUNT(CASE WHEN messagessender.read = 0 THEN 1 ELSE NULL END) as totalMessage')
+    // .orderBy("messagessender.id","ASC")
+   
+    .orderBy("user.firstname","ASC")
+    .getRawMany();
+  }
+
   const getDoctorByPatient = async (userid:any) => {
     return await getRepository(Patient)
     .createQueryBuilder("patient")
@@ -229,4 +255,4 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     return response;
   }
 
-export {register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist,getDoctorByPatient}
+export {getListPatientWithMessage, register, getPatients, getPatientsAndTotalAppointment, getpatientDetail, registerPatient, addBrigadista, getPatientsAndTotalAppointmentByBrigadist,getDoctorByPatient}

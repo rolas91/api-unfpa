@@ -1,0 +1,32 @@
+html
+    head
+        title='Login'
+        style
+            include ./public/css/style.css
+    body.background
+        div
+            form
+                div.box-center                   
+                img(src="/static/img/logo.png", alt="logo")#principal
+                label Inicio de sesión.
+                div.box-center  
+
+                    label Correo               
+                    input(type="email" name="email" placeholder="" id="email")
+                    br
+
+                    label Contraseña 
+                    img.eye(src="/static/img/eye.png", alt="logo",id="showp1")
+                    br               
+                    input(type="password" name="password" placeholder="" id="pass1")
+                    br                
+
+                    h3 #{message}
+
+                    //- h3 (class='error') #{error}
+
+                    input(type="submit" name="enviar" value="Entrar" id="login")
+                
+       
+        script(src='/static/js/jquery.min.js', type='text/javascript')
+        script(src='/static/js/index.js', type='text/javascript')

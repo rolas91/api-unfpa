@@ -11,6 +11,7 @@ import * as appointment from '../controllers/appointments';
 import * as categorylist from '../controllers/categorytips';
 import * as notification from '../controllers/notification';
 import * as joinuser from '../controllers/joinroom';
+import * as reports from '../controllers/reports';
 import * as tip from '../controllers/tips';
 import fetch from 'node-fetch';
 
@@ -53,6 +54,22 @@ export default (app: Application): void => {
   
   app.get('/new-password/:token', (req, res) => {
     res.render('changepass',{token:req.params.token});     
+  });
+
+  app.get('/', (req, res) => {
+    res.render('login');     
+  });
+  app.get('/dashboard', (req, res) => {
+    res.render('panel');     
+  });
+
+  app.get('/api/v1/create/report', async(req, res) => {
+    try{
+      let response = await reports.report();
+      res.status(200).json({response});
+    }catch(e){
+      console.log(e.error)
+    }
   });
 
   app.post('/api/v1/auth/fcm/token', async(req, res) => {
@@ -425,6 +442,19 @@ app.post('/api/v1/message/readmessagedoctor', async(req, res) => {
     try {
      
       const result = await patient.getpatientDetail(req.body);
+      res.status(200).json({
+        message:'successfully',
+        patient:result
+      })
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  })
+
+  app.post('/api/v1/patients/patientlist', async(req, res) => {
+    try {
+     
+      const result = await patient.getListPatientWithMessage(req.body);
       res.status(200).json({
         message:'successfully',
         patient:result

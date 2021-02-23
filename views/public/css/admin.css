@@ -1,0 +1,341 @@
+body {
+	margin: 0;
+	font-family: sans-serif;
+}
+header {
+	width: 100%;
+    height: 50px;
+	background: #FF8000;
+}
+#btn-menu {
+	display: none;
+}
+
+header label {
+	display: none;
+	width: 30px;
+	height: 30px;
+	padding: 10px;
+}
+header label:hover {
+	cursor: pointer;
+}
+.logo {
+	position: absolute;
+    top:5px;
+    left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.logo a {
+	text-decoration: none;
+	line-height: 1px;
+}
+
+.mycontainer{
+    padding: 20px;
+}
+
+.menu ul {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	display: flex;
+	justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+}
+.menu li {
+	text-align: center;
+	width: auto;
+}
+
+.menu li a {
+	/* display: block;
+	padding: 50px 75px; */
+	color: #464646;
+	text-decoration: none;
+	font-size: 0.91667rem;
+	line-height: 1.33;
+	font-weight: 600;
+	text-transform: uppercase;
+    cursor: pointer;
+}
+
+.menu li a:hover {
+	color: #fff;
+	-webkit-transition: 0.5s ease-in;
+	-o-transition: 0.5s ease-in;
+	transition: 0.5s ease-in;
+}
+
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+}
+.dt-buttons{
+    margin-bottom: 20px;
+}
+
+.buttons-pdf{
+    background-color:#d30000;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+.buttons-copy{
+    background-color:#0b9ef9;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+.buttons-excel{
+    background-color:#00a017;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+.buttons-csv{
+    background-color:#060d8c;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        width: 100%;
+        margin-bottom: 15px;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        border: 1px solid #ddd;
+    }
+    .table-responsive > .table {
+        margin-bottom: 0;
+    }
+    .table-responsive > .table > thead > tr > th,
+    .table-responsive > .table > tbody > tr > th,
+    .table-responsive > .table > tfoot > tr > th,
+    .table-responsive > .table > thead > tr > td,
+    .table-responsive > .table > tbody > tr > td,
+    .table-responsive > .table > tfoot > tr > td {
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 1650px) {
+	.menu li a {
+		padding: 50px 86px !important;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	.menu li a {
+		padding: 50px 82px !important;
+	}
+}
+
+@media screen and (max-width: 1550px) {
+	.menu li a {
+		padding: 50px 76px !important;
+	}
+}
+
+@media screen and (max-width: 1500px) {
+	.menu li a {
+		padding: 50px 71px !important;
+	}
+}
+
+@media screen and (max-width: 1450px) {
+	.menu li a {
+		padding: 50px 66px !important;
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	.menu li a {
+		padding: 50px 63px !important;
+	}
+}
+
+@media screen and (max-width: 1370px) {
+	.menu li a {
+		padding: 50px 58px !important;
+	}
+}
+
+@media screen and (max-width: 1330px) {
+	.menu li a {
+		padding: 50px 55px !important;
+	}
+}
+
+@media screen and (max-width: 1300px) {
+	.menu li a {
+		padding: 50px 52px !important;
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.menu li a {
+		padding: 50px 50px !important;
+	}
+}
+
+@media screen and (max-width: 1250px) {
+	.menu li a {
+		padding: 50px 49px !important;
+	}
+}
+
+@media screen and (max-width: 1240px) {
+	.menu li a {
+		padding: 50px 48px !important;
+	}
+}
+
+@media screen and (max-width: 1232px) {
+	.menu li a {
+		padding: 50px 45px !important;
+	}
+}
+
+@media screen and (max-width: 1220px) {
+	.menu li a {
+		padding: 50px 44px !important;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.menu li a {
+		padding: 50px 42px !important;
+	}
+}
+
+@media screen and (max-width: 1175px) {
+	.menu li a {
+		padding: 50px 38px !important;
+	}
+}
+
+@media screen and (max-width: 1160px) {
+	.menu li a {
+		padding: 50px 37px !important;
+	}
+}
+
+@media screen and (max-width: 1150px) {
+	.menu li a {
+		padding: 50px 37px !important;
+	}
+}
+
+@media screen and (max-width: 1140px) {
+	.menu li a {
+		padding: 50px 35px !important;
+	}
+}
+
+@media screen and (max-width: 1120px) {
+	.menu li a {
+		padding: 50px 33px !important;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	.menu li a {
+		padding: 50px 32px !important;
+	}
+}
+
+@media screen and (max-width: 1080px) {
+	.menu li a {
+		padding: 50px 30px !important;
+	}
+}
+
+@media screen and (max-width: 1054px) {
+	.menu li a {
+		padding: 50px 27px !important;
+	}
+}
+
+@media screen and (max-width: 1048px) {
+	.menu li a {
+		padding: 50px 26px !important;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	header label {
+		display: block;
+		float: right;
+		width: 100%;
+		text-align: right;
+		background: rgba(201, 201, 201, 0.3);
+	}
+	.menu {
+		position: absolute;
+		top: 50px;
+		background: rgba(201, 201, 201, 0.3);
+		width: 100%;
+		margin-left: -100%;
+		transition: all 0.5s;
+	}
+	.logo a img {
+		width: 112px;
+	}
+	.menu li {
+		text-align: left;
+	}
+	.menu li a {
+		padding: 15px 20px !important;
+	}
+	.menu ul {
+		flex-direction: column;
+	}
+
+	#btn-menu:checked ~ .menu {
+		margin: 0;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	header label {
+		display: block;
+		float: right;
+		width: 100%;
+		text-align: right;
+		background: rgba(201, 201, 201, 0.3);
+	}
+	.menu {
+		position: absolute;
+		top: 50px;
+		background: rgba(201, 201, 201, 0.3);
+		width: 100%;
+		margin-left: -100%;
+		transition: all 0.5s;
+	}
+	.logo a img {
+		width: 112px;
+	}
+	.menu li {
+		text-align: left;
+	}
+	.menu li a {
+		padding: 15px 20px !important;
+	}
+	.menu ul {
+		flex-direction: column;
+	}
+
+	#btn-menu:checked ~ .menu {
+		margin: 0;
+	}
+}
