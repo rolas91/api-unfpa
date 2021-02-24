@@ -70,8 +70,8 @@ $(document).ready(function(){
 
     
     function getData(){
-        // let url = `${URL}/api/v1/create/report`
-        let url = `http://localhost:7000/api/v1/create/report`
+        let url = `${URL}/api/v1/create/report`
+        // let url = `http://localhost:7000/api/v1/create/report`
         fetch(url,{
             method:'GET',
             headers: {
