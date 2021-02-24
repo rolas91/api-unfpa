@@ -52,7 +52,8 @@ $(document).ready(function(){
                 let message = Object.values(await data.response)                
                 $('#message').html(message[0]);             
             }else{
-                token = localStorage.setItem('token', data.token);
+                let token = Object.values(await data.response)                 
+                localStorage.setItem('token', token[0]);
                 location.href = '/dashboard';
             }
         })
