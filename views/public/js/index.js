@@ -160,7 +160,7 @@ $(document).ready(function(){
                         },
                         {
                             "render": function (data, type, row) {
-                                return (data === 1) ? '<span style="color:#fff; background:red; padding:5px; border-radius:3px;">Cancelada</span>' : '<span style="color:#fff; background:green; padding:5px; border-radius:3px;">Realizado</span>';
+                                return (data === 1) ? '<span style="color:#fff; background:red; padding:5px; border-radius:3px;">Cancelada</span>' : '<span style="color:#fff; background:green; padding:5px; border-radius:3px;">Creado</span>';
                             },
                             "targets": 19
                         }
