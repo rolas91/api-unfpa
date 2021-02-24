@@ -63,7 +63,7 @@ export default (app: Application): void => {
     res.render('panel');     
   });
 
-  app.get('/api/v1/create/report', async(req, res) => {
+  app.get('/api/v1/create/report', isLogin ,async(req, res) => {
     try{
       let response = await reports.report();
       res.status(200).json({response});

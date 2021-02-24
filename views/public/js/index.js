@@ -75,7 +75,8 @@ $(document).ready(function(){
         fetch(url,{
             method:'GET',
             headers: {
-                'Content-Type': 'application/json'              
+                'Content-Type': 'application/json',
+                'token':localStorage.getItem('token')            
             }
         })
         .then(response => response.json())
