@@ -70,8 +70,8 @@ $(document).ready(function(){
 
     
     function getData(){
-        let url = `${URL}/api/v1/create/report`
-        // let url = `http://localhost:7000/api/v1/create/report`
+        // let url = `${URL}/api/v1/create/report`
+        let url = `http://localhost:7000/api/v1/create/report`
         fetch(url,{
             method:'GET',
             headers: {
@@ -80,6 +80,7 @@ $(document).ready(function(){
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             if(data.response){
                 $('#table_id').DataTable({
                     dom: 'Blfrtip', 
@@ -87,14 +88,18 @@ $(document).ready(function(){
                         {
                             extend: 'pdfHtml5',
                             orientation: 'landscape',
-                            pageSize: 'LEGAL'
+                            pageSize: 'LEGAL',
+                            title:'Reporte Appsistencia Materna'
                         },   
                         {
                             extend:'excelHtml5',
                             title:'Reporte Appsistencia Materna'
                         },                     
-                        'copyHtml5',                  
-                        'csvHtml5'
+                        {
+                            extend:'csvHtml5',
+                            title:'Reporte Appsistencia Materna'
+                        },                     
+                        'copyHtml5'                 
 
                     ],        
                     data:data.response,
@@ -105,11 +110,21 @@ $(document).ready(function(){
                         {data:'Nombre'},
                         {data:'Apellido'},
                         {data:'NoCédula'},
-                        {data:'Edad'},
+                        {data:'Edad'},   
+                        {data:'Antecedentespatológicos'},
+                        {data:'TratamientosRecibidos'},
+                        {data:'ObservacionesMédicas'},
+                        {data:'SemanasGestación'},
+                        {data:'ReporteMovimientoFetales'},
+                        {data:'ArOBro'},
+                        {data:'RazónPrincipaldelaConsulta'},
                         {data:'Diagnóstico'},
+                        {data:'Planes'},
+                        {data:'OtrosComentarios'},                     
                         {data:'Medico'},
                         {data:'NotasMédicas'},
                         {data:'CitaCancelada'}
+                        
                     ],
                     language: {
                         "decimal": "",
@@ -143,7 +158,7 @@ $(document).ready(function(){
                             "render": function (data, type, row) {
                                 return (data === 1) ? '<span style="color:#fff; background:red; padding:5px; border-radius:3px;">Cancelada</span>' : '<span style="color:#fff; background:green; padding:5px; border-radius:3px;">Realizado</span>';
                             },
-                            "targets": 10
+                            "targets": 19
                         }
                     ]
                 });
