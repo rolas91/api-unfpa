@@ -99,7 +99,10 @@ $(document).ready(function(){
                             extend:'csvHtml5',
                             title:'Reporte Appsistencia Materna'
                         },                     
-                        'copyHtml5'                 
+                        {
+                            extend:'copyHtml5',
+                            title:'Reporte Appsistencia Materna'
+                        }                 
 
                     ],        
                     data:data.response,
