@@ -41,11 +41,20 @@ $(document).ready(function(){
                 'Content-Type': 'application/json'              
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-          token = localStorage.setItem('token', data.token)
-          location.href = '/dashboard';
+        .then(response => {
+           return {
+               code:response.status,
+               response:response.json()
+           }
+        })
+        .then(async(data) => {                     
+            if(data.code == 401){
+                let message = Object.values(await data.response)                
+                $('#message').html(message[0]);             
+            }else{
+                token = localStorage.setItem('token', data.token);
+                location.href = '/dashboard';
+            }
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -61,6 +70,7 @@ $(document).ready(function(){
     
     function getData(){
         let url = `${URL}/api/v1/create/report`
+        // let url = `http://localhost:7000/api/v1/create/report`
         fetch(url,{
             method:'GET',
             headers: {
