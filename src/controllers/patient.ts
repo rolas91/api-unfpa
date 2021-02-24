@@ -191,26 +191,25 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
       doctorId:any,
       sender:number,
       receive:number
-    }) => {
-        const {  sender, receive, doctorId} = data;
-    return await getRepository(Patient)
-    .createQueryBuilder("patient")
-    .leftJoinAndSelect("patient.user","user")
-    .leftJoin("user.messagessender","messagessender")
-    .leftJoin("user.messagesreceiver","messagesreceiver")
-    .leftJoin("patient.doctors", "doctors")
-    .where("doctors.id = :id",{id:doctorId})
-    .orWhere("messagesreceiver.id = :receive", {receive})
-    // .orWhere("messagessender.id = :sender", {sender})
-    .orWhere("messagessender.state = 'r'")
-    // .orWhere("messagessender.id = :receive", {receive})
-    // .andWhere("messagesreceiver.id = :sender", {sender})
-    // .andWhere("messagessender.state = 's'") 
-    .addSelect('COUNT(CASE WHEN messagessender.read = 0 THEN 1 ELSE NULL END) as totalMessage')
-    // .orderBy("messagessender.id","ASC")
-   
-    .orderBy("user.firstname","ASC")
-    .getRawMany();
+    }) => {        
+        try {
+            const {  sender, receive, doctorId} = data;
+
+            const entityManager = getManager();
+            const responseQuery = entityManager.query(`
+                SELECT DISTINCT pa.userId, us.firstname, us.lastname, 
+                (select  count(*) from message m WHERE m.state = 'r' AND m.senderId = ${doctorId} AND m.receiverId = pa.userId AND m.read = 0) AS contador
+                FROM plzrkxwlwlx7bs7m.user  AS us
+                INNER Join patient AS pa ON pa.userId = us.id
+                INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})
+                INNER Join patient_doctors_user pdu ON pa.id = pdu.patientId
+                WHERE  pdu.userId = ${doctorId} ORDER by us.firstname ASC
+            `);
+            return responseQuery;              
+        } catch (error) {
+            console.log(error)
+        }
+  
   }
 
   const getDoctorByPatient = async (userid:any) => {

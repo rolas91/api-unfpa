@@ -16,7 +16,6 @@ const report = async():Promise<any> =>{
     } catch (error) {
         console.log(error)
     }
-
 }
 
 export{
