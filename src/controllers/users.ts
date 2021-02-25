@@ -64,10 +64,11 @@ const getUserLike = async (data:{
 };
 
 const getUserDoctors = async (data:{ 
+  id:number;
   doctorId:any
 }) => {
 
-  const {doctorId} = data;
+  const {doctorId, id} = data;
 
   // const entityManager = getManager();
 
@@ -86,7 +87,7 @@ const getUserDoctors = async (data:{
   return await getRepository(Users)
   .createQueryBuilder('user')
   .where("user.typeUser = 'medico'")
-  .andWhere("user.id <> :id",{id:doctorId})
+  .andWhere("user.id <> :id",{id:id})
   .orderBy("user.firstname","ASC")
   .getMany();
 }
