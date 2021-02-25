@@ -189,17 +189,15 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
 
   const getListPatientWithMessage = async (data:{
       doctorId:any,
-      sender:number,
-      receive:number
     }) => {        
         try {
-            const {  sender, receive, doctorId} = data;
+            const { doctorId} = data;
 
             const entityManager = getManager();
             const responseQuery = entityManager.query(`
                 SELECT DISTINCT pa.userId, us.firstname, us.lastname, 
                 (select  count(*) from message m WHERE m.state = 'r' AND m.senderId = ${doctorId} AND m.receiverId = pa.userId AND m.read = 0) AS contador
-                FROM plzrkxwlwlx7bs7m.user  AS us
+                FROM user  AS us
                 INNER Join patient AS pa ON pa.userId = us.id
                 INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})
                 INNER Join patient_doctors_user pdu ON pa.id = pdu.patientId

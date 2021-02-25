@@ -63,14 +63,32 @@ const getUserLike = async (data:{
   
 };
 
-const getUserDoctors = async (data:{id:number}) => {
-  const {id} = data;
-  return await getRepository(Users)
-  .createQueryBuilder('user')
-  .where("user.typeUser = 'medico'")
-  .andWhere("user.id <> :id",{id:id})
-  .orderBy("user.firstname","ASC")
-  .getMany();
+const getUserDoctors = async (data:{ 
+  doctorId:any
+}) => {
+
+  const {doctorId} = data;
+
+  const entityManager = getManager();
+
+  const responseQuery = await entityManager.query(`
+      SELECT DISTINCT us.id, us.firstname, us.lastname, 
+      (select  count(*) from message m WHERE m.state = 'r' AND m.senderId = ${doctorId} AND m.receiverId = us.id AND m.read = 0) AS contador
+      FROM user  AS us
+      INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})
+      WHERE  us.id <> ${doctorId} AND  WHERE us.typeUser = 'medico'
+      ORDER by us.firstname ASC
+  `);
+  console.log("ver",responseQuery);
+  
+  return responseQuery;  
+
+  // return await getRepository(Users)
+  // .createQueryBuilder('user')
+  // .where("user.typeUser = 'medico'")
+  // .andWhere("user.id <> :id",{id:id})
+  // .orderBy("user.firstname","ASC")
+  // .getMany();
 }
 
 const totalMessage = async (data:{
