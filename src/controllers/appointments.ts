@@ -397,7 +397,7 @@ const getAppointmentByHour = async (doctorId:any, today:Date, hour:string) => {
      
     if(response != undefined){        
         response.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
-        response.patient.gestationWeeksDate =  <any> moment(response.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
+        response.patient.gestationWeeksDate =  <any> moment(response.patient.gestationWeeksDate).format('YYYY-MM-DD HH:mm:ss');
     }  
     
     
