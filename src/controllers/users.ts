@@ -64,32 +64,21 @@ const getUserLike = async (data:{
 };
 
 const getUserDoctors = async (data:{ 
-  doctorId:any,
-  id:any
+  doctorId:any
 }) => {
 
-  const {doctorId, id} = data;
+  const {doctorId} = data;
 
-  // const entityManager = getManager();
+  const entityManager = getManager();
 
-  // const responseQuery = await entityManager.query(`
-  //     SELECT DISTINCT us.id, us.firstname, us.lastname, 
-  //     (select  count(*) from message m WHERE m.state = 'r' AND m.senderId = ${doctorId} AND m.receiverId = us.id AND m.read = 0) AS contador
-  //     FROM user  AS us
-  //     INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})
-  //     WHERE  us.id <> ${doctorId} AND  WHERE us.typeUser = 'medico'
-  //     ORDER by us.firstname ASC
-  // `);
-  // console.log("ver",responseQuery);
-  
-  // return responseQuery;  
+  const responseQuery = await entityManager.query(`
+    SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 'r' AND m.receiverId =  ${doctorId} AND m.senderId = us.id AND m.read = 0) AS contador
+    FROM plzrkxwlwlx7bs7m.user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId}) 
+    WHERE  us.id !=  ${doctorId} AND  us.typeUser = 'medico'
+    ORDER by us.firstname ASC
+  `);
 
-  return await getRepository(Users)
-  .createQueryBuilder('user')
-  .where("user.typeUser = 'medico'")
-  .andWhere("user.id <> :id",{id:id})
-  .orderBy("user.firstname","ASC")
-  .getMany();
+  return responseQuery;
 }
 
 const totalMessage = async (data:{
