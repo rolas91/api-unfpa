@@ -25,12 +25,13 @@ const registerPatient = async(data:{
     userid:number;
     doctorid:number;
     gestationWeeks:number;
+    gestationWeeksDate:string;
     pathologicalAntecedents:string;
     treatmentsReceived:string;
     medicalObservations:string;
 }):Promise<any> => {
     const entityManager = getManager();
-    const {userid,doctorid, pathologicalAntecedents, treatmentsReceived, medicalObservations, gestationWeeks, } = data;   
+    const {userid,doctorid, pathologicalAntecedents, treatmentsReceived,gestationWeeksDate, medicalObservations, gestationWeeks, } = data;   
 
     const user = await getRepository(Users).findOne({
         where:{
@@ -64,7 +65,7 @@ const registerPatient = async(data:{
                     treatmentsReceived, 
                     medicalObservations, 
                     doctors:[doctor],
-                    gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
+                    gestationWeeksDate:gestationWeeksDate
                 })
                 await getRepository(Patient).save(newPatient);
                 return {
@@ -86,7 +87,7 @@ const registerPatient = async(data:{
                 treatmentsReceived, 
                 medicalObservations, 
                 doctors:[doctor],
-                gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
+                gestationWeeksDate:gestationWeeksDate
             })
             return await getRepository(Patient).save(newPatient);
         }
