@@ -55,7 +55,7 @@ const getUserLike = async (data:{
     LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') and pu.userId = ${doctorId} order by u.firstname asc `)
   }
   else{   
-    return await entityManager.query(`SELECT u.id, u.firstname,u.lastname, u.email, u.cedula, u.birth, u.phone, u.password, u.avatar, u.typeAuth, u.typeUser, u.create_at, u.update_at, u.centerId, u.token, u.emailToken, p.userId, p.brigadistaId, p.gestationWeeks,p.gestationWeeksDate , p.ges, p.pathologicalAntecedents, p.treatmentsReceived, p.medicalObservations, pu.patientId FROM user u 
+    return await entityManager.query(`SELECT u.id, u.firstname,u.lastname, u.email, u.cedula, u.birth, u.phone, u.password, u.avatar, u.typeAuth, u.typeUser, u.create_at, u.update_at, u.centerId, u.token, u.emailToken, p.userId, p.brigadistaId, p.gestationWeeks,p.gestationWeeksDate , p.pathologicalAntecedents, p.treatmentsReceived, p.medicalObservations, pu.patientId FROM user u 
     inner join patient p on u.id = p.userId inner join patient_doctors_user pu on p.id = pu.patientId WHERE (concat(u.firstname,' ',u.lastname) 
     LIKE '${params}%' OR u.email LIKE '${params}%' OR u.phone LIKE '${params}%' OR u.cedula LIKE '${params}%') GROUP BY p.userId order by u.firstname `)
     
@@ -73,6 +73,25 @@ const getUserDoctors = async (data:{
 
   const responseQuery = await entityManager.query(`
     SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 'r' AND m.receiverId =  ${doctorId} AND m.senderId = us.id AND m.read = 0) AS contador
+    FROM plzrkxwlwlx7bs7m.user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId}) 
+    WHERE  us.id !=  ${doctorId} AND  us.typeUser = 'medico'
+    ORDER by us.firstname ASC
+  `);
+
+  return responseQuery;
+}
+
+
+const getListAndMessageDoctors = async (data:{ 
+  doctorId:any
+}) => {
+
+  const {doctorId} = data;
+
+  const entityManager = getManager();
+
+  const responseQuery = await entityManager.query(`
+    SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 's' AND m.receiverId =  ${doctorId} AND m.senderId = us.id AND m.read = 0) AS contador
     FROM plzrkxwlwlx7bs7m.user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId}) 
     WHERE  us.id !=  ${doctorId} AND  us.typeUser = 'medico'
     ORDER by us.firstname ASC
@@ -215,4 +234,4 @@ const sendFCM = async(title, message, fcmToken) =>{
 }
 
 
-export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike, readmessageDoctor, readmessagePatient};
+export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike, readmessageDoctor, readmessagePatient, getListAndMessageDoctors};
