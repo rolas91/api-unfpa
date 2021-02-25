@@ -82,23 +82,23 @@ const getUserDoctors = async (data:{
 }
 
 
-const getListAndMessageDoctors = async (data:{ 
-  patient:any
-}) => {
+// const getListAndMessageDoctors = async (data:{ 
+//   patient:any
+// }) => {
 
-  const {patient} = data;
+//   const {patient} = data;
 
-  const entityManager = getManager();
+//   const entityManager = getManager();
 
-  const responseQuery = await entityManager.query(`
-    SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 's' AND m.receiverId =  ${patient} AND m.senderId = us.id AND m.read = 0) AS contador
-    FROM plzrkxwlwlx7bs7m.user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${patient} OR me.senderId = ${patient}) 
-    WHERE  us.id !=  ${patient} AND  us.typeUser = 'medico'
-    ORDER by us.firstname ASC
-  `);
+//   const responseQuery = await entityManager.query(`
+//     SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 's' AND m.receiverId =  ${patient} AND m.senderId = us.id AND m.read = 0) AS contador
+//     FROM user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${patient} OR me.senderId = ${patient}) 
+//     WHERE  us.id !=  ${patient} AND  us.typeUser = 'medico'
+//     ORDER by us.firstname ASC
+//   `);
 
-  return responseQuery;
-}
+//   return responseQuery;
+// }
 
 const totalMessage = async (data:{
   sender:number,
@@ -234,4 +234,4 @@ const sendFCM = async(title, message, fcmToken) =>{
 }
 
 
-export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike, readmessageDoctor, readmessagePatient, getListAndMessageDoctors};
+export {totalMessage, getUserDoctors, getUsers, getUser, getUsersTypeBrigadista, getOnlyUser, addMessages, getMessages, getUserLike, readmessageDoctor, readmessagePatient};

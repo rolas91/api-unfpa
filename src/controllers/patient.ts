@@ -216,7 +216,10 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .createQueryBuilder("patient")
     .leftJoin("patient.user","user")
     .leftJoinAndSelect("patient.doctors", "doctors")
-    .where("user.id = :id",{id:userid}).getRawMany();
+    .where("user.id = :id",{id:userid})
+    .addSelect(`(select  count(*) from message m WHERE m.state = "s" AND m.senderId = doctors.id  AND m.read = 0) AS contador`)
+    .orderBy('doctors.firstname','ASC')
+    .getRawMany();
   }
 
   const getPatientsAndTotalAppointmentByBrigadist = async (brigadistaid:any) => {

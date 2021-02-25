@@ -212,20 +212,20 @@ export default (app: Application): void => {
     }
   })
 
-  app.post('/api/v1/user/getListdoctorsbypatient', async(req, res) => {
-    try {
-      const result = await user.getListAndMessageDoctors(req.body);
-      res.status(200).json({
-        message:'successfully',
-        patient:result
-      })
-    } catch (error) {
-      res.status(200).json({ 
-        message: 'unsuccess',
-        doctors:[]
-      });
-    }
-  })
+  // app.post('/api/v1/user/getListdoctorsbypatient', async(req, res) => {
+  //   try {
+  //     const result = await user.getListAndMessageDoctors(req.body);
+  //     res.status(200).json({
+  //       message:'successfully',
+  //       patient:result
+  //     })
+  //   } catch (error) {
+  //     res.status(200).json({ 
+  //       message: 'unsuccess',
+  //       doctors:[]
+  //     });
+  //   }
+  // })
 
   app.post('/api/v1/user/getmessage', async(req, res) => {
       try{
