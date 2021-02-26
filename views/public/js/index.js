@@ -54,7 +54,7 @@ $(document).ready(function(){
             }else{
                 let token = Object.values(await data.response)                 
                 localStorage.setItem('token', token[0]);
-                location.href = '/dashboard';
+                location.href = `/dashboard/${token[0]}`;
             }
         })
         .catch((error) => {

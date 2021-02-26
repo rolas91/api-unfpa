@@ -17,7 +17,7 @@ import fetch from 'node-fetch';
 
 import tokens from '../controllers/tokens';
 
-import { isLogin } from '../middlewares/isLogin';
+import { isLogin, isAuth } from '../middlewares/isLogin';
 
 import uploader from '../middlewares/uploader';
 
@@ -59,7 +59,7 @@ export default (app: Application): void => {
   app.get('/', (req, res) => {
     res.render('login');     
   });
-  app.get('/dashboard', (req, res) => {
+  app.get('/dashboard/:token?', isAuth ,(req, res) => {
     res.render('panel');     
   });
 
@@ -220,7 +220,7 @@ export default (app: Application): void => {
   //       patient:result
   //     })
   //   } catch (error) {
-  //     res.status(200).json({ 
+  //     res.status(200).json({ https://api-unfpa.herokuapp.com/dashboard
   //       message: 'unsuccess',
   //       doctors:[]
   //     });

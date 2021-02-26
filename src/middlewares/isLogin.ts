@@ -28,3 +28,21 @@ export const isLogin = async (
     res.status(403).send({ message: error.message });
   }
 };
+
+export const isAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { token } = req.params;    
+    const result: any = await jwt.verify(token as string, process.env.SECRET || 'supersecret' );    
+    if (!result) {
+      res.redirect('/')
+    }  
+    req.userId = result.id;
+    next();
+  } catch (error) {
+    res.redirect('/')
+  }
+};
