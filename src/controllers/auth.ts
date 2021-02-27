@@ -128,6 +128,13 @@ const sendMailResetPassword = async(data:{
   }
 }
 
+const encryptPassword = async(data:{ 
+  password:string 
+}):Promise<any> => {
+  const {password} = data;
+  return await bcrypt.hash(password, 10);
+}
+
 const resetPassword = async(data:{
   token:any;
   password:string;
@@ -184,4 +191,4 @@ const postToken = async(data:{
   }
 }
 
-export { register, login, resetPassword, sendMailResetPassword, postToken };
+export { register, login, resetPassword, sendMailResetPassword, postToken, encryptPassword };

@@ -1,7 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 
 import _, { join } from 'lodash';
-import { Application } from 'express';
+import { Application, response } from 'express';
 import * as auth from '../controllers/auth';
 import * as profile from '../controllers/profile';
 import * as user from '../controllers/users';
@@ -101,6 +101,16 @@ export default (app: Application): void => {
       res.render('changepass',{message:"Ha habido un error al cambiar tu contraseña"});
     }
   });
+
+  app.post('/api/v1/auth/encrypt-password', async(req, res) => {
+    try {
+      const psEncrypt = await auth.encryptPassword(req.body);
+      res.status(200).json(psEncrypt);
+    } catch (error) {
+      console.log(error);
+      
+    }
+  })
   
   // authenticate
   app.post('/api/v1/auth/resetpassword', async(req, res) => {

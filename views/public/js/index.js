@@ -3,7 +3,6 @@ let userId;
 const URL = "https://api-unfpa.herokuapp.com"
 $(document).ready(function(){
     getData();
-
     $('#showp1').on('click', function() {
         $('#showp1').attr('src', function(index, attr) {
             return attr == '/static/img/eye.png' ? '/static/img/invisible.png' : '/static/img/eye.png';
@@ -67,8 +66,6 @@ $(document).ready(function(){
         localStorage.removeItem('token')
         location.href = '/'
     });
-
-    
     function getData(){
         let url = `${URL}/api/v1/create/report`
         // let url = `http://localhost:7000/api/v1/create/report`
@@ -173,7 +170,5 @@ $(document).ready(function(){
         });
     
     }
-
-
 });
 
