@@ -245,7 +245,7 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .leftJoinAndSelect("patient.appointments","appointments")
     .where("user.id = :id",{id:userid})
     .orderBy("appointments.date","DESC")
-    .addOrderBy("appointments.hour","DESC")
+    .addOrderBy("appointments.hour","ASC")
     .getMany();
 
     response.map((val, index) => {
