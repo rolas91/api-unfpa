@@ -73,11 +73,11 @@ const getUserDoctors = async (data:{
 
   const responseQuery = await entityManager.query(`
     SELECT DISTINCT us.id, us.firstname, us.lastname, (SELECT COUNT(*) from message m WHERE m.state = 'r' AND m.receiverId =  ${doctorId} AND m.senderId = us.id AND m.read = 0) AS contador
-    FROM plzrkxwlwlx7bs7m.user us INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId}) 
+    FROM plzrkxwlwlx7bs7m.user us 
     WHERE  us.id !=  ${doctorId} AND  us.typeUser = 'medico'
     ORDER by us.firstname ASC
   `);
-
+  // INNER JOIN message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId}) 
   return responseQuery;
 }
 

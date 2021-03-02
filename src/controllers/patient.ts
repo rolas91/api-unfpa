@@ -200,11 +200,12 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
                 (select  count(*) from message m WHERE m.state = 'r' AND m.senderId = ${doctorId} AND m.receiverId = pa.userId AND m.read = 0) AS contador
                 FROM user  AS us
                 INNER Join patient AS pa ON pa.userId = us.id
-                INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})
+                
                 INNER Join patient_doctors_user pdu ON pa.id = pdu.patientId
                 WHERE  pdu.userId = ${doctorId} ORDER by us.firstname ASC
             `);
-            return responseQuery;              
+            return responseQuery;  
+            // INNER Join message AS me ON  me.receiverId = us.id OR me.senderId =  us.id OR (me.receiverId = ${doctorId} OR me.senderId = ${doctorId})            
         } catch (error) {
             console.log(error)
         }
@@ -244,8 +245,7 @@ const getPatientsAndTotalAppointment = async (doctorId:any) => {
     .leftJoinAndSelect("patient.user","user")
     .leftJoinAndSelect("patient.appointments","appointments")
     .where("user.id = :id",{id:userid})
-    .orderBy("appointments.date","DESC")
-    .addOrderBy("appointments.hour","ASC")
+    .orderBy("appointments.id","DESC")
     .getMany();
 
     response.map((val, index) => {
