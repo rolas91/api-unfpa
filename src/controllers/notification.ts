@@ -8,6 +8,7 @@ const getNotifications = async(data:{userid:number;}):Promise<any> =>{
                         .leftJoin("notification.user","user")
                         .where("user.id = :userid",{userid:userid})
                         .orderBy("notification.id", "DESC")
+                        .limit(5)
                         .getMany();
 }
 
