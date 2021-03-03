@@ -5,14 +5,10 @@ import { Application, response } from 'express';
 import * as auth from '../controllers/auth';
 import * as profile from '../controllers/profile';
 import * as user from '../controllers/users';
-import * as center from '../controllers/center';
 import * as patient from '../controllers/patient';
 import * as appointment from '../controllers/appointments';
-import * as categorylist from '../controllers/categorytips';
 import * as notification from '../controllers/notification';
-import * as joinuser from '../controllers/joinroom';
 import * as reports from '../controllers/reports';
-import * as tip from '../controllers/tips';
 import fetch from 'node-fetch';
 
 import tokens from '../controllers/tokens';
@@ -362,16 +358,6 @@ app.post('/api/v1/message/readmessagedoctor', async(req, res) => {
   }
   );
   
-  //centers
-  app.get('/api/v1/centers', async (req, res) => {
-    try {
-      
-      const response = await center.getCenters();
-      res.status(200).send(response);
-    } catch (error) {
-      res.status(500).send({ message: error.message});
-    }
-  });
 
   //patients
 
@@ -688,41 +674,6 @@ app.post('/api/v1/message/readmessagedoctor', async(req, res) => {
     }
   });
 
-  //categories tips
-  app.get('/api/v1/category-tips/all', async(req, res) => {
-    try{
-      const result = await categorylist.getCategoryTips();
-      if(result){
-        res.status(200).json({
-          categories:result
-        })
-      }
-    }catch(e){
-      res.status(500).json({
-        message:'error'+e
-      })
-    }
-  });
-
-  app.post('/api/v1/tips/detail', async(req, res) => {
-    try{
-      const result = await tip.getTips(req.body.categoryid);
-      if(result){
-        res.status(200).json({
-          tips:result
-        })
-      }else{
-        res.status(200).json({
-          tips:'empty'
-        })
-      }
-    }catch(e){
-      res.status(500).json({
-        message:'error'+e
-      })
-    }
-  });
-
   app.post('/api/v1/notification', async(req, res) => {
     try{
       const result = await notification.getNotifications(req.body);
@@ -740,11 +691,6 @@ app.post('/api/v1/message/readmessagedoctor', async(req, res) => {
     }catch(e){
       console.log(`error ${e}`)
     }
-  });
-
-  app.post('/api/v1/joinusers', async(req, res) => {
-      let result = await joinuser.joinUsers(req.body);
-      res.status(200).json({result})
   });
 };
 
