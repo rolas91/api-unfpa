@@ -33,9 +33,11 @@ const register = async(data:{
     note:string
 }): Promise<any> => {
     const {patient, doctor, gestationWeeks, reportOfFetalMovements,arObro,typeAppointment,otherRemarks,plans, diagnostics, mainReasonForTheConsultation,date, hour,note} = data;
+    console.log( patient);
     
     let response = await getRepository(Appointment).findOne({
         where:{
+            patient,
             date,
             hour,
             cancel:false
@@ -60,6 +62,7 @@ const register = async(data:{
         note,
         gestationWeeksDate:moment().tz("America/Managua").format('YYYY-MM-DD HH:mm:ss')
     });
+     
     return await getRepository(Appointment).save(newAppointment);
    }else{
        return false;

@@ -32,7 +32,8 @@ const registerPatient = async(data:{
 }):Promise<any> => {
     const entityManager = getManager();
     const {userid,doctorid, pathologicalAntecedents, treatmentsReceived,gestationWeeksDate, medicalObservations, gestationWeeks, } = data;   
-
+    
+    
     const user = await getRepository(Users).findOne({
         where:{
             id:userid,
