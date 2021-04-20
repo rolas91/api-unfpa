@@ -1,10 +1,10 @@
 {
     "type":"mysql",
-    "host":"vrk7xcrab1wsx4r1.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "host":"localhost",
     "port":3306,
-    "username":"lu5se04b4mhb5h5v",
-    "password":"qv2831ivehsvmtty",
-    "database":"plzrkxwlwlx7bs7m",
+    "username":"root",
+    "password":"Accessprofamilia2021@",
+    "database":"appsistencia",
     "entities":["dist/entity/**/*.js"],
     "synchronize":true
 }
