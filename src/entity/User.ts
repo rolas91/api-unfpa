@@ -20,7 +20,7 @@ export default class User{
     @Column()
     cedula: string;
 
-    @Column({type:'date'})
+    @Column({type:'date', nullable: true})
     birth:Date;
 
     @Column()
@@ -29,7 +29,7 @@ export default class User{
     @Column()
     password: string;
 
-    @Column()
+    @Column({nullable: true})
     avatar: string;
 
     @Column({
@@ -46,10 +46,10 @@ export default class User{
     })
     typeUser:string;
 
-    @Column()
+    @Column({nullable: true})
     centerId:number;
 
-    @Column()
+    @Column({nullable: true})
     token:string;
 
     @Column({nullable:true})
