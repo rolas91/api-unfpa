@@ -25,6 +25,7 @@ export default class Appointment{
         precision : 10 ,  
         scale : 1  ,   
         comment:'Semanas de gestacion',
+        nullable:true
     })
     gestationWeeks:number;
 
