@@ -17,7 +17,7 @@ export default class Appointment{
     })
     doctor:User;
 
-    @Column()
+    @Column({nullable:true})
     gestationWeeksDate:Date;
 
     @Column({     
@@ -31,22 +31,23 @@ export default class Appointment{
 
     @Column({
         comment:'Reporte de movimientos fetales',
+        nullable:true
     })
     reportOfFetalMovements:string;
 
-    @Column()
+    @Column({nullable:true})
     arObro:string;
 
-    @Column({comment:'Motivo principal de la consulta'})
+    @Column({comment:'Motivo principal de la consulta', nullable:true})
     mainReasonForTheConsultation:string
 
-    @Column({comment:'Diagnostico'})
+    @Column({comment:'Diagnostico', nullable:true})
     diagnostics:string
 
-    @Column({comment:'Planes'})
+    @Column({comment:'Planes', nullable:true})
     plans:string
 
-    @Column({comment:'Otras observaciones'})
+    @Column({comment:'Otras observaciones', nullable:true})
     otherRemarks:string;
 
     @Column({
@@ -72,13 +73,13 @@ export default class Appointment{
     })
     fcm2:boolean
 
-    @Column()
+    @Column({nullable:true})
     note:string;
 
     @Column({default:false})
     cancel:boolean;
 
-    @Column()
+    @Column({nullable:true})
     reasonCancel:string;
 
     @CreateDateColumn({name:'create_at'}) 
