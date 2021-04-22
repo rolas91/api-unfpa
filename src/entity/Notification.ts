@@ -6,13 +6,13 @@ export default class Notification{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
+    @Column({nullable:true})
     title:string;
     
-    @Column()
+    @Column({nullable:true})
     text:string;
     
-    @Column('time')
+    @Column({type:'time', nullable:true})
     hour:Date
     
     @ManyToOne(() => User, user => user.messagesreceiver)

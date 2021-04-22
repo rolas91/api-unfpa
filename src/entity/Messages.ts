@@ -12,15 +12,15 @@ export default class Message{
     @ManyToOne(() => User, user => user.messagesreceiver)
     receiver:User;
 
-    @Column("text")
+    @Column({type:"text", nullable:true})
     message:string;
 
-    @Column({default:false})
+    @Column({default:true})
     read:boolean;
 
-    @Column()
+    @Column({nullable:true})
     date:Date
 
-    @Column()
+    @Column({nullable:true})
     state:string;
 }

@@ -8,25 +8,25 @@ export default class User{
     @PrimaryGeneratedColumn()
     id: number;
     
-    @Column()
+    @Column({nullable:true})
     firstname: string;
 
-    @Column()
+    @Column({nullable:true})
     lastname: string;
 
     @Column({unique:true})
     email: string;
 
-    @Column()
+    @Column({nullable:true})
     cedula: string;
 
     @Column({type:'date', nullable: true})
     birth:Date;
 
-    @Column()
+    @Column({nullable:true})
     phone:string;
 
-    @Column()
+    @Column({nullable:true})
     password: string;
 
     @Column({nullable: true})

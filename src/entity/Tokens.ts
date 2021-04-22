@@ -10,6 +10,6 @@ export default class Token{
     @Column({unique:true, nullable:false})
     jwt: string;
 
-    @Column()
+    @Column({nullable:true})
     payload:number;
 }

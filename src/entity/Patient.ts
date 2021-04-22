@@ -18,21 +18,25 @@ export default class Patient{
         precision : 10 ,  
         scale : 1 ,
         comment:'Semanas de gestacion',
+        nullable:true
     })
     gestationWeeks:number;
 
     @Column({
         comment:'Antecedentes patologicos',
+        nullable:true
     })
     pathologicalAntecedents:string;
 
     @Column({
         comment:'Tratamientos recibidos',
+        nullable:true
     })
     treatmentsReceived:string;
 
     @Column({
         comment:'Observaciones médicas',
+        nullable:true
     })
     medicalObservations:string;
 
@@ -46,7 +50,7 @@ export default class Patient{
     @JoinTable()
     doctors:User[]
 
-    @Column()
+    @Column({nullable:true})
     gestationWeeksDate:Date;
 
 
