@@ -179,7 +179,11 @@ const getMessages = async(data:{
               .andWhere("receiver.id = :receive", {receive})
               .orWhere("sender.id = :receive", {receive})
               .andWhere("receiver.id = :sender", {sender})
-              .getMany();              
+              .orderBy("message.id", 'ASC')
+              .getMany()
+              
+                
+
 }
 
 const addMessages = async(username:string,message:string, roomName:any, state:string):Promise<any> => {
